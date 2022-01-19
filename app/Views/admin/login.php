@@ -9,15 +9,16 @@
 <body>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
-      <div class="content-wrapper d-flex align-items-center auth">
+      <div class="content-wrapper d-flex align-items-center auth" style="background-image: url(https://static.wixstatic.com/media/aa45a6_2014a1f5142443c6bd2de284f1312efb~mv2.gif);">
         <div class="row w-100">
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left p-5">
               <div class="brand-logo">
                 <img src="<?=base_url();?>/assets/images/logo.png" alt="logo">
               </div>
-              <h4>Hello! let's get started</h4>
-              <h6 class="font-weight-light">Sign in to continue.</h6>
+              <h6>“There is no failure.  Only feedback.”</h6>
+              <h6 class="text-right">- Robert Allen</h6>
+              <h4 class="font-weight-bold text-center">Sign In to The Future</h4>
               <form class="pt-3" id="loginForm">
                 <div class="form-group">
                   <input type="email" class="form-control form-control-lg" id="email" placeholder="Email" name="email">
