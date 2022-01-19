@@ -10,6 +10,7 @@
   <div class="container-scroller">
     <?php include __DIR__ . '/../layout/navbar.php'; ?>
     <div class="container-fluid page-body-wrapper">
+      <?php include __DIR__ . '/../layout/sidebar.php'; ?>
       <div class="main-panel">
         <!-- main content will come here and please donot remove any tag -->
         <?php include __DIR__ . '/../layout/footer.php'; ?>
