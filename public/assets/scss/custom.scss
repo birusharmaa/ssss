@@ -1,3 +1,23 @@
+:root {
+	--brand: #ff9000;
+	--accent: #00a3e0;
+}
+.btn-brand {
+	background-color: var(--brand);
+	color: var(--white);
+	border-color: var(--brand);
+	&:hover {
+		opacity: 0.8;
+	}
+}
+.btn-accent {
+	background-color: var(--accent);
+	color: var(--white);
+	border-color: var(--accent);
+	&:hover {
+		opacity: 0.8;
+	}
+}
 label.is-invalid {
 	color: var(--danger);
 	margin-block: 0.25rem;

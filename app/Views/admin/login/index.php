@@ -4,21 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>XLAcademy Admin</title>
-  <?php include 'layout/cssLinks.php'; ?>
+  <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
 </head>
 <body>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
-      <div class="content-wrapper d-flex align-items-center auth" style="background-image: url(https://static.wixstatic.com/media/aa45a6_2014a1f5142443c6bd2de284f1312efb~mv2.gif);">
+      <div class="content-wrapper d-flex align-items-center auth">
         <div class="row w-100">
           <div class="col-lg-4 mx-auto">
             <div class="auth-form-light text-left p-5">
               <div class="brand-logo">
                 <img src="<?=base_url();?>/assets/images/logo.png" alt="logo">
-              </div>
-              <h6>“There is no failure.  Only feedback.”</h6>
-              <h6 class="text-right">- Robert Allen</h6>
-              <h4 class="font-weight-bold text-center">Sign In to The Future</h4>
+              </div>sdfsdfsdf
+              <h4>Hello! let's get started</h4>
+              <h6 class="font-weight-light">Sign in to continue.</h6>
               <form class="pt-3" id="loginForm">
                 <div class="form-group">
                   <input type="email" class="form-control form-control-lg" id="email" placeholder="Email" name="email">
@@ -27,7 +26,8 @@
                   <input type="password" class="form-control form-control-lg" id="password" placeholder="Password" name="password">
                 </div>
                 <div class="mt-3">
-                  <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" >Sign In</button>
+                  <!-- <button class="btn btn-block btn-brand btn-lg font-weight-medium auth-form-btn" type="submit" >Sign In</button> -->
+                  <a class="btn btn-block btn-brand btn-lg font-weight-medium auth-form-btn" href="<?=base_url();?>/dashboard">Sign In</a>
                 </div>
                 <div class="my-2 d-flex justify-content-between align-items-center">
                   <div class="form-check">
@@ -45,7 +45,7 @@
       </div>
     </div>
   </div>
-  <?php include 'layout/jsLinks.php'; ?>
+  <?php include __DIR__ . '/../layout/jsLinks.php'; ?>
   <script>
     $("#loginForm").validate({
       errorClass: "is-invalid",
