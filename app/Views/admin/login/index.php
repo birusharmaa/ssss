@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>XLAcademy Admin</title>
-  <?php include 'layout/cssLinks.php'; ?>
+  <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
 </head>
 <body>
   <div class="container-scroller">
@@ -26,7 +26,8 @@
                   <input type="password" class="form-control form-control-lg" id="password" placeholder="Password" name="password">
                 </div>
                 <div class="mt-3">
-                  <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit" >Sign In</button>
+                  <!-- <button class="btn btn-block btn-brand btn-lg font-weight-medium auth-form-btn" type="submit" >Sign In</button> -->
+                  <a class="btn btn-block btn-brand btn-lg font-weight-medium auth-form-btn" href="<?=base_url();?>/dashboard">Sign In</a>
                 </div>
                 <div class="my-2 d-flex justify-content-between align-items-center">
                   <div class="form-check">
@@ -44,7 +45,7 @@
       </div>
     </div>
   </div>
-  <?php include 'layout/jsLinks.php'; ?>
+  <?php include __DIR__ . '/../layout/jsLinks.php'; ?>
   <script>
     $("#loginForm").validate({
       errorClass: "is-invalid",
