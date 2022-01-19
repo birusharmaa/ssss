@@ -18,6 +18,48 @@
               Dashboard
             </h3>
           </div>
+          <div class="row">
+            <div class="col-md-3 mt-2">
+              <div class="form-group">
+                <label for="">User</label>
+                <select name="" id="" class="form-control">
+                  <option value="">Name</option>
+                  <option value="">Name</option>
+                  <option value="">Name</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3 mt-2">
+              <div class="form-group">
+                <label for="">Source</label>
+                <select name="" id="" class="form-control">
+                  <option value="">Source</option>
+                  <option value="">Source</option>
+                  <option value="">Source</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3 mt-2">
+              <div class="form-group">
+                <label for="">From</label>
+                <select name="" id="" class="form-control">
+                  <option value="">Date</option>
+                  <option value="">Date</option>
+                  <option value="">Date</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3 mt-2">
+              <div class="form-group">
+                <label for="">To</label>
+                <select name="" id="" class="form-control">
+                  <option value="">Date</option>
+                  <option value="">Date</option>
+                  <option value="">Date</option>
+                </select>
+              </div>
+            </div>
+          </div>
           <div class="row grid-margin">
             <?php for($i=1; $i<=10; $i++) {?>
             <div class="col-md-3 mt-2">
@@ -28,7 +70,7 @@
                       Collection
                     </p>
                     <h2>7500</h2>
-                    <label class="badge badge-outline-danger badge-pill">16% decrease</label>
+                    <!-- <label class="badge badge-outline-danger badge-pill">16% decrease</label> -->
                   </div>
                 </div>
               </div>
