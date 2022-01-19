@@ -6,13 +6,36 @@
   <title>XLAcademy Admin</title>
   <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
 </head>
-<body>
+<body class="sidebar-fixed">
   <div class="container-scroller">
     <?php include __DIR__ . '/../layout/navbar.php'; ?>
     <div class="container-fluid page-body-wrapper">
       <?php include __DIR__ . '/../layout/sidebar.php'; ?>
       <div class="main-panel">
-        <!-- main content will come here and please donot remove any tag -->
+      <div class="content-wrapper">
+          <div class="page-header">
+            <h3 class="page-title">
+              Dashboard
+            </h3>
+          </div>
+          <div class="row grid-margin">
+            <?php for($i=1; $i<=10; $i++) {?>
+            <div class="col-md-3 mt-2">
+              <div class="card card-widgit">
+                <div class="card-body">
+                  <div class="statistics-item">
+                    <p>
+                      Collection
+                    </p>
+                    <h2>7500</h2>
+                    <label class="badge badge-outline-danger badge-pill">16% decrease</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <?php } ?>
+          </div>
+        </div>
         <?php include __DIR__ . '/../layout/footer.php'; ?>
       </div>
     </div>

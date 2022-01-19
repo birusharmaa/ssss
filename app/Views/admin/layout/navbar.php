@@ -24,30 +24,8 @@
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item d-none d-lg-flex">
             <a class="nav-link" href="#">
-              <span class="btn btn-primary">+ Create new</span>
+              <span class="btn btn-brand">+ Create new</span>
             </a>
-          </li>
-          <li class="nav-item dropdown d-none d-lg-flex">
-            <div class="nav-link">
-              <span class="dropdown-toggle btn btn-outline-dark" id="languageDropdown" data-toggle="dropdown">English</span>
-              <div class="dropdown-menu navbar-dropdown" aria-labelledby="languageDropdown">
-                <a class="dropdown-item font-weight-medium" href="#">
-                  French
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item font-weight-medium" href="#">
-                  Espanol
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item font-weight-medium" href="#">
-                  Latin
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item font-weight-medium" href="#">
-                  Arabic
-                </a>
-              </div>
-            </div>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">

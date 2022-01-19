@@ -30,3 +30,20 @@ label.is-invalid {
 		}
 	}
 }
+.card {
+	&.card-widgit {
+		background: linear-gradient(85deg, var(--accent), var(--blue));
+		color: #ffffff;
+	}
+}
+.auth {
+	background-image: url(https://static.wixstatic.com/media/aa45a6_2014a1f5142443c6bd2de284f1312efb~mv2.gif);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-color: var(--black);
+	.auth-form-light {
+		background-color: rgba(255, 255, 255, 0.782);
+		backdrop-filter: blur(2px);
+	}
+}
