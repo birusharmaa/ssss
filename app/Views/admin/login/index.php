@@ -16,9 +16,9 @@
               <div class="brand-logo">
                 <img src="<?=base_url();?>/assets/images/logo.png" alt="logo">
               </div>
-              <h4>Hello! let's get started</h4>
-              <h4></h4>
-              <h6 class="font-weight-light">Sign in to continue.</h6>
+              <h6>"There is no failure. Only Feedback"</h6>
+              <h6 class="text-right">- Robert Alen</h6>
+              <h4 class="font-weight-bold text-center">Sign In to The Future</h4>
               <form class="pt-3" id="loginForm">
                 <div class="form-group">
                   <input type="email" class="form-control form-control-lg" id="email" placeholder="Email" name="email">
