@@ -54,7 +54,7 @@ class Login extends ResourceController
                 
                 if(!empty($user)){
                     if(!password_verify($password, $user['password'])) {
-                        //$this->setUserSession($user);
+                        $this->setUserSession($user);
                         //Redirecting to dashboard after login
                         $data['status']  = "success";
                         $data['message'] = "Login successfully.";
