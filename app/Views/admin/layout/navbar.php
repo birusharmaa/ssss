@@ -22,11 +22,11 @@
           </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
-          <li class="nav-item d-none d-lg-flex">
+          <!-- <li class="nav-item d-none d-lg-flex">
             <a class="nav-link" href="#">
               <span class="btn btn-brand">+ Create new</span>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
               <i class="fas fa-bell mx-0"></i>
@@ -82,7 +82,7 @@
               </a>
             </div>
           </li>
-          <li class="nav-item dropdown">
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-envelope mx-0"></i>
               <span class="count">25</span>
@@ -136,18 +136,18 @@
                 </div>
               </a>
             </div>
-          </li>
+          </li> -->
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <img src="<?=base_url();?>/assets/images/faces/face5.jpg" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="#">
                 <i class="fas fa-cog text-primary"></i>
                 Settings
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="#">
                 <i class="fas fa-power-off text-primary"></i>
                 Logout
               </a>

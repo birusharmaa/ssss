@@ -42,21 +42,13 @@
             <div class="col-md-3 mt-2">
               <div class="form-group">
                 <label for="">From</label>
-                <select name="" id="" class="form-control">
-                  <option value="">Date</option>
-                  <option value="">Date</option>
-                  <option value="">Date</option>
-                </select>
+                <input type="date" class="form-control form-control-sm">
               </div>
             </div>
             <div class="col-md-3 mt-2">
               <div class="form-group">
                 <label for="">To</label>
-                <select name="" id="" class="form-control">
-                  <option value="">Date</option>
-                  <option value="">Date</option>
-                  <option value="">Date</option>
-                </select>
+                <input type="date" class="form-control form-control-sm">
               </div>
             </div>
           </div>
