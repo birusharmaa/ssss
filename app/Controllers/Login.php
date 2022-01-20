@@ -1,8 +1,7 @@
 <?php
-
 namespace App\Controllers;
-
 use CodeIgniter\RESTful\ResourceController;
+use CodeIgniter\API\ResponseTrait;
 use App\Models\UserModel;
 
 class Login extends ResourceController
@@ -12,31 +11,68 @@ class Login extends ResourceController
      *
      * @return mixed
      */
-    public function index()
+
+    public function __construct()
     {
-        $rules = [
-            'email' => 'required|valid_email',
-            'password' => 'required|min_length[6]'
-        ];
-        if(!$this->validate($rules)) return $this->fail($this->validator->getErrors());
-        $model = new UserModel();
-        $user = $model->where("email", $this->request->getVar('email'))->first();
-        if(!$user) return $this->failNotFound('Email Not Found');
- 
-        $verify = password_verify($this->request->getVar('password'), $user['password']);
-        if(!$verify) return $this->fail('Wrong Password');
- 
-        $key = getenv('TOKEN_SECRET');
-        $payload = array(
-            "iat" => 1356999524,
-            "nbf" => 1357000000,
-            "uid" => $user['id'],
-            "email" => $user['email']
-        );
- 
-        $token = JWT::encode($payload, $key);
- 
-        return $this->respond($token);
+        helper('url', 'session');
+    }
+
+
+    public function index(){
+
+        $apiModel = new UserModel();
+        $data = $apiModel->orderBy('emp_id', 'DESC')->findAll();
+        return $this->respond($data);        
+    }
+
+    public function login(){
+        $data = [];
+
+        if ($this->request->getMethod() == 'post') {
+
+            $rules = [
+                'email' => 'required|min_length[6]|max_length[50]|valid_email',
+                'password' => 'required|min_length[8]|max_length[255]|validateUser[email,password]',
+            ];
+
+            $errors = [
+                'password' => [
+                    'validateUser' => "Email or Password don't match",
+                ],
+            ];
+            
+            $email    = $this->request->getVar('email');
+            $password = $this->request->getVar('password');
+            
+            if (empty($email) || empty($password)) {
+                return view('index', [
+                    "validation" => $this->validator,
+                ]);
+            }else{
+                $model = new UserModel();
+                $user = $model->where('personal_email', $email)->first();
+                
+                if(!empty($user)){
+                    if(!password_verify($password, $user['password'])) {
+                        //$this->setUserSession($user);
+                        //Redirecting to dashboard after login
+                        $data['status']  = "success";
+                        $data['message'] = "Login successfully.";
+                        return $this->respond($data); 
+                    }else{
+                        $data['status'] = "failed";
+                        $data['message'] = "Authencation failed, wrong credential.";
+                        return $this->respond($data); 
+                    }
+                }else{
+                    $data['status'] = "failed";
+                    $data['type'] = "email";
+                    $data['message'] = "Your email id don't not exists.";
+                    return $this->respond($data); 
+                }
+            }
+        }
+        return view('index');
     }
 
     /**
@@ -66,7 +102,31 @@ class Login extends ResourceController
      */
     public function create()
     {
-        //
+        $model = new UserModel();
+        $data = [
+            'full_name' => $this->request->getVar('fullName'),
+            'designation'  => $this->request->getVar('designation'),
+            'personal_email'  => $this->request->getVar('personalEmail'),
+            'office_number'  => $this->request->getVar('officeNumber'),
+            'personal_number'  => $this->request->getVar('personalumber'),
+            'designation'  => $this->request->getVar('designation'),
+            'designation'  => $this->request->getVar('designation'),
+            'designation'  => $this->request->getVar('designation'),
+            'designation'  => $this->request->getVar('designation'),
+        ];
+        echo "<pre>";
+        print_r($data);
+        exit;
+        $model->insert($data);
+        $response = [
+            'status'   => 201,
+            'error'    => null,
+            'messages' => [
+                'success' => 'Employee created successfully'
+            ]
+        ];
+        return $this->respondCreated($response);
+
     }
 
     /**

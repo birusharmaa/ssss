@@ -46,7 +46,8 @@ $routes->put('user/(:segment)',      'users::update/$1');
 $routes->patch('user/(:segment)',    'users::update/$1');
 $routes->delete('user/(:segment)',   'users::delete/$1');
 
-$routes->get('login', 'Login::index');
+$routes->post('login', 'Login::login');
+$routes->post('register', 'Login::create');
 
 
 /*
