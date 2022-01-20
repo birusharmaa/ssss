@@ -1,11 +1,10 @@
 :root {
-	--brand: #ff9000;
 	--accent: #00a3e0;
 }
 .btn-brand {
-	background-color: var(--brand);
+	background-color: var(--primary);
 	color: var(--white);
-	border-color: var(--brand);
+	border-color: var(--primary);
 	&:hover {
 		opacity: 0.8;
 	}
@@ -33,7 +32,7 @@ label.is-invalid {
 .card {
 	&.card-widgit {
 		background: linear-gradient(85deg, var(--accent), var(--blue));
-		color: #ffffff;
+		color: var(--white);
 	}
 }
 .auth {
