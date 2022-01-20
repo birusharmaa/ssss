@@ -34,6 +34,21 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Home::index');
 $routes->get('/dashboard', 'Dashboard::index');
 
+$routes->resource('photos');
+
+// Equivalent to the following:
+$routes->get('user/new',             'users::new');
+$routes->post('user',                'users::create');
+$routes->get('user',                 'users::index');
+$routes->get('user/(:segment)',      'users::show/$1');
+$routes->get('user/(:segment)/edit', 'users::edit/$1');
+$routes->put('user/(:segment)',      'users::update/$1');
+$routes->patch('user/(:segment)',    'users::update/$1');
+$routes->delete('user/(:segment)',   'users::delete/$1');
+
+$routes->get('login', 'Login::index');
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
