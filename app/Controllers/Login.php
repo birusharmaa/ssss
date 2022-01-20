@@ -43,7 +43,6 @@ class Login extends ResourceController
             
             $email    = $this->request->getVar('email');
             $password = $this->request->getVar('password');
-            
             if (empty($email) || empty($password)) {
                 return view('index', [
                     "validation" => $this->validator,
@@ -53,8 +52,15 @@ class Login extends ResourceController
                 $user = $model->where('personal_email', $email)->first();
                 
                 if(!empty($user)){
-                    if(!password_verify($password, $user['password'])) {
-                        $this->setUserSession($user);
+
+                    if(password_verify($password, $user['password'])) {
+                        $session = \Config\Services::session();
+                        $session->set("userdata", array(
+                            "full_name" => $user['full_name'],
+                            "emp_id"    => $user['emp_id'],
+                            "email"     => $user['personal_email']
+                        ));
+                        //$this->setUserSession($user);
                         //Redirecting to dashboard after login
                         $data['status']  = "success";
                         $data['message'] = "Login successfully.";
