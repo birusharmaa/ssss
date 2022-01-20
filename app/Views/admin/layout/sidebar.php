@@ -113,5 +113,11 @@
         <span class="menu-title">Transactions</span>
       </a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">
+        <i class="fas fa-cog menu-icon"></i>
+        <span class="menu-title">Settings</span>
+      </a>
+    </li>
   </ul>
 </nav>
