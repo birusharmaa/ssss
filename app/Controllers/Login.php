@@ -50,21 +50,6 @@ class Login extends ResourceController
             //Get field value
             $email    = $this->request->getVar('email');
             $password = $this->request->getVar('password');
-            //$email = "";
-
-            // if (!$this->validate($rules, $messages)) {
-            //     $response = [
-            //         'status' => 500,
-            //         'error' => true,
-            //         'message' => $this->validator->getErrors(),
-            //         'data' => []
-            //     ];
-            //     return $this->respond($response); 
-            //     exit;
-            // } else {
-            //     echo "sss"
-            //     exit;
-            // }
 
             //Check field are empty or not
             if (empty($email) || empty($password)) {
