@@ -52,7 +52,6 @@ class Login extends ResourceController
                 $user = $model->where('personal_email', $email)->first();
                 
                 if(!empty($user)){
-
                     if(password_verify($password, $user['password'])) {
                         $session = \Config\Services::session();
                         $session->set("userdata", array(
