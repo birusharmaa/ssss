@@ -62,7 +62,6 @@
                       Collection
                     </p>
                     <h2>7500</h2>
-                    <!-- <label class="badge badge-outline-danger badge-pill">16% decrease</label> -->
                   </div>
                 </div>
               </div>
