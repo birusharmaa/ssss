@@ -75,10 +75,10 @@
                     type : 'POST',
                     data : $('#loginForm').serialize(),
                     beforeSend: function (response) {
-                    },
+                    }, 
                     success: function (data) {
                         if(data.status=="success"){
-                            location.href="dashboard";
+                            location.href = "auth";
                         }else{
                             if(data.type=="email"){
                                 $("#email").addClass('is-invalid');

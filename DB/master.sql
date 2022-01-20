@@ -1,3 +1,5 @@
+/****   20-Jan-2022 Added biru ****/
+
 CREATE TABLE `xla_users` (
   `emp_id` int(11) NOT NULL,
   `full_name` varchar(100) NOT NULL,

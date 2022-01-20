@@ -12,64 +12,108 @@ class Login extends ResourceController
      * @return mixed
      */
 
-    public function __construct()
-    {
-        helper('url', 'session');
+    public function __construct(){
+        helper('url');
     }
 
 
     public function index(){
-
         $apiModel = new UserModel();
         $data = $apiModel->orderBy('emp_id', 'DESC')->findAll();
         return $this->respond($data);        
     }
 
+    //User login check
     public function login(){
         $data = [];
 
-        if ($this->request->getMethod() == 'post') {
-
+        //Check if request type is post
+        if ($this->request->getMethod() == 'post'){
+            
+            //Add field rules
             $rules = [
                 'email' => 'required|min_length[6]|max_length[50]|valid_email',
                 'password' => 'required|min_length[8]|max_length[255]|validateUser[email,password]',
             ];
-
-            $errors = [
-                'password' => [
-                    'validateUser' => "Email or Password don't match",
+            
+            $messages = [
+                "name" => [
+                    "required" => "Name is required"
+                ],
+                "email" => [
+                    "required" => "Email required",
+                    "valid_email" => "Email address is not in format",
+                    "is_unique" => "Email address already exists"
                 ],
             ];
             
+            //Get field value
             $email    = $this->request->getVar('email');
             $password = $this->request->getVar('password');
+            //$email = "";
+
+            // if (!$this->validate($rules, $messages)) {
+            //     $response = [
+            //         'status' => 500,
+            //         'error' => true,
+            //         'message' => $this->validator->getErrors(),
+            //         'data' => []
+            //     ];
+            //     return $this->respond($response); 
+            //     exit;
+            // } else {
+            //     echo "sss"
+            //     exit;
+            // }
+
+            //Check field are empty or not
             if (empty($email) || empty($password)) {
                 return view('index', [
                     "validation" => $this->validator,
                 ]);
             }else{
+
                 $model = new UserModel();
                 $user = $model->where('personal_email', $email)->first();
-                
+
+                //Check email is exists or not
                 if(!empty($user)){
+                    
+                    //password verify
                     if(password_verify($password, $user['password'])) {
+                        
+                        //Session declaration and store
                         $session = \Config\Services::session();
-                        $session->set("userdata", array(
-                            "full_name" => $user['full_name'],
-                            "emp_id"    => $user['emp_id'],
-                            "email"     => $user['personal_email']
-                        ));
-                        //$this->setUserSession($user);
-                        //Redirecting to dashboard after login
+                        $newdata = [
+                            "emp_id"            => $user['emp_id'],
+                            'full_name'         => $user['full_name'],
+                            'email'             => $user['personal_email'],
+                            "designation"       => $user['designation'],
+                            "office_number"     => $user['office_number'],
+                            "personal_number"   => $user['personal_number'],
+                            "picture_attachment"=> $user['picture_attachment'],
+                            "account_name"      => $user['account_name'],
+                            "location"          => $user['location'],
+                            "key"               => $user['key'],
+                            'logged_in'         => true
+                            
+                        ];
+                        $session->set($newdata);
+
+                        //Set success message
                         $data['status']  = "success";
                         $data['message'] = "Login successfully.";
                         return $this->respond($data); 
                     }else{
+                        
+                        //Set wrong password message
                         $data['status'] = "failed";
                         $data['message'] = "Authencation failed, wrong credential.";
                         return $this->respond($data); 
                     }
                 }else{
+
+                    //Email does not exists
                     $data['status'] = "failed";
                     $data['type'] = "email";
                     $data['message'] = "Your email id don't not exists.";
@@ -77,7 +121,7 @@ class Login extends ResourceController
                 }
             }
         }
-        return view('index');
+        return view('admin/login/index');
     }
 
     /**
