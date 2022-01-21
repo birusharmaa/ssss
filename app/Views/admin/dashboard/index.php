@@ -87,7 +87,7 @@
               ),
               array(
                 'title'=>'Revenue',
-                'count'=>'<i class="fas fa-rupee-sign"></i> 234778',
+                'count'=>'<i class="fas fa-rupee-sign"></i> 2,34,778',
               ),
               array(
                 'title'=>'Admission',
