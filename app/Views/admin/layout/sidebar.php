@@ -10,7 +10,10 @@
             SarTia Global
           </p>
           <p class="designation">
-            Super Admin
+            demo@sartiaglobal.com
+          </p>
+          <p class="designation">
+            Sartia's Laptop
           </p>
         </div>
       </div>
