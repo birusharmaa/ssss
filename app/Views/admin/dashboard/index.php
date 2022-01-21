@@ -54,15 +54,63 @@
             </div>
           </div>
           <div class="row grid-margin">
-            <?php for($i=1; $i<=10; $i++) {?>
+            <?php 
+            
+            $card= array(
+              array(
+                'title'=>"Today's Leads",
+                'count'=>'10',
+              ),
+              array(
+                'title'=>'Pending Leads',
+                'count'=>'85',
+              ),
+              array(
+                'title'=>'Next Week Lead',
+                'count'=>'24',
+              ),
+              array(
+                'title'=>'This Month Lead',
+                'count'=>'100',
+              ),
+              array(
+                'title'=>'Touched',
+                'count'=>'24',
+              ),
+              array(
+                'title'=>'Untouched',
+                'count'=>'100',
+              ),
+              array(
+                'title'=>'Business',
+                'count'=>'456320',
+              ),
+              array(
+                'title'=>'Revenue',
+                'count'=>'<i class="fas fa-rupee-sign"></i> 2,34,778',
+              ),
+              array(
+                'title'=>'Admission',
+                'count'=>'9',
+              ),
+              array(
+                'title'=>'Collection',
+                'count'=>'21000',
+              ),
+            );
+
+            foreach($card as $c)
+            {?>
             <div class="col-md-3 mt-2">
               <div class="card card-widgit">
                 <div class="card-body">
                   <div class="statistics-item">
                     <p>
-                      Collection
+                      <?php echo $c['title']; ?>
                     </p>
-                    <h2>7500</h2>
+                    <h2>
+                      <?php echo $c['count']; ?>
+                    </h2>
                   </div>
                 </div>
               </div>
