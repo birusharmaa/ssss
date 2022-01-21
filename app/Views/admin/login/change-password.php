@@ -75,9 +75,13 @@
                             $("#confPassword").addClass('valid');
                             $("#confPassword").parent().append('<label id="password-error" class="text-success" for="password">'+data.message+'</label>');
                             $('button[type="submit"]').attr('disabled','disabled');
-                        }else{
+                        }
+                    }, 
+                    error:function(response, data){
+                        $('button[type="submit"]').text('Change Password');
+                        if(response.responseJSON.messages.status=="failed"){
                             $("#confPassword").addClass('is-invalid');
-                            $("#confPassword").parent().append('<label id="password-error" class="is-invalid" for="password">'+data.message+'</label>');
+                            $("#confPassword").parent().append('<label id="password-error" class="is-invalid" for="password">'+response.responseJSON.messages.message+'</label>');
                         }
                     }
                 });

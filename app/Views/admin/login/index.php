@@ -77,16 +77,18 @@
                     beforeSend: function (response) {
                     }, 
                     success: function (data) {
+                        console.log(data.status);
                         if(data.status=="success"){
                             location.href = "auth";
+                        }
+                    },
+                    error:function(response, data){
+                        if(response.responseJSON.messages.type=="email"){
+                            $("#email").addClass('is-invalid');
+                            $("#email").parent().append('<label id="password-error" class="is-invalid" for="password">'+response.responseJSON.messages.message+'</label>');
                         }else{
-                            if(data.type=="email"){
-                                $("#email").addClass('is-invalid');
-                                $("#email").parent().append('<label id="password-error" class="is-invalid" for="password">'+data.message+'</label>');
-                            }else{
-                                $("#password").addClass('is-invalid');
-                                $("#password").parent().append('<label id="password-error" class="is-invalid" for="password">'+data.message+'</label>');
-                            }
+                            $("#password").addClass('is-invalid');
+                            $("#password").parent().append('<label id="password-error" class="is-invalid" for="password">'+response.responseJSON.messages.message+'</label>');
                         }
                     }
                 });

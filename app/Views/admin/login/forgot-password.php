@@ -52,6 +52,7 @@
 
             submitHandler: function (form) { // for demo
                 $('button[type="submit"]').text('Processing..');
+                $('button[type="submit"]').attr('disabled',true);
                 $.ajax({
                     url: "reset-password",
                     type : 'POST',
@@ -64,9 +65,14 @@
                             $("#email").addClass('valid');
                             $("#email").parent().append('<label id="password-error" class="text-success" for="password">'+data.message+'</label>');
                             $('button[type="submit"]').attr('disabled','disabled');
-                        }else{
+                        }
+                    },
+                    error:function(response, data){
+                        $('button[type="submit"]').attr('disabled',false);
+                        $('button[type="submit"]').text('Forgot Password');
+                        if(response.responseJSON.messages.status=="failed"){
                             $("#email").addClass('is-invalid');
-                            $("#email").parent().append('<label id="password-error" class="is-invalid" for="password">'+data.message+'</label>');
+                            $("#email").parent().append('<label id="password-error" class="is-invalid" for="password">'+response.responseJSON.messages.message+'</label>');
                         }
                     }
                 });

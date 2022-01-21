@@ -8,6 +8,10 @@ use App\Controllers\BaseController;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+use CodeIgniter\Cookie\Cookie;
+use CodeIgniter\Cookie\CookieStore;
+use Config\Services;
+
 class Login extends ResourceController
 {
     /**
@@ -92,21 +96,35 @@ class Login extends ResourceController
                         $session->set($newdata);
 
                         if($remember=="on"){
-                            // helper("cookie");
-                            // echo "sss";
-                            // // exit;
-                            // // $cookie = array(
-                            // //     'name'   => 'remember_me_token',
-                            // //     'value'  => '4c99e2ce09b0a8e7d2122ff5a16b0842',
-                            // //     //'expire' => '1209600',  // Two weeks
-                            // //     'expire' => '29030400',  // one year
-                            // //     'domain' => '',
-                            // //     'path'   => '/'
+                            $time = time();
+
+                            //One year time
+                            $time = $time+31536000;
+
+                            // // $cookie = new Cookie(
+                            // //     'remember_token',
+                            // //     'f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6',
+                            // //     [
+                            // //         'expires'  => $time,
+                            // //         'prefix'   => '__Secure-',
+                            // //         'path'     => '/',
+                            // //         'domain'   => '',
+                            // //         'secure'   => true,
+                            // //         'httponly' => true,
+                            // //         'raw'      => false,
+                            // //         'samesite' => Cookie::SAMESITE_LAX,
+                            // //     ]
                             // // );
-                            // // set_cookie($cookie);
-                            // set_cookie('cookie_name','cookie_value','3600'); 
-                            // echo get_cookie('cookie_name')." = "."avc";
-                            // die();
+
+                            // helper("cookie");
+
+                            // // store a cookie value
+                            // set_cookie('code','Learn CodeIgniter at Tutorials and Examples','+3600');
+                            // echo "<h3> Cookie has been saved successfully. </h3>";  
+
+                            // // get cookie value
+                            // echo get_cookie("sartia_global");
+                            // exit;
                         }
 
                         //Set success message
@@ -114,11 +132,10 @@ class Login extends ResourceController
                         $data['message'] = "Login successfully.";
                         return $this->respond($data); 
                     }else{
-                        
                         //Set wrong password message
                         $data['status'] = "failed";
                         $data['message'] = "Authencation failed, wrong credential.";
-                        return $this->respond($data); 
+                        return $this->fail($data); 
                     }
                 }else{
 
@@ -126,7 +143,7 @@ class Login extends ResourceController
                     $data['status'] = "failed";
                     $data['type'] = "email";
                     $data['message'] = "Your email id don't not exists.";
-                    return $this->respond($data); 
+                    return $this->fail($data); 
                 }
             }
         }
@@ -193,7 +210,7 @@ class Login extends ResourceController
                         if(!$mail->send()) {
                             $data['status'] = "failed";
                             $data['message'] = "Something went wrong. Please try again.";
-                            return $this->respond($data);
+                            return $this->fail($data);
                         }
                         else {
                             $apiModel = new UserModel();
@@ -210,7 +227,7 @@ class Login extends ResourceController
                         $data['type'] = "email";
                         $data['message'] = "Your email id don't not exists.";
                         //echo json_encode($data);
-                        return $this->respond($data);
+                        return $this->fail($data);
                     }
                     
                 }else{
@@ -220,7 +237,7 @@ class Login extends ResourceController
                     $data['type'] = "email";
                     $data['message'] = "Your email id don't not exists.";
                     //echo json_encode($data);
-                    return $this->respond($data); 
+                    return $this->fail($data); 
                 }
             }
         }
@@ -307,18 +324,17 @@ class Login extends ResourceController
                         $data['message'] = "Password updated successfully.";
                         return $this->respond($data); 
                     }else{
-                        
                         //Set wrong password message
                         $data['status'] = "failed";
                         $data['message'] = "Password update unsuccessfully.";
-                        return $this->respond($data); 
+                        return $this->fail($data); 
                     }
                 }else{
 
                     //Email does not exists
                     $data['status'] = "failed";
                     $data['message'] = "You already updated your password.";
-                    return $this->respond($data); 
+                    return $this->fail($data); 
                 }
             }
         }
