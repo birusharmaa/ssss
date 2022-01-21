@@ -11,6 +11,7 @@ class UserModel extends Model
       'full_name', 
       'designation',
       'personal_email',
+      'password',
       'office_number',
       'personal_number',
       'picture_attachment',

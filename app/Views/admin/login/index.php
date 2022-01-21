@@ -34,11 +34,11 @@
                                 <div class="my-2 d-flex justify-content-between align-items-center">
                                     <div class="form-check">
                                         <label class="form-check-label text-muted">
-                                            <input type="checkbox" class="form-check-input">
+                                            <input type="checkbox" class="form-check-input" id="remember" name="remember" />
                                             Keep me signed in
                                         </label>
                                     </div>
-                                    <a href="#" class="auth-link text-black">Forgot password?</a>
+                                    <a href="<?=base_url();?>/forgot-password" class="auth-link text-black">Forgot password?</a>
                                 </div>
                             </form>
                         </div>

@@ -25,5 +25,11 @@ class Users extends BaseController
         return redirect()->to('/');
     }
 
+    public function forgotPassword(){
+        return view('admin/login/forgot-password');
+    }
+
+
+
 }
 ?>

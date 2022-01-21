@@ -4,6 +4,10 @@ use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\UserModel;
 
+use App\Controllers\BaseController;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class Login extends ResourceController
 {
     /**
@@ -13,7 +17,7 @@ class Login extends ResourceController
      */
 
     public function __construct(){
-        helper('url');
+        helper('url', 'cookie');
     }
 
 
@@ -50,7 +54,9 @@ class Login extends ResourceController
             //Get field value
             $email    = $this->request->getVar('email');
             $password = $this->request->getVar('password');
-
+            $remember = "";
+            $remember = $this->request->getVar('remember');
+            
             //Check field are empty or not
             if (empty($email) || empty($password)) {
                 return view('index', [
@@ -85,6 +91,24 @@ class Login extends ResourceController
                         ];
                         $session->set($newdata);
 
+                        if($remember=="on"){
+                            // helper("cookie");
+                            // echo "sss";
+                            // // exit;
+                            // // $cookie = array(
+                            // //     'name'   => 'remember_me_token',
+                            // //     'value'  => '4c99e2ce09b0a8e7d2122ff5a16b0842',
+                            // //     //'expire' => '1209600',  // Two weeks
+                            // //     'expire' => '29030400',  // one year
+                            // //     'domain' => '',
+                            // //     'path'   => '/'
+                            // // );
+                            // // set_cookie($cookie);
+                            // set_cookie('cookie_name','cookie_value','3600'); 
+                            // echo get_cookie('cookie_name')." = "."avc";
+                            // die();
+                        }
+
                         //Set success message
                         $data['status']  = "success";
                         $data['message'] = "Login successfully.";
@@ -108,6 +132,199 @@ class Login extends ResourceController
         }
         return view('admin/login/index');
     }
+
+    public function resetPassword(){
+
+        if ($this->request->getMethod() == 'post'){
+            //Add field rules
+            $rules = [
+                'email' => 'required|min_length[6]|max_length[50]|valid_email',
+            ];
+            
+            $messages = [
+                "email" => [
+                    "required" => "Email required",
+                    "valid_email" => "Email address is not in format",
+                    "is_unique" => "Email address already exists"
+                ],
+            ];
+            
+            //Get field value
+            $email    = $this->request->getVar('email');
+
+            //Check field are empty or not
+            if (empty($email)) {
+                return view('index', [
+                    "validation" => $this->validator,
+                ]);
+            }else{
+
+                $model = new UserModel();
+                $user = $model->where('personal_email', $email)->first();
+
+                //Check email is exists or not
+                if(!empty($user)){
+                    $random_number      = rand(999999999,9999999999);
+                    $random_number      = md5($random_number);
+
+                    $mail = new PHPMailer(true);  
+                    try {    
+                        $mail->isSMTP();  
+                        $mail->Host         = 'smtp.gmail.com'; //smtp.google.com
+                        $mail->SMTPAuth     = true;     
+                        $mail->Username     = 'urjasofttest@gmail.com';  
+                        $mail->Password     = 'Urja@1234';
+                        $mail->SMTPSecure   = 'tls';  
+                        $mail->Port         = 587;  
+                        $mail->Subject      = "Forgot password link.";
+
+                        $mail_message = 'Dear '.$user['full_name'].','. "\r\n";
+                        $mail_message.='<br/>To reset your password, please click the following'."\r\n";
+                        $mail_message.='<br/><a href="'.base_url().'/Login/changePassword/'.$random_number.'" style="margin-top:30px;margin-botton:30px;font-size:16px;line-height:20px;font-weight:700;color:#ffffff;background-color:#f49b28;font-style:normal;text-decoration:none;letter-spacing:0px;padding:15px 35px 15px 35px;display:inline-block" target="_blank">
+                            <span align="center">RESET PASSWORD</span>
+                        </a>';
+                        $mail_message.='<br/><br/>Thanks & Regards';
+                        $mail_message.='<br>Your company name';
+                        $mail->Body         = $mail_message;
+                        $mail->setFrom('urjasofttest@gmail.com', 'Demo User');
+                        
+                        $mail->addAddress($email);  
+                        $mail->isHTML(true);
+                        if(!$mail->send()) {
+                            $data['status'] = "failed";
+                            $data['message'] = "Something went wrong. Please try again.";
+                            return $this->respond($data);
+                        }
+                        else {
+                            $apiModel = new UserModel();
+                            // $apiModel->where('personal_email', $email)->first();
+                            // $apiModel->update('key', $random_number);
+                            $apiModel->where('personal_email', $email)->set('key', $random_number)->update();
+
+                            $data['status'] = "success";
+                            $data['message'] = "We have sent you email for reset your password! Please check your email.";
+                            return $this->respond($data);
+                        }
+                    }catch(Exception $e) {
+                        $data['status'] = "failed";
+                        $data['type'] = "email";
+                        $data['message'] = "Your email id don't not exists.";
+                        //echo json_encode($data);
+                        return $this->respond($data);
+                    }
+                    
+                }else{
+
+                    //Email does not exists
+                    $data['status'] = "failed";
+                    $data['type'] = "email";
+                    $data['message'] = "Your email id don't not exists.";
+                    //echo json_encode($data);
+                    return $this->respond($data); 
+                }
+            }
+        }
+        return view('admin/login/forgot-password');
+    }
+
+    public function changePassword($token = null){
+        if(empty($token)){
+            return redirect()->to('/');
+        }else{
+            $model = new UserModel();
+            $user = $model->where('key', $token)->first();
+            //Check email is exists or not
+            if(!empty($user)){
+                $session = \Config\Services::session();
+                $newdata = [
+                    "change-password" => "Yes",
+                    "token"           => $token,
+                    "id"              => $user['emp_id']
+                ];
+                $session->set($newdata);
+                return redirect()->to('/change-password');
+            }else{
+                return redirect()->to('/');
+            }
+        }
+    }
+
+    public function passwordChange($t = null){
+        $session = \Config\Services::session();
+        if($session->get('change-password')=="Yes"){
+            $token = $session->get('token');
+            return view('admin/login/change-password');
+        }else{
+            $session->remove('change-password');
+            $session->remove('token');
+            return redirect()->to('/');
+        }
+    }
+
+    public function savePassword(){
+        if ($this->request->getMethod() == 'post'){
+
+            $rules = [
+                'password' => 'required|min_length[5]|max_length[255]|validateUser[password]',
+                'confPassword' => 'required|min_length[5]|max_length[255]|validateUser[confPassword]',
+            ];
+            
+            $messages = [
+                "email" => [
+                    "required" => "Email required",
+                    "valid_email" => "Email address is not in format",
+                ],
+            ];
+            
+            //Get field value
+            $conf_password    = $this->request->getVar('confPassword');
+            $password         = $this->request->getVar('password');
+
+
+            //Check field are empty or not
+            if (empty($conf_password) || empty($password)) {
+                return view('index', [
+                    "validation" => $this->validator,
+                ]);
+            }else{
+                $session = \Config\Services::session();
+                $token = "";
+                if($session->get('change-password')=="Yes"){
+                    $token = $session->get('token');
+
+                    $model = new UserModel();
+                    $user = $model->where('key', $token)->first();
+
+                    //Check email is exists or not                    
+                    if(!empty($user)){
+                        $session->remove("change-password");
+                        //Set success message
+                        $encrypt_password = password_hash($password, PASSWORD_DEFAULT);
+                        $key  = $model->where('emp_id', $user['emp_id'])->set('key', '')->update();
+                        $pass = $model->where('emp_id', $user['emp_id'])->set('password', $encrypt_password)->update();
+                        
+                        $data['status']  = "success";
+                        $data['message'] = "Password updated successfully.";
+                        return $this->respond($data); 
+                    }else{
+                        
+                        //Set wrong password message
+                        $data['status'] = "failed";
+                        $data['message'] = "Password update unsuccessfully.";
+                        return $this->respond($data); 
+                    }
+                }else{
+
+                    //Email does not exists
+                    $data['status'] = "failed";
+                    $data['message'] = "You already updated your password.";
+                    return $this->respond($data); 
+                }
+            }
+        }
+        return view('admin/login/change-password');
+    }
+
 
     /**
      * Return the properties of a resource object

@@ -49,6 +49,11 @@ $routes->delete('user/(:segment)',   'users::delete/$1');
 $routes->post('login', 'Login::login');
 $routes->get('auth', 'Users::index');
 $routes->get('logout', 'Users::logout');
+$routes->get('forgot-password', 'Users::forgotPassword');
+$routes->post('reset-password', 'Login::resetPassword');
+$routes->get('change-password', 'Login::passwordChange');
+$routes->post('change-password', 'Login::savePassword');
+
 $routes->post('register', 'Login::create');
 
 
