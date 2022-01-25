@@ -58,7 +58,7 @@ $routes->post('change-password', 'Login::savePassword');
 
 $routes->post('register', 'Login::create');
 
-$routes->group('api', function ($routes) {
+$routes->group('api', ["filter" => "myauth"], function ($routes) {
     $routes->post('dashboad', 'api/Admin::dashBoardData');
     $routes->put('setting', 'api/Admin::updateSetting');
     $routes->get('users', 'api/Admin::allusers');
