@@ -20,4 +20,12 @@ class UserModel extends Model
       'location',
       'key'
     ];
+    
+    public function updateImage($id,$data){
+      $db = \Config\Database::connect();
+      $builder = $db->table($this->table);
+      $builder->set($data);
+      $builder->where('emp_id', $id);
+      return $builder->update();
+  }
 }

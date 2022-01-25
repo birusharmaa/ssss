@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\UserModel;
+
 
 class Users extends BaseController
 {   
@@ -11,8 +13,11 @@ class Users extends BaseController
     //Check user login or not
     public function index(){
         $session = \Config\Services::session();
+       
         if($session->get('emp_id')){
-            return view('admin/dashboard/index');
+            $Model = new UserModel();
+            $user = $Model->where(['isAdmin' => 0])->findAll();            
+            echo view('admin/dashboard/index',array('user' => $user));
         }else{
             return view('admin/login/index');
         }

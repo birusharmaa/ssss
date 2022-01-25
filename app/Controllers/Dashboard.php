@@ -9,4 +9,10 @@ class Dashboard extends BaseController
         return view('admin/dashboard/index');
         //my changes
     }
+
+    Public function search()
+    {   
+        return view('admin/dashboard/index');
+        //my changes
+    }
 }

@@ -18,15 +18,17 @@
             <h3 class="page-title">
               Dashboard
             </h3>
-          </div>
+          </div>      
+
           <div class="row">
             <div class="col-md-3 mt-2">
               <div class="form-group">
-                <label for="">User</label>
-                <select name="" id="" class="form-control">
-                  <option value="">Name</option>
-                  <option value="">Name</option>
-                  <option value="">Name</option>
+                <label>User</label>
+                <select name="emp_id" id="emp_id_val" class="form-control">
+                  <option>--select--</option>
+                  <?php if($user): foreach($user as $val):?>
+                  <option value="<?php echo $val['emp_id'];?>"><?php echo $val['full_name']; ?></option>                  
+                  <?php endforeach; endif;?>
                 </select>
               </div>
             </div>
@@ -125,3 +127,10 @@
   <?php include __DIR__ . '/../layout/jsLinks.php'; ?>
 </body>
 </html>
+
+<script>
+  $("#emp_id_val").change(function(){
+    var id = $('#emp_id_val').val(); 
+  alert("The text has been changed. :- "+id);
+});
+</script>

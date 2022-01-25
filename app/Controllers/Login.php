@@ -33,8 +33,8 @@ class Login extends ResourceController
 
     //User login check
     public function login(){
-        $data = [];
-
+        $data = [];       
+       
         //Check if request type is post
         if ($this->request->getMethod() == 'post'){
             
