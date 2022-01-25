@@ -6,6 +6,10 @@ function loadAllUses() {
     $.ajax
         ({
             type: "Get",
+            headers: {
+                'email':'demo@gmail.com',
+                'password':'12345',  
+            },
             url: url,
             success: function (data) {
                 updateUserSelect(data.data)
@@ -46,6 +50,10 @@ function loadDashBordData(formData = null) {
     $.ajax
         ({
             type: "post",
+            headers: {
+                'email':'demo@gmail.com',
+                'password':'12345',  
+            },
             url: url,
             data: formData,
             success: function (data) {
@@ -127,6 +135,10 @@ $(function () {
             let message = '';
             $.ajax({
                 type: "PUT",
+                headers: {
+                    'email':'demo@gmail.com',
+                    'password':'12345',  
+                },
                 url: url,
                 data: formData,
                 success: function (data) {
