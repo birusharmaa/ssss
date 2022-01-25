@@ -6,22 +6,31 @@ class Users extends BaseController
 {   
     public function __construct(){
         helper('url');
+        $session = \Config\Services::session();
+        if(!$session->get('emp_id')){
+            return view('admin/login/index');
+        }
+      
     }
+    
+    /**
+     * 
+     */
+
+     public function settingPage()
+     {
+        $pageData = ['pageTitle'=>'XLAcademy Admin', 'pageHeading'=>'Setting'];
+        return view('admin/dashboard/setting',$pageData);
+     }
 
     //Check user login or not
     public function index(){
-        $session = \Config\Services::session();
-        if($session->get('emp_id')){
             return view('admin/dashboard/index');
-        }else{
-            return view('admin/login/index');
-        }
     }
 
     //Logout function for session destroy
     public function logout(){
-        $session = \Config\Services::session();
-        $session->destroy();
+        session_destroy();
         return redirect()->to('/');
     }
 
@@ -32,4 +41,3 @@ class Users extends BaseController
 
 
 }
-?>

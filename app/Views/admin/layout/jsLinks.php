@@ -1,3 +1,6 @@
+<script>
+    const BaseUrl = '<?= base_url()?>';
+</script>
 <script src="<?=base_url();?>/assets/vendors/js/vendor.bundle.base.js"></script>
 <script src="<?=base_url();?>/assets/vendors/js/vendor.bundle.addons.js"></script>
 <script src="<?=base_url();?>/assets/js/off-canvas.js"></script>

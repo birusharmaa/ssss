@@ -35,9 +35,10 @@ class Login extends ResourceController
     public function login(){
         $data = [];
 
+   
         //Check if request type is post
         if ($this->request->getMethod() == 'post'){
-            
+        
             //Add field rules
             $rules = [
                 'email' => 'required|min_length[6]|max_length[50]|valid_email',
@@ -67,10 +68,8 @@ class Login extends ResourceController
                     "validation" => $this->validator,
                 ]);
             }else{
-
                 $model = new UserModel();
                 $user = $model->where('personal_email', $email)->first();
-
                 //Check email is exists or not
                 if(!empty($user)){
                     

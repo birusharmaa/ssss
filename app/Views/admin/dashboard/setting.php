@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>XLAcademy Admin</title>
+  <title><?= $pageTitle ?></title>
   <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
 </head>
 
@@ -17,42 +17,40 @@
         <div class="content-wrapper">
           <div class="page-header">
             <h3 class="page-title">
-              Dashboard
+              <?= $pageHeading ?>
             </h3>
           </div>
           <div class="row">
             <div class="col-md-3 mt-2">
               <div class="form-group">
-                <label for="">User</label>
-                <select name="user-list" id="user-list" class="form-control">
-                </select>
+                <label for="">Company Name</label>
+                <input type="text" class="form-control form-control-sm">
               </div>
             </div>
             <div class="col-md-3 mt-2">
               <div class="form-group">
-                <label for="">Source</label>
-                <select name="source-list" id="source-list" class="form-control">
-                  <option value="">Source</option>
-                  <option value="">Source</option>
-                  <option value="">Source</option>
-                </select>
+                <label for="">Company Phone</label>
+                <input type="text" class="form-control form-control-sm" name="company-phone" id="company-phone">
+              </div>
+            </div>
+            <div class="col-md-3 mt-2">
+            <div class="form-group">
+                <label for="">Company Email</label>
+                <input type="email" class="form-control form-control-sm" name="company-phone" id="company-phone">
               </div>
             </div>
             <div class="col-md-3 mt-2">
               <div class="form-group">
-                <label for="">From</label>
-                <input type="date" class="form-control form-control-sm" id="from-date">
-              </div>
-            </div>
-            <div class="col-md-3 mt-2">
-              <div class="form-group">
-                <label for="">To</label>
-                <input type="date" class="form-control form-control-sm" id="to-date">
+                <label for="company-vat-number">Company Vat Number</label>
+                <input type="text" class="form-control form-control-sm" id="company-vat-number">
               </div>
             </div>
           </div>
-          <div class="row grid-margin" id="widget-container">
-            
+        
+          <div class="row grid-margin" id="setting-page">
+            <section>
+
+            </section>
           </div>
         </div>
         <?php include __DIR__ . '/../layout/footer.php'; ?>

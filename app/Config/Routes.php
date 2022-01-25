@@ -36,6 +36,8 @@ $routes->get('/dashboard', 'Dashboard::index');
 
 $routes->resource('photos');
 
+$routes->post('settings', 'users::settingPage');
+
 // Equivalent to the following:
 $routes->get('user/new',             'users::new');
 $routes->post('user',                'users::create');
@@ -55,6 +57,13 @@ $routes->get('change-password', 'Login::passwordChange');
 $routes->post('change-password', 'Login::savePassword');
 
 $routes->post('register', 'Login::create');
+
+$routes->get('api/users', 'api/Admin::allusers');
+
+$routes->post('api/dashboad', 'api/Admin::dashBoardData');
+$routes->put('api/setting', 'api/Admin::updateSetting');
+
+// 
 
 
 /*

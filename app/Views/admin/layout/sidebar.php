@@ -117,7 +117,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="<?=base_url('users/settingpage');?>">
         <i class="fas fa-cog menu-icon"></i>
         <span class="menu-title">Settings</span>
       </a>

@@ -71,13 +71,13 @@
 
             submitHandler: function (form) { // for demo
                 $.ajax({
-                    url: "login",
+                    url: BaseUrl+"/login",
                     type : 'POST',
                     data : $('#loginForm').serialize(),
                     beforeSend: function (response) {
                     }, 
                     success: function (data) {
-                        console.log(data.status);
+                      
                         if(data.status=="success"){
                             location.href = "auth";
                         }
