@@ -129,7 +129,7 @@ class Admin extends ResourceController
                 'status'   => 404,
                 'error'    => true,
                 'messages' => [
-                    'success' => 'invalid data'
+                    'error' => 'invalid data'
                 ],
                 'data' => []
             ];
@@ -154,7 +154,7 @@ class Admin extends ResourceController
             'status'   => 200,
             'error'    => false,
             'messages' => [
-                'success' => 'Setting Updated.',
+                'success' => 'Setting successfully updated.',
             ],
             'data' => [$updatedArr]
         ];

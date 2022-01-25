@@ -20,38 +20,47 @@
               <?= $pageHeading ?>
             </h3>
           </div>
-          <div class="row">
-            <div class="col-md-3 mt-2">
-              <div class="form-group">
-                <label for="">Company Name</label>
-                <input type="text" class="form-control form-control-sm">
-              </div>
-            </div>
-            <div class="col-md-3 mt-2">
-              <div class="form-group">
-                <label for="">Company Phone</label>
-                <input type="text" class="form-control form-control-sm" name="company-phone" id="company-phone">
-              </div>
-            </div>
-            <div class="col-md-3 mt-2">
-            <div class="form-group">
-                <label for="">Company Email</label>
-                <input type="email" class="form-control form-control-sm" name="company-phone" id="company-phone">
-              </div>
-            </div>
-            <div class="col-md-3 mt-2">
-              <div class="form-group">
-                <label for="company-vat-number">Company Vat Number</label>
-                <input type="text" class="form-control form-control-sm" id="company-vat-number">
-              </div>
-            </div>
+          <div id="alertMessage">
+            
           </div>
-        
-          <div class="row grid-margin" id="setting-page">
-            <section>
+          <form id="settingForm">
+            <div class="row">
+              <div class="col-md-6 mt-2">
+                <div class="form-group">
+                  <label for="">Company Name</label>
+                  <input type="text" class="form-control form-control-sm" name="company_name" required>
+                </div>
+              </div>
+              <div class="col-md-6 mt-2">
+                <div class="form-group">
+                  <label for="">Company Phone</label>
+                  <input type="text" class="form-control form-control-sm" name="company_phone" id="company-phone" required>
+                </div>
+              </div>
+            </div>
 
-            </section>
-          </div>
+            <div class="row">
+              <div class="col-md-6 mt-2">
+                <div class="form-group">
+                  <label for="">Company Email</label>
+                  <input type="email" class="form-control form-control-sm" name="company_email" id="company-email" required>
+                </div>
+              </div>
+              <div class="col-md-6 mt-2">
+                <div class="form-group">
+                  <label for="company-vat-number">Company Vat Number</label>
+                  <input type="text" class="form-control form-control-sm" name="company_vat_number" id="company_vat_number" required>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 mt-2">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-success float-right">Save Changes</button>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
         <?php include __DIR__ . '/../layout/footer.php'; ?>
       </div>

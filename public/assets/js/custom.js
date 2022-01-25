@@ -117,4 +117,45 @@ $(function () {
     })
 
     $('#user-list').trigger("change");
+
+    $('#settingForm').on('submit', function (e) {
+        e.preventDefault();
+        let url = BaseUrl + '/api/setting';
+        let formData = $(this).serialize();
+        if (formData) {
+
+            let message = '';
+            $.ajax({
+                type: "PUT",
+                url: url,
+                data: formData,
+                success: function (data) {
+                    console.log(data.message);
+
+                    if (data.status === 200) {
+                        message = `<div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Setting!</strong> ${data.messages.success}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>`;
+                        setTimeout(() => { $('#alertMessage').html(message); }, 600);
+                    }
+                },
+                error: function (jqxhr, eception) {
+                    if (jqxhr.status == 404) {
+                        message = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Setting!</strong> ${data.messages}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>`;
+                        setTimeout(() => { $('#alertMessage').html(message); }, 600);
+                    }
+                }
+            });
+        }
+    })
+
+
 })
