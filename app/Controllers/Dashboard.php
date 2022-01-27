@@ -35,7 +35,7 @@ class Dashboard extends BaseController
      */
     public function settingPage()
     {
-        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Setting'];
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Settings'];
         $model = new SettingModel();
         $pageData['settingData'] = $model->get()->getResult('array');
         return view('admin/dashboard/settings', $pageData);
