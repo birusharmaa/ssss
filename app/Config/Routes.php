@@ -49,6 +49,8 @@ $routes->get('/', 'Home::index');
 // $routes->patch('user/(:segment)',    'users::update/$1');
 // $routes->delete('user/(:segment)',   'users::delete/$1');
 
+
+
 $routes->post('login', 'Login::login');
 $routes->get('auth', 'Users::index');
 $routes->get('logout', 'Users::logout');
@@ -64,7 +66,7 @@ $routes->post('register', 'Login::create');
  */
 $routes->group('admin', function ($routes) {
     $routes->get('dashboard', 'dashboard::index');
-    $routes->get('websetings', 'dashboard::settingPage');
+    $routes->get('websettings', 'dashboard::settingPage');
 });
 
 /**
@@ -75,6 +77,7 @@ $routes->group('api', ["filter" => "myauth"], function ($routes) {
     $routes->put('setting', 'api/Admin::updateSetting');
     $routes->get('users', 'api/Admin::allusers');
 });
+
 // 
 
 

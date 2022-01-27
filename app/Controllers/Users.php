@@ -7,9 +7,13 @@ class Users extends BaseController
 {
     public function __construct()
     {
-        helper('url');
-        $session = \Config\Services::session();
+        $session = 
+        
+        print_r($session->logged_in);
+        die('ddd');
+        
         if (!$session->get('emp_id')) {
+
             return view('admin/login/index');
         }
     }
@@ -20,7 +24,8 @@ class Users extends BaseController
         $userData = new DashboardModel();
         $pageData['users'] = $userData->allusers();
         $pageData['dashboardData'] = $userData->dashboardData();
-        return view('admin/dashboard/index', $pageData);
+        
+        return view('admin/dashboard/settings', $pageData);
     }
 
     //Logout function for session destroy

@@ -79,7 +79,7 @@
                     success: function (data) {
                       
                         if(data.status=="success"){
-                            location.href = "auth";
+                            location.href = "admin/dashboard";
                         }
                     },
                     error:function(response, data){

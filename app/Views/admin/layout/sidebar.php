@@ -3,7 +3,7 @@
     <li class="nav-item nav-profile">
       <div class="nav-link">
         <div class="profile-image">
-          <img src="<?=base_url();?>/assets/images/faces/face5.jpg" alt="image"/>
+          <img src="<?= base_url(); ?>/assets/images/faces/face5.jpg" alt="image" />
         </div>
         <div class="profile-name">
           <p class="name">
@@ -19,7 +19,7 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="<?= base_url('admin/dashboard');?>">
+      <a class="nav-link" href="<?= base_url('admin/dashboard'); ?>">
         <i class="fa fa-home menu-icon"></i>
         <span class="menu-title">Dashboard</span>
       </a>
@@ -117,10 +117,21 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="<?= base_url('admin/websetings');?>">
+      <a class="nav-link" data-toggle="collapse" href="#web-setting" aria-expanded="false" aria-controls="web-setting">
         <i class="fas fa-cog menu-icon"></i>
         <span class="menu-title">Settings</span>
+        <i class="menu-arrow"></i>
       </a>
+      <div class="collapse" id="web-setting">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item d-none d-lg-block">
+            <a class="nav-link" href="<?= base_url('admin/websettings'); ?>">General Setting </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Role & Permission </a>
+          </li>
+        </ul>
+      </div>
     </li>
   </ul>
 </nav>

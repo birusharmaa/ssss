@@ -92,6 +92,7 @@ class Login extends ResourceController
                             'logged_in'         => true
                             
                         ];
+                        
                         $session->set($newdata);
 
                         if($remember=="on"){
@@ -100,30 +101,6 @@ class Login extends ResourceController
                             //One year time
                             $time = $time+31536000;
 
-                            // // $cookie = new Cookie(
-                            // //     'remember_token',
-                            // //     'f699c7fd18a8e082d0228932f3acd40e1ef5ef92efcedda32842a211d62f0aa6',
-                            // //     [
-                            // //         'expires'  => $time,
-                            // //         'prefix'   => '__Secure-',
-                            // //         'path'     => '/',
-                            // //         'domain'   => '',
-                            // //         'secure'   => true,
-                            // //         'httponly' => true,
-                            // //         'raw'      => false,
-                            // //         'samesite' => Cookie::SAMESITE_LAX,
-                            // //     ]
-                            // // );
-
-                            // helper("cookie");
-
-                            // // store a cookie value
-                            // set_cookie('code','Learn CodeIgniter at Tutorials and Examples','+3600');
-                            // echo "<h3> Cookie has been saved successfully. </h3>";  
-
-                            // // get cookie value
-                            // echo get_cookie("sartia_global");
-                            // exit;
                         }
 
                         //Set success message
