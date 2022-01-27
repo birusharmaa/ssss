@@ -19,7 +19,8 @@
             <h3 class="page-title">
               Dashboard
             </h3>
-          </div>
+          </div>      
+
           <div class="row">
             <div class="col-md-3 mt-2">
               <div class="form-group">

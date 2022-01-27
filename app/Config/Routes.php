@@ -80,6 +80,15 @@ $routes->group('api', ["filter" => "myauth"], function ($routes) {
 
 // 
 
+$routes->post('authpass', 'AuthController::checkUser');
+
+$routes->group('profile', function ($routes) {
+    $routes->post('image_update/(:any)','ProfileController::updateImage/$1');
+    $routes->delete('image_delete/(:any)','ProfileController::deleteImage/$1');
+    $routes->put('update_password/(:any)','ProfileController::update_password/$1');
+    $routes->put('update_general/(:any)','ProfileController::update_general/$1');
+    $routes->get('search','ProfileController::search');
+});
 
 /*
  * --------------------------------------------------------------------

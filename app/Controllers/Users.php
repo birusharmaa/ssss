@@ -7,10 +7,10 @@ class Users extends BaseController
 {
     public function __construct()
     {
-        $session = 
+        $session =    $session = \Config\Services::session();
         
-        print_r($session->logged_in);
-        die('ddd');
+        // print_r($session->logged_in);
+        // die('ddd');
         
         if (!$session->get('emp_id')) {
 

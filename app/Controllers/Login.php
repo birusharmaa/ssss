@@ -92,7 +92,7 @@ class Login extends ResourceController
                             'logged_in'         => true
                             
                         ];
-                        
+
                         $session->set($newdata);
 
                         if($remember=="on"){
@@ -357,9 +357,9 @@ class Login extends ResourceController
             'designation'  => $this->request->getVar('designation'),
             'designation'  => $this->request->getVar('designation'),
         ];
-        echo "<pre>";
-        print_r($data);
-        exit;
+        // echo "<pre>";
+        // print_r($data);
+        // exit;
         $model->insert($data);
         $response = [
             'status'   => 201,

@@ -40,4 +40,10 @@ class Dashboard extends BaseController
         $pageData['settingData'] = $model->get()->getResult('array');
         return view('admin/dashboard/settings', $pageData);
     }
+
+    Public function search()
+    {   
+        return view('admin/dashboard/index');
+        //my changes
+    }
 }
