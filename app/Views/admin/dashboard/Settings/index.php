@@ -35,8 +35,15 @@
                   <div class="row">
                     <div class="col-lg-4">
                       <div class="border-bottom text-center pb-4">
-                        <img src="<?= base_url(); ?>/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
-                        <h3>David Grey. H</h3>
+
+                        <?php
+                        $imgpath = base_url() . 'assets/images/faces/face12.jpg';
+                        if (isset($user['picture_attachment'])) {
+                          $imgpath = $user['picture_attachment'];
+                        }
+                        ?>
+                        <img src="<?= $imgpath ?>" alt="profile" class="img-lg rounded-circle mb-3" />
+                        <h3><?= $user['full_name'] ?? '' ?></h3>
                       </div>
 
                       <?php
@@ -96,9 +103,9 @@
                       </div>
                     </div>
                     <div class="col-lg-8 pl-lg-5">
+                      <div id="alertMessage"></div>
                       <div class="tab-content tab-content-vertical">
                         <div class="tab-pane fade show active" id="general" role="tabpanel">
-                          <div id="alertMessage"></div>
                           <div class="card">
                             <div class="card-body">
                               <h4 class="card-title">General Settings</h4>
@@ -146,18 +153,17 @@
                           <div class="card">
                             <div class="card-body">
                               <h4 class="card-title">Edit Profile Picture</h4>
-                              <form class="forms-sample" enctype="multipart/form-data">
+                              <form class="forms-sample" enctype="multipart/form-data" id="update-image-form">
                                 <div class="form-group">
                                   <label>File upload</label>
-                                  <input type="file" name="img[]" class="file-upload-default" accept="image/*">
                                   <div class="input-group col-xs-12">
-                                    <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+                                    <input type="file" name="img" class="form-control file-upload-info" accept="image/*" placeholder="Upload Image">
                                     <span class="input-group-append">
-                                      <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                                      <button class="file-upload-browse btn btn-primary" id="uploadImage" type="button">Upload</button>
                                     </span>
                                   </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary mr-2">Change Profile</button>
+                                <!-- <button type="submit" class="btn btn-primary mr-2">Change Profile</button> -->
                               </form>
                             </div>
                           </div>
@@ -166,18 +172,18 @@
                           <div class="card">
                             <div class="card-body">
                               <h4 class="card-title">Password Setting</h4>
-                              <form class="forms-sample">
+                              <form class="forms-sample" id="update-password-form">
                                 <div class="form-group">
                                   <label for="oldPass">Old Password</label>
-                                  <input type="password" class="form-control" id="oldPass" placeholder="Old Pasword">
+                                  <input type="password" class="form-control" name="oldPass" id="oldPass" placeholder="Old Pasword">
                                 </div>
                                 <div class="form-group">
                                   <label for="newPass">New Password</label>
-                                  <input type="password" class="form-control" id="newPass" placeholder="New Pasword">
+                                  <input type="password" class="form-control" name="newPass" id="newPass" placeholder="New Pasword">
                                 </div>
                                 <div class="form-group">
                                   <label for="confPass">Confirm Password</label>
-                                  <input type="password" class="form-control" id="confPass" placeholder="Confirm Pasword">
+                                  <input type="password" class="form-control" name="confPass" id="confPass" placeholder="Confirm Pasword">
                                 </div>
                                 <button type="submit" class="btn btn-primary mr-2">Change Password</button>
                               </form>

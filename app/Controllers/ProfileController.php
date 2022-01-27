@@ -15,10 +15,11 @@ class ProfileController extends ResourceController
   {
     $model = new UserModel();
     $checkUser = $model->where('emp_id', $id)->first();
+
     if ($checkUser) {
-      $file_name = rand() . $_FILES['picture_attachment']['name'];
+      $file_name = rand() . $_FILES['img']['name'];
       $filewithpath = base_url() . "/images/profile/" . $file_name;
-      $file = $this->request->getFile('picture_attachment');
+      $file = $this->request->getFile('img');
       $file->move('./images/profile', $file_name);
       $data = array('picture_attachment' => $filewithpath);
 
@@ -70,21 +71,22 @@ class ProfileController extends ResourceController
   public function update_password($id = null)
   {
     $validation =  \Config\Services::validation();
-
     $model = new UserModel();
     $data = $model->where('emp_id', $id)->first();
     $input = $this->request->getRawInput();
-    $current_pass = $input['password'];
+    $current_pass = $input['oldPass'];
     $status =  $this->validate([
-      'new_password' => 'required|min_length[5]',
-      'passconf' => 'required|matches[new_password]',
+      'newPass' => 'required|min_length[5]',
+      'confPass' => 'required|matches[newPass]',
     ]);
 
-    $newPass = md5($input['new_password']);
+    $pwd =  $input['newPass'];
+
+    $pwd_hashed = password_hash($pwd, PASSWORD_DEFAULT);
     if ($data) {
-      if (md5($current_pass) ==  $data['password']) {
+      if (password_verify($current_pass, $data['password'])) {
         if ($status) {
-          $data = array('password' => $newPass);
+          $data = array('password' => $pwd_hashed);
           $model->updateImage($id, $data);
           $response = [
             'status'   => 200,
