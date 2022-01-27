@@ -32,21 +32,22 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
-$routes->get('/dashboard', 'Dashboard::index');
 
-$routes->resource('photos');
+// $routes->get('/dashboard', 'Dashboard::index');
 
-$routes->post('settings', 'users::settingPage');
+// $routes->resource('photos');
+
+// $routes->post('settings', 'users::settingPage');
 
 // Equivalent to the following:
-$routes->get('user/new',             'users::new');
-$routes->post('user',                'users::create');
-$routes->get('user',                 'users::index');
-$routes->get('user/(:segment)',      'users::show/$1');
-$routes->get('user/(:segment)/edit', 'users::edit/$1');
-$routes->put('user/(:segment)',      'users::update/$1');
-$routes->patch('user/(:segment)',    'users::update/$1');
-$routes->delete('user/(:segment)',   'users::delete/$1');
+// $routes->get('user/new',             'users::new');
+// $routes->post('user',                'users::create');
+// $routes->get('user',                 'users::index');
+// $routes->get('user/(:segment)',      'users::show/$1');
+// $routes->get('user/(:segment)/edit', 'users::edit/$1');
+// $routes->put('user/(:segment)',      'users::update/$1');
+// $routes->patch('user/(:segment)',    'users::update/$1');
+// $routes->delete('user/(:segment)',   'users::delete/$1');
 
 $routes->post('login', 'Login::login');
 $routes->get('auth', 'Users::index');
@@ -58,16 +59,22 @@ $routes->post('change-password', 'Login::savePassword');
 
 $routes->post('register', 'Login::create');
 
+/**
+ * Routes for pages 
+ */
+$routes->group('admin', function ($routes) {
+    $routes->get('dashboard', 'dashboard::index');
+    $routes->get('websetings', 'dashboard::settingPage');
+});
+
+/**
+ * Routes for admin apis
+ */
 $routes->group('api', ["filter" => "myauth"], function ($routes) {
     $routes->post('dashboad', 'api/Admin::dashBoardData');
     $routes->put('setting', 'api/Admin::updateSetting');
     $routes->get('users', 'api/Admin::allusers');
 });
-
-
-
-
-
 // 
 
 

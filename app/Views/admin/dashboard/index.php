@@ -25,6 +25,15 @@
               <div class="form-group">
                 <label for="">User</label>
                 <select name="user-list" id="user-list" class="form-control">
+                <option value=""><?= "Select" ?></option>
+                  <?php if(!empty($users)):
+                        foreach ($users as $item):?>
+                          <option value="<?= $item['emp_id']?>"><?= $item['full_name']?></option>
+                       <?php endforeach; ?>
+                       <?php else:?>
+                       <option value="">No User found</option>
+                   <?php endif;?>
+                  
                 </select>
               </div>
             </div>
@@ -52,7 +61,25 @@
             </div>
           </div>
           <div class="row grid-margin" id="widget-container">
-            
+            <?php
+            if (!empty($dashboardData)) :
+              foreach ($dashboardData as $item) : ?>
+                <div class="col-md-3 mt-2">
+                  <div class="card card-widgit">
+                    <div class="card-body">
+                      <div class="statistics-item">
+                        <p>
+                          <?= $item['title']; ?>
+                        </p>
+                        <h2>
+                          <?= $item['count']; ?>
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            <?php endforeach;
+            endif; ?>
           </div>
         </div>
         <?php include __DIR__ . '/../layout/footer.php'; ?>

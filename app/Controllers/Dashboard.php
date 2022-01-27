@@ -2,11 +2,42 @@
 
 namespace App\Controllers;
 
+use App\Models\SettingModel;
+use App\Models\DashboardModel;
+
 class Dashboard extends BaseController
 {
+    public function __construct()
+    {
+        helper('url');
+        $session = \Config\Services::session();
+        if (!$session->get('emp_id')) {
+            return view('admin/login/index');
+        }
+    }
+
+    /**
+     * Function is used to load dashboard page view
+     *
+     * @return array
+     */
     public function index()
-    {   
-        return view('admin/dashboard/index');
-        //my changes
+    {
+        $userData = new DashboardModel();
+        $pageData['users'] = $userData->allusers();
+        $pageData['dashboardData'] = $userData->dashboardData();
+        return view('admin/dashboard/index', $pageData);
+    }
+    /**
+     *  Function is used to load setting page view
+     *
+     * @return array
+     */
+    public function settingPage()
+    {
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Setting'];
+        $model = new SettingModel();
+        $pageData['settingData'] = $model->get()->getResult('array');
+        return view('admin/dashboard/setting', $pageData);
     }
 }

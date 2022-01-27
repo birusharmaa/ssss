@@ -10,8 +10,6 @@ use CodeIgniter\HTTP\IncomingRequest;
 
 class Admin extends ResourceController
 {
-
-
     public function allusers()
     {
         $model = new UserModel();
@@ -42,8 +40,6 @@ class Admin extends ResourceController
 
     public function dashBoardData()
     {
-
-        $model = new UserModel();
 
         $data = array(
             array(

@@ -19,7 +19,7 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="<?=base_url();?>/dashboard">
+      <a class="nav-link" href="<?= base_url('admin/dashboard');?>">
         <i class="fa fa-home menu-icon"></i>
         <span class="menu-title">Dashboard</span>
       </a>
@@ -117,7 +117,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="<?=base_url('users/settingpage');?>">
+      <a class="nav-link" href="<?= base_url('admin/websetings');?>">
         <i class="fas fa-cog menu-icon"></i>
         <span class="menu-title">Settings</span>
       </a>

@@ -106,7 +106,7 @@ $(function () {
     /**
      * Function to load all users when load page
      */
-    loadAllUses();
+    // loadAllUses();
 
     /**
      * Change event for user select box to load dashboard data from DB
@@ -124,7 +124,7 @@ $(function () {
         loadDashBordData(formData);
     })
 
-    $('#user-list').trigger("change");
+    // $('#user-list').trigger("change");
 
     $('#settingForm').on('submit', function (e) {
         e.preventDefault();
@@ -168,6 +168,8 @@ $(function () {
             });
         }
     })
+
+    // loadDashBordData();
 
 
 })

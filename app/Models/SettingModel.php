@@ -15,9 +15,12 @@ class SettingModel extends Model
     'deleted'
   ];
 
-  public function updateSetting($id,$data) {
+  public function updateSetting($id, $data)
+  {
     $db = \Config\Database::connect();
-    $builder = $db->table($this->table);        
-    return $builder->where('id',$id)->set($data)->update();
-}
+    $builder = $db->table($this->table);
+    return $builder->where('id', $id)->set($data)->update();
+  }
+
+  
 }
