@@ -20,21 +20,19 @@
               <?= $pageHeading ?>
             </h3>
           </div>
-          <div id="alertMessage">
-            
-          </div>
+          <div id="alertMessage"></div>
           <form id="settingForm">
             <div class="row">
               <div class="col-md-6 mt-2">
                 <div class="form-group">
                   <label for="">Company Name</label>
-                  <input type="text" class="form-control form-control-sm" name="company_name" required>
+                  <input type="text" class="form-control form-control-sm" name="company_name" value="<?= isset($settingData)?$settingData[7]['setting_value']:''?>" required>
                 </div>
               </div>
               <div class="col-md-6 mt-2">
                 <div class="form-group">
                   <label for="">Company Phone</label>
-                  <input type="text" class="form-control form-control-sm" name="company_phone" id="company-phone" required>
+                  <input type="text" class="form-control form-control-sm" name="company_phone" id="company-phone" value="<?= isset($settingData)?$settingData[8]['setting_value']:''?>" required>
                 </div>
               </div>
             </div>
@@ -43,13 +41,13 @@
               <div class="col-md-6 mt-2">
                 <div class="form-group">
                   <label for="">Company Email</label>
-                  <input type="email" class="form-control form-control-sm" name="company_email" id="company-email" required>
+                  <input type="email" class="form-control form-control-sm" name="company_email" id="company-email"  value="<?= isset($settingData)?$settingData[6]['setting_value']:''?>" required>
                 </div>
               </div>
               <div class="col-md-6 mt-2">
                 <div class="form-group">
                   <label for="company-vat-number">Company Vat Number</label>
-                  <input type="text" class="form-control form-control-sm" name="company_vat_number" id="company_vat_number" required>
+                  <input type="text" class="form-control form-control-sm" name="company_vat_number" id="company_vat_number"  value="<?= isset($settingData)?$settingData[9]['setting_value']:''?>" required>
                 </div>
               </div>
             </div>
