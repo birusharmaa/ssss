@@ -38,12 +38,12 @@ class Dashboard extends BaseController
         $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Settings'];
         $model = new SettingModel();
         $pageData['settingData'] = $model->get()->getResult('array');
-        return view('admin/dashboard/settings', $pageData);
+        return view('admin/dashboard/Websettings/index', $pageData);
     }
 
     Public function search()
     {   
         return view('admin/dashboard/index');
-        //my changes
+        
     }
 }

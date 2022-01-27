@@ -142,7 +142,7 @@
               <img src="<?=base_url();?>/assets/images/faces/face5.jpg" alt="profile"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="<?= base_url().'/Settings/index'?>">
                 <i class="fas fa-cog text-primary"></i>
                 Settings
               </a>

@@ -90,14 +90,12 @@ class Login extends ResourceController
                             "location"          => $user['location'],
                             "key"               => $user['key'],
                             'logged_in'         => true
-                            
                         ];
 
                         $session->set($newdata);
 
                         if($remember=="on"){
                             $time = time();
-
                             //One year time
                             $time = $time+31536000;
 

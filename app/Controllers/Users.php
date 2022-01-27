@@ -25,7 +25,7 @@ class Users extends BaseController
         $pageData['users'] = $userData->allusers();
         $pageData['dashboardData'] = $userData->dashboardData();
         
-        return view('admin/dashboard/settings', $pageData);
+        return view('admin/dashboard/Websetting/index', $pageData);
     }
 
     //Logout function for session destroy

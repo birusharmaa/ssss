@@ -33,7 +33,7 @@
       <div class="collapse" id="daily-activity">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item d-none d-lg-block">
-            <a class="nav-link" href="#">New Leads</a>
+            <a class="nav-link" href="<?=base_url();?>/leads/index">New Leads</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Final Leads</a>
