@@ -22,33 +22,80 @@
           </div>
           <div id="alertMessage"></div>
           <form id="settingForm">
-            <div class="row">
-              <div class="col-md-6 mt-2">
-                <div class="form-group">
-                  <label for="">Company Name</label>
-                  <input type="text" class="form-control form-control-sm" name="company_name" value="<?= isset($settingData)?$settingData[7]['setting_value']:''?>" required>
-                </div>
-              </div>
-              <div class="col-md-6 mt-2">
-                <div class="form-group">
-                  <label for="">Company Phone</label>
-                  <input type="text" class="form-control form-control-sm" name="company_phone" id="company-phone" value="<?= isset($settingData)?$settingData[8]['setting_value']:''?>" required>
-                </div>
-              </div>
-            </div>
+            <?php
+            // echo '<pre>';
 
+            // print_r($settingData);
+            ?>
             <div class="row">
-              <div class="col-md-6 mt-2">
+              <div class="col-md-4 mt-2">
                 <div class="form-group">
-                  <label for="">Company Email</label>
-                  <input type="email" class="form-control form-control-sm" name="company_email" id="company-email"  value="<?= isset($settingData)?$settingData[6]['setting_value']:''?>" required>
+                  <label for="">Name</label>
+                  <input type="text" class="form-control form-control-sm" name="company_name" value="<?= isset($settingData) ? $settingData[7]['setting_value'] : '' ?>" required>
                 </div>
               </div>
-              <div class="col-md-6 mt-2">
+              <div class="col-md-4 mt-2">
                 <div class="form-group">
-                  <label for="company-vat-number">Company Vat Number</label>
-                  <input type="text" class="form-control form-control-sm" name="company_vat_number" id="company_vat_number"  value="<?= isset($settingData)?$settingData[9]['setting_value']:''?>" required>
+                  <label for="">Phone</label>
+                  <input type="text" class="form-control form-control-sm" name="company_phone" id="company-phone" value="<?= isset($settingData) ? $settingData[8]['setting_value'] : '' ?>" required>
                 </div>
+              </div>
+
+              <div class="col-md-4 mt-2">
+                <div class="form-group">
+                  <label for="">Email</label>
+                  <input type="email" class="form-control form-control-sm" name="company_email" id="company-email" value="<?= isset($settingData) ? $settingData[6]['setting_value'] : '' ?>" required>
+                </div>
+              </div>
+              <div class="col-md-4 mt-2">
+                <div class="form-group">
+                  <label for="company-vat-number">GST Number</label>
+                  <input type="text" class="form-control form-control-sm" name="company_gst_number" id="company_gst_number" value="<?= isset($settingData) ? $settingData[9]['setting_value'] : '' ?>" required>
+                </div>
+              </div>
+              <div class="col-md-4 mt-2">
+                <div class="form-group">
+                  <label for="company-vat-number">Address</label>
+                  <textarea class="form-control" name="company_address" id="" cols="" rows="3"><?= isset($settingData) ? $settingData[5]['setting_value'] : '' ?></textarea>
+                </div>
+              </div>
+              <div class="col-md-4 mt-2">
+                <div class="form-group">
+                  <label for="company-vat-number">Apps Title</label>
+                  <input type="text" class="form-control form-control-sm" name="app_title" id="app_title" value="<?= isset($settingData) ? $settingData[3]['setting_value'] : '' ?>" required>
+                </div>
+              </div>
+              <div class="col-md-4 mt-2">
+                <div class="form-group">
+                  <label for="company-vat-number">Accepted file format</label>
+                  <input type="text" class="form-control form-control-sm" name="accepted_file_formats" id="accepted_file_formats" value="<?= isset($settingData) ? $settingData[0]['setting_value'] : '' ?>" required>
+                </div>
+              </div>
+              <div class="col-md-4 mt-2">
+                <div class="form-group">
+                  <label for="company-vat-number">Date format</label>
+                  <input type="text" class="form-control form-control-sm" name="date_format" id="date_format" value="<?= isset($settingData) ? $settingData[14]['setting_value'] : '' ?>" required>
+                </div>
+              </div>
+              <div class="col-md-4 mt-2">
+                <div class="form-group">
+                  <label for="company-vat-number">Website</label>
+                  <input type="text" class="form-control form-control-sm" name="company_website" id="company_website" value="<?= isset($settingData) ? $settingData[10]['setting_value'] : '' ?>" required>
+                </div>
+              </div>
+              <div class="col-md-4 mt-2">
+                <div class="form-group">
+                  <label for="company-vat-number">Logo</label>
+                  <input type="file" class="form-control form-control-sm" name="logo" id="logo" value="<?= isset($settingData) ? $settingData[76]['setting_value'] : '' ?>">
+                  <input type="hidden" name="site_logo" id="site_logo" value="<?= isset($settingData) ? $settingData[76]['setting_value'] : '' ?>">
+                </div>
+              </div>
+              <div class="col-md-4 mt-2">
+                <?php if (!empty($settingData[76]['setting_value'])) : ?>
+                  <a href="" class="navbar-brand brand-logo">
+                    <img src="<?= $settingData[76]['setting_value'] ?>" alt="logo" height="100">
+                  </a>
+                <?php endif; ?>
               </div>
             </div>
             <div class="row">

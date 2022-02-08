@@ -1,4 +1,6 @@
-<?php $session = session(); ?>
+<?php $session = session();
+$data = $session->get('loginInfo');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>XLAcademy Admin</title>
   <?php include __DIR__ . '/../../layout/cssLinks.php'; ?>
-  <script src="<?= base_url(); ?>/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="<?= base_url(); ?>/public/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body class="sidebar-fixed">
@@ -36,22 +38,15 @@
                     <div class="col-lg-4">
                       <div class="border-bottom text-center pb-4">
 
-                        <?php
-                        $imgpath = base_url() . 'assets/images/faces/face12.jpg';
-                        if (isset($user['picture_attachment'])) {
-                          $imgpath = $user['picture_attachment'];
-                        }
-                        ?>
-                        <img src="<?= $imgpath ?>" alt="profile" class="img-lg rounded-circle mb-3" />
+                        <?php if (!empty($user['picture_attachment'])) : ?>
+                          <img src="<?= $user['picture_attachment'] ?>" alt="profile" class="img-lg rounded-circle mb-3" />
+                        <?php else : ?>
+                          <img src="<?= base_url(); ?>/public/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
+                        <?php endif; ?>
                         <h3><?= $user['full_name'] ?? '' ?></h3>
                       </div>
 
-                      <?php
-                      // echo '<pre>';
-                      // print_r($user);
-
-                      ?>
-                      <input type="hidden" value="<?= $session->get('emp_id') ?>" id="employee_id">
+                      <input type="hidden" value="<?= $data['emp_id'] ?>" id="employee_id">
                       <div class="py-4">
                         <p class="clearfix">
                           <span class="float-left">
@@ -144,7 +139,7 @@
                                   <textarea class="form-control" id="address" name="address" rows="4"><?= $user['address'] ?? '' ?></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                                <button class="btn btn-light">Cancel</button>
+                              
                               </form>
                             </div>
                           </div>
@@ -163,7 +158,9 @@
                                     </span>
                                   </div>
                                 </div>
-                                <!-- <button type="submit" class="btn btn-primary mr-2">Change Profile</button> -->
+                                <?php if (!empty($user['picture_attachment'])) : ?>
+                                  <button type="button" class="btn btn-primary mr-2" id="remove-pic" data-empid="<?= $user['emp_id'] ?>">Remove Profile Picture</button>
+                                <?php endif; ?>
                               </form>
                             </div>
                           </div>
@@ -198,157 +195,12 @@
             </div>
           </div>
         </div>
-        <!-- <div class="content-wrapper">
-          <div class="page-header">
-            <h3 class="page-title">
-              Data table
-            </h3>
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Leads</a></li>
-                <li class="breadcrumb-item active" aria-current="page">leads</li>
-              </ol>
-            </nav>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h4 class="card-title">Leads</h4>
-              <div class="row">
-                <div class="col-12">
-                  <div class="table-responsive">
-                    <table id="leads-table" class="table">
-                      <thead>
-                        <tr>
-                            <th>Order #</th>
-                            <th>Purchased On</th>
-                            <th>Customer</th>
-                            <th>Ship to</th>
-                            <th>Base Price</th>
-                            <th>Purchased Price</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php for ($i = 1; $i <= 20; $i++) { ?>
-                          <tr>
-                              <td><?= $i ?></td>
-                              <td>2012/08/03</td>
-                              <td>Edinburgh</td>
-                              <td>New York</td>
-                              <td>$1500</td>
-                              <td>$3200</td>
-                              <td>
-                                <label class="badge badge-info">On hold</label>
-                              </td>
-                              <td>
-                                <button class="btn btn-outline-primary">View</button>
-                              </td>
-                          </tr>
-                        <?php } ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <!-- <div class="content-wrapper">
-          <div class="page-header">
-            <h3 class="page-title">
-              Profile
-            </h3>
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Profile</li>
-              </ol>
-            </nav>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div class="border-bottom text-center pb-4">
-                        <img src="<?= base_url(); ?>/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3"/>
-                        <h3>David Grey. H</h3>
-                      </div>
-                      <div class="py-4">
-                        <p class="clearfix">
-                          <span class="float-left">
-                            Status
-                          </span>
-                          <span class="float-right text-muted">
-                            Active
-                          </span>
-                        </p>
-                        <p class="clearfix">
-                          <span class="float-left">
-                            Phone
-                          </span>
-                          <span class="float-right text-muted">
-                            9898989898
-                          </span>
-                        </p>
-                        <p class="clearfix">
-                          <span class="float-left">
-                            E-mail
-                          </span>
-                          <span class="float-right text-muted">
-                            Jacod@testmail.com
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                    <div class="col-lg-8 pl-lg-5">
-                      <div class="card">
-                        <div class="card-body">
-                          <h4 class="card-title">General Settings</h4>
-                          <form class="forms-sample">
-                            <div class="form-group">
-                              <label for="exampleInputName1">Name</label>
-                              <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">
-                            </div>
-                            <div class="form-group">
-                              <label for="exampleInputEmail3">Email address</label>
-                              <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
-                            </div>
-                            <div class="form-group">
-                              <label for="exampleSelectGender">Gender</label>
-                                <select class="form-control" id="exampleSelectGender">
-                                  <option>Male</option>
-                                  <option>Female</option>
-                                </select>
-                              </div>
-                            <div class="form-group">
-                              <label for="exampleInputCity1">City</label>
-                              <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
-                            </div>
-                            <div class="form-group">
-                              <label for="exampleTextarea1">Textarea</label>
-                              <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            <button class="btn btn-light">Cancel</button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <?php include __DIR__ . '/../../layout/footer.php'; ?>
       </div>
     </div>
   </div>
   <?php include __DIR__ . '/../../layout/jsLinks.php'; ?>
-  <script src="<?= base_url(); ?>/assets/js/xla-profile.js"></script>
+  <script src="<?= base_url(); ?>/public/assets/js/xla-profile.js"></script>
 
   <script>
     $(document).ready(function() {

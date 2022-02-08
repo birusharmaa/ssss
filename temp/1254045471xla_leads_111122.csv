@@ -1,0 +1,10 @@
+Enq_Dt,Name,City,Location,Mob_1,mob_2,Email,Follow_Up_Dt,Source,Key_Comment,Follow_Up_Comment,Status_value,FollowUp_Days,Course_Value,status
+2/7/2022 0:00,name 1,city 1,loca 1,9001234560,9001234560,user1@mail.com,12/1/2022 0:00,1,key 1,fol 1,,7/1/2022 0:00,5000,1
+2/8/2022 0:00,name 2,city 2,loca 2,9001234560,9001234560,user1@mail.com,12/2/2022 0:00,2,key 2,fol 2,,7/2/2022 0:00,5000,1
+2/9/2022 0:00,name 3,city 3,loca 3,9001234560,9001234560,user1@mail.com,12/3/2022 0:00,1,key 3,fol 3,,7/3/2022 0:00,5000,1
+2/10/2022 0:00,name 4,city 4,loca 4,9001234560,9001234560,user1@mail.com,12/4/2022 0:00,1,key 4,fol 4,,7/4/2022 0:00,5000,1
+2/11/2022 0:00,name 5,city 5,loca 5,9001234560,9001234560,user1@mail.com,12/5/2022 0:00,1,key 5,fol 5,,7/5/2022 0:00,5000,1
+2/12/2022 0:00,name 6,city 6,loca 6,9001234560,9001234560,user1@mail.com,12/6/2022 0:00,1,key 6,fol 6,,7/6/2022 0:00,5000,1
+2/13/2022 0:00,name 7,city 7,loca 7,9001234560,9001234560,user1@mail.com,12/7/2022 0:00,2,key 7,fol 7,,7/7/2022 0:00,5000,1
+2/14/2022 0:00,name 8,city 8,loca 8,9001234560,9001234560,user1@mail.com,12/8/2022 0:00,2,key 8,fol 8,,7/8/2022 0:00,5000,1
+2/15/2022 0:00,name 9,city 9,loca 9,9001234560,9001234560,user1@mail.com,12/9/2022 0:00,3,key 9,fol 9,,7/9/2022 0:00,5000,1

@@ -26,23 +26,17 @@ class AuthFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-
         $request = service('request');
         $userEmail = $request->getHeader('email');
-        $userPassword = $request->getHeader('password');
-
+        $userPassword = $request->getHeader('password');      
         if (isset($userEmail) &&  !empty($userEmail) && isset($userPassword) && !empty($userPassword)) {
-
             $model = new UserModel();
-
             $condition = ['personal_email' => $userEmail->getValue()];
-
             $data = $model->where($condition)->first();
-    
             if (!password_verify($userPassword->getValue(), $data['password'])) {
                 echo "Invalid credentials";
                 exit();
-            }
+             }
         } else {
             echo "required credentials";
             exit();

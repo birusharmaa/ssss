@@ -66,4 +66,16 @@ class DashboardModel extends Model
         );
         return $data;
     }
+
+    public function getLeadSubCategory($id = null)
+    {
+      $builder = $this->db->table('xla_subcategory');
+      $builder->where('cat_id', $id);
+      $result = $builder->get();
+      if ($result->getResultArray() > 0) {
+        return $result->getResult();
+      } else {
+        return false;
+      }
+    }
 }

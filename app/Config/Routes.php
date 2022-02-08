@@ -21,7 +21,7 @@ $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
-$routes->setAutoRoute(true);
+$routes->setAutoRoute(false);
 
 /*
  * --------------------------------------------------------------------
@@ -52,33 +52,64 @@ $routes->get('/', 'Home::index');
 
 
 $routes->post('login', 'Login::login');
-$routes->get('auth', 'Users::index');
-$routes->get('logout', 'Users::logout');
-$routes->get('forgot-password', 'Users::forgotPassword');
-$routes->post('reset-password', 'Login::resetPassword');
-$routes->get('change-password', 'Login::passwordChange');
-$routes->post('change-password', 'Login::savePassword');
 
+// $routes->get('auth', 'Users::index');/leads/search/
+
+$routes->get('logout', 'Dashboard::logout');
+
+$routes->post('change-password', 'Login::savePassword');
+$routes->post('reset-password', 'Login::resetPassword');
 $routes->post('register', 'Login::create');
+
+$routes->get('forgot-password', 'Users::forgotPassword');
+
+$routes->group('auth',function ($routes) {
+    $routes->get('change-password', 'Login::passwordChange');
+});
 
 /**
  * Routes for pages 
  */
-$routes->group('admin', function ($routes) {
-    $routes->get('dashboard', 'dashboard::index');
-    $routes->get('websettings', 'dashboard::settingPage');
+$routes->group('admin', ["filter" => "mysess"], function ($routes) {
+    $routes->get('dashboard', 'Dashboard::index');
+    $routes->get('websettings', 'Dashboard::settingPage');
+    $routes->get('category', 'Dashboard::category');
+    $routes->get('roles', 'Dashboard::role');
+    $routes->get('new-leads', 'Dashboard::new_leads');
+    $routes->get('lead/(:any)', 'Dashboard::leadDetails/$1');
+    $routes->get('subcategory/(:any)', 'Admin::getSubCategory/$1');
+    $routes->get('profile-setting', 'Settings::index/');
+    $routes->get('final-leads', 'Dashboard::FinalLeads');
+    $routes->get('follow-up', 'Dashboard::followupView');
+    $routes->get('admission', 'Dashboard::admission');
+    $routes->get('add_lead/(:any)', 'Dashboard::add_lead/$1');
+    $routes->get('fee-collection', 'Dashboard::fee_collection');
+});
+
+$routes->group('user', ["filter" => "mysess"], function ($routes) {    
+    $routes->get('profile-setting', 'Settings::index/');
+});
+
+$routes->group('fee', ['filter' => 'myauth'], function ($routes) {   
+    $routes->post('collect','FeeCollect::create'); 
+    $routes->get('comments/(:any)','FeeCollect::comments/$1');     
 });
 
 /**
  * Routes for admin apis
  */
 $routes->group('api', ["filter" => "myauth"], function ($routes) {
-    $routes->post('dashboad', 'api/Admin::dashBoardData');
-    $routes->put('setting', 'api/Admin::updateSetting');
-    $routes->get('users', 'api/Admin::allusers');
+    $routes->post('dashboad', 'Admin::dashBoardData');
+    $routes->put('setting', 'Admin::updateSetting');
+    $routes->get('users', 'Admin::allusers');
+    $routes->post('upload_logo', 'Admin::updateSubSiteLogo');
+    $routes->post('lead-data', 'Lead::getLeadBySearch');
+    $routes->post('assignlead', 'Lead::assignLead');
+    $routes->post('updatecomments', 'Lead::updateLeadComments');
+    $routes->post('unsubscribe-leads', 'Lead::unsubscribeLeads');
+    $routes->get('followuplist', 'Lead::getFolloupList');
+    $routes->get('unsubscribelist', 'Lead::getUnsubscribedList');
 });
-
-// 
 
 $routes->post('authpass', 'AuthController::checkUser');
 
@@ -89,6 +120,41 @@ $routes->group('profile', ["filter" => "myauth"], function ($routes) {
     $routes->put('update_general/(:any)','ProfileController::update_general/$1');
     $routes->get('search','ProfileController::search');
 });
+
+$routes->group('leads',['filter' => 'myauth'], function ($routes) {
+    $routes->post('search','Lead::search');
+});
+
+$routes->group('leadsapi', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('leads','Lead::index');
+    $routes->get('lead/(:segment)','Lead::show/$1');
+    $routes->post('insert','Lead::create');
+    $routes->post('updateImage/(:any)','Lead::updateImage/$1');
+    $routes->put('update/(:segment)','Lead::update/$1');
+    $routes->delete('delete/(:any)','Lead::delete/$1');
+    $routes->delete('deleteImage/(:any)','Lead::deleteImage/$1');
+    $routes->post('import','Lead::import');
+    $routes->put('update_add/(:any)','Lead::update_add/$1'); 
+    $routes->get('lead_fee/(:any)','Lead::lead_fee/$1');
+});
+
+$routes->group('catapi', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('categories','Category::index');
+    $routes->get('show/(:any)','Category::show/$1');
+    $routes->post('insert','Category::create');
+    $routes->delete('delete/(:any)','Category::delete/$1');    
+    $routes->put('update/(:any)','Category::update/$1');  
+});
+
+$routes->group('subapi', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('subcategories/(:any)','SubCategory::index/$1');
+    $routes->get('show/(:any)','SubCategory::show/$1');
+    $routes->post('insert','SubCategory::create');
+    $routes->delete('delete/(:any)','SubCategory::delete/$1');    
+    $routes->put('update/(:any)','SubCategory::update/$1');  
+});
+
+
 
 /*
  * --------------------------------------------------------------------

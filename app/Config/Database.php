@@ -33,9 +33,9 @@ class Database extends Config
     public $default = [
         'DSN'      => '',
         'hostname' => 'localhost',
-        'username' => 'root',
-        'password' => '',
-        'database' => 'xlacademy',
+        'username' => 'root', //thewings_xlacademy
+        'password' => '', //oX5sczh^KoX~
+        'database' => 'xlacademy', //thewings_xlacademy
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,

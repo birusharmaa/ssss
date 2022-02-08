@@ -9,6 +9,7 @@ use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\AuthFilter;
+use App\Filters\SessFilter;
 
 class Filters extends BaseConfig
 {
@@ -24,7 +25,8 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        'myauth'        => AuthFilter::class
+        'myauth'        => AuthFilter::class,
+        'mysess'        => SessFilter::class
     ];
 
     /**

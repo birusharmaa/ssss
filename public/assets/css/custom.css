@@ -1,0 +1,39 @@
+#searchlist{
+    position: absolute;
+    font-size: 0.9rem;
+    margin-top: 0;
+    right: 0;
+    left: auto;
+    top: 48px;
+    border-radius: 2px;
+    width: 250px;
+    padding: 7px 13px;
+    box-shadow: 0 3px 21px 0 rgb(0 0 0 / 20%);
+    z-index: 1000;
+    background-color: #fff;
+    color: #000000;
+}
+#searchlist span{
+    display: block;
+    cursor: pointer;
+}
+#searchlist a{
+    color: #000000;
+    font-weight: 400;
+}
+
+.list-group-item{
+    cursor: pointer;
+    
+}
+
+.nav-pills .nav-link.active{
+    background-color:#ff9000 !important;
+}
+a {
+  color: #999999;
+}
+
+.jsgrid .jsgrid-table td, .jsgrid .jsgrid-table th, .table td, .table th{
+    padding:2px !important;
+}

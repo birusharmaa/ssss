@@ -21,6 +21,4 @@ class SettingModel extends Model
     $builder = $db->table($this->table);
     return $builder->where('id', $id)->set($data)->update();
   }
-
-  
 }

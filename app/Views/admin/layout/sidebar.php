@@ -3,17 +3,21 @@
     <li class="nav-item nav-profile">
       <div class="nav-link">
         <div class="profile-image">
-          <img src="<?= base_url(); ?>/assets/images/faces/face5.jpg" alt="image" />
+          <?php if (!empty($sessData['picture_attachment'])) : ?>
+            <img src="<?= $sessData['picture_attachment'] ?>" alt="profile" class="img-lg rounded-circle mb-3" />
+          <?php else : ?>
+            <img src="<?= base_url(); ?>/public/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
+          <?php endif; ?>
         </div>
         <div class="profile-name">
           <p class="name">
-            SarTia Global
+            <?= $sessData['full_name'] ?>
           </p>
           <p class="designation">
-            demo@sartiaglobal.com
+            <?= $sessData['email'] ?>
           </p>
           <p class="designation">
-            Sartia's Laptop
+            <?= $sessData['designation'] ?>
           </p>
         </div>
       </div>
@@ -33,19 +37,20 @@
       <div class="collapse" id="daily-activity">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item d-none d-lg-block">
-            <a class="nav-link" href="<?=base_url();?>/leads/index">New Leads</a>
+            <a class="nav-link" href="<?= base_url(); ?>/admin/new-leads">New Leads</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Final Leads</a>
-          </li>
-          <li class="nav-item d-none d-lg-block">
-            <a class="nav-link" href="#">Follow Ups</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Admission</a>
+          
+           <li class="nav-item">
+            <a class="nav-link" href="<?= base_url()?>/admin/final-leads">Final Leads</a>
           </li>
           <li class="nav-item d-none d-lg-block">
-            <a class="nav-link" href="#">Fee Collection</a>
+            <a class="nav-link" href="<?= base_url()?>/admin/follow-up">Follow Ups</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= base_url()?>/admin/admission">Admission</a>
+          </li>
+          <li class="nav-item d-none d-lg-block">
+            <a class="nav-link" href="<?= base_url()?>/admin/fee-collection">Fee Collection</a>
           </li>
         </ul>
       </div>
@@ -128,7 +133,10 @@
             <a class="nav-link" href="<?= base_url('admin/websettings'); ?>">General Setting </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Role & Permission </a>
+            <a class="nav-link" href="<?= base_url('admin/roles'); ?>">Role & Permission </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('admin/category'); ?>">Category </a>
           </li>
         </ul>
       </div>

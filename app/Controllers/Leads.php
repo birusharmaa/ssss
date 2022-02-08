@@ -1,5 +1,7 @@
 <?php
+
 namespace App\COntrollers;
+
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\LeadsModel;
@@ -13,20 +15,25 @@ use Config\Services;
 class Leads extends BaseController
 {
 
-    public function index()
-    {   
-        return view('admin/leads/index');
+    protected $leadModel;
+    public function __construct()
+    {
+        $this->leadModel = new LeadsModel();
+        $this->session = session();
+        if (!$this->session->has('loginInfo')) {
+            return redirect()->to(base_url());
+        }
     }
 
+    public function index()
+    {
+        $pageData['leads'] = $this->leadModel->getAllLeads();
+        return view('admin/leads/index', $pageData);
+    }
 
-    public function view()
-    {   
+    public function view($id = null)
+    {
+        $pageData['leads'] = $this->leadModel->getLeadDetails($id);
         return view('admin/leads/view');
-    
     }
 }
-
-
-
-
-?>

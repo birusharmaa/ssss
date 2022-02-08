@@ -23,7 +23,9 @@ class App extends BaseConfig
      *
      * @var string
      */
+    // public $baseURL = 'https://demoacademy.thewingshield.com/';
     public $baseURL = 'http://localhost:8080/';
+    
 
     /**
      * --------------------------------------------------------------------------

@@ -12,8 +12,7 @@ class AuthController extends Controller
 {
   use ResponseTrait;
 
-  public function checkUser()
-  {  
+  public function checkUser(){  
            
     $request = service('request');
     $userEmail = $request->getHeader('email');
@@ -24,9 +23,8 @@ class AuthController extends Controller
     $condition = ['personal_email' => $userEmail->getValue()];
     $data = $model->where($condition)->first(); 
     if (password_verify($userPassword, $data['password'])) {    
-      return TRUE;      
-      } else {     
-       // echo "Invalid Credential"; 
+         return TRUE;      
+      } else {  
         return FALSE;
       }    
   }

@@ -50,8 +50,8 @@ class ProfileController extends ResourceController
     if ($data != '') {
       if (file_exists($path)) {
         unlink($path);
-        $data = array('picture_attachment' => '');
-        $model->updateImage($delete_id, $data);
+        $dataImg = array('picture_attachment' => '');
+        $model->updateImage($delete_id, $dataImg);
         $response = [
           'status'   => 200,
           'error'    => null,
@@ -83,6 +83,7 @@ class ProfileController extends ResourceController
     $pwd =  $input['newPass'];
 
     $pwd_hashed = password_hash($pwd, PASSWORD_DEFAULT);
+    
     if ($data) {
       if (password_verify($current_pass, $data['password'])) {
         if ($status) {
@@ -93,8 +94,12 @@ class ProfileController extends ResourceController
             'error'    => null,
             'messages' => [
               'success' => 'Password Change Successfully.'
-            ]
+            ],
           ];
+
+          $sess = session();
+          $sess->set('updated_password',['email'=>$data['personal_emmail'],'password'=>$pwd]);
+
           return $this->respond($response);
         } else {
           $errors = $validation->getErrors();
@@ -103,7 +108,8 @@ class ProfileController extends ResourceController
             'error'    => true,
             'messages' => [
               'error_message' => $errors
-            ]
+            ],
+            
           ];
 
           return $this->respond($response);
@@ -121,6 +127,7 @@ class ProfileController extends ResourceController
     } else {
       return $this->respond('Trying to access Invalid record.');
     }
+
   }
 
 
