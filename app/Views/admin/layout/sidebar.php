@@ -6,7 +6,7 @@
           <?php if (!empty($sessData['picture_attachment'])) : ?>
             <img src="<?= $sessData['picture_attachment'] ?>" alt="profile" class="img-lg rounded-circle mb-3" />
           <?php else : ?>
-            <img src="<?= base_url(); ?>/public/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
+            <img src="<?= base_url(); ?>/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
           <?php endif; ?>
         </div>
         <div class="profile-name">

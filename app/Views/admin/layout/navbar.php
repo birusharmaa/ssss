@@ -3,12 +3,12 @@ $session = session();
 $sessData = $session->get('loginInfo');
 $model = new \App\Models\SettingModel();
 $settingData = $model->get()->getResult('array');
-$logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_value'] : base_url() . '/public/assets/images/logo.png';
+$logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_value'] : base_url() . '/assets/images/logo.png';
 ?>
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row default-layout-navbar">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
     <a class="navbar-brand brand-logo" href="<?= base_url(); ?>/admin/dashboard"><img src="<?= $logo ?>" alt="logo" /></a>
-    <a class="navbar-brand brand-logo-mini" href="<?= base_url(); ?>/admin/dashboard"><img src="<?= base_url(); ?>/public/assets/images/logo-sm.png" alt="logo" /></a>
+    <a class="navbar-brand brand-logo-mini" href="<?= base_url(); ?>/admin/dashboard"><img src="<?= base_url(); ?>/assets/images/logo-sm.png" alt="logo" /></a>
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-stretch">
     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -105,7 +105,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
               <div class="dropdown-divider"></div>
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
-                    <img src="<?= base_url(); ?>/public/assets/images/faces/face4.jpg" alt="image" class="profile-pic">
+                    <img src="<?= base_url(); ?>/assets/images/faces/face4.jpg" alt="image" class="profile-pic">
                 </div>
                 <div class="preview-item-content flex-grow">
                   <h6 class="preview-subject ellipsis font-weight-medium">David Grey
@@ -119,7 +119,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
               <div class="dropdown-divider"></div>
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
-                    <img src="<?= base_url(); ?>/public/assets/images/faces/face2.jpg" alt="image" class="profile-pic">
+                    <img src="<?= base_url(); ?>/assets/images/faces/face2.jpg" alt="image" class="profile-pic">
                 </div>
                 <div class="preview-item-content flex-grow">
                   <h6 class="preview-subject ellipsis font-weight-medium">Tim Cook
@@ -133,7 +133,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
               <div class="dropdown-divider"></div>
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
-                    <img src="<?= base_url(); ?>/public/assets/images/faces/face3.jpg" alt="image" class="profile-pic">
+                    <img src="<?= base_url(); ?>/assets/images/faces/face3.jpg" alt="image" class="profile-pic">
                 </div>
                 <div class="preview-item-content flex-grow">
                   <h6 class="preview-subject ellipsis font-weight-medium"> Johnson
@@ -151,7 +151,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
           <?php if (!empty($sessData['picture_attachment'])) : ?>
             <img src="<?= $sessData['picture_attachment'] ?>" alt="profile" class="img-lg rounded-circle mb-3" />
           <?php else : ?>
-            <img src="<?= base_url(); ?>/public/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
+            <img src="<?= base_url(); ?>/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
           <?php endif; ?>
         </a>
         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">

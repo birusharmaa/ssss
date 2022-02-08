@@ -172,8 +172,6 @@ class Dashboard extends BaseController
     public function admission()
     {
         $pageData['leads'] = $this->leadModel->getadmission();
-        print_r($pageData['leads']);
-        die('aaa');
         $pageData['categories'] = $this->CategoryModel->getCategories();
         return view('admin/admission/index', $pageData);
     }

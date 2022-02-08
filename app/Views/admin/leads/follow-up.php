@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title><?= $pageTitle ?></title>
   <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
-  <script src="<?= base_url(); ?>/public/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="<?= base_url(); ?>/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body class="sidebar-fixed">
@@ -70,7 +70,7 @@
     });
   </script>
 
-  <script src="<?= base_url(); ?>/public/assets/js/xla-followups.js"></script>
+  <script src="<?= base_url(); ?>/assets/js/xla-followups.js"></script>
   <!-- Modal -->
   <div class="modal fade" id="followupsModal" tabindex="-1" role="dialog" aria-labelledby="followupsModalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">

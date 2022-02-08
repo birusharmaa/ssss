@@ -242,7 +242,7 @@
     </div>
   </div>
   <?php include __DIR__ . '/../layout/jsLinks.php'; ?>
-  <script src="<?= base_url(); ?>/public/assets/js/xla-final-leads.js"></script>
+  <script src="<?= base_url(); ?>/assets/js/xla-final-leads.js"></script>
   <script>
     $(document).ready(function() {
       $('#assign-leads-table').DataTable();
