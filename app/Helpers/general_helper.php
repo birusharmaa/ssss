@@ -2109,9 +2109,11 @@ function dateFormat($date = null)
 
 function getUser($empid = null)
 {
-    $model = new UserModel();
-    $data = $model->where('emp_id', $empid)->first();
-    return  $data['full_name'];
+    if ($empid) {
+        $model = new UserModel();
+        $data = $model->where('emp_id', $empid)->first();
+        return  $data['full_name'];
+    }
 }
 
 function followCount($leadid = null)
@@ -2135,6 +2137,6 @@ function getFollowUpDays($followUpDays = null)
 {
     $date1 = date_create($followUpDays);
     $date2 =  date_create(date("Y-m-d"));
-    $diff = date_diff($date1,$date2);
+    $diff = date_diff($date1, $date2);
     return $diff->format("%R%a days");
 }

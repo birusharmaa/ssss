@@ -62,9 +62,14 @@ class LeadsModel extends Model
   public function getadmission()
   {
     $db = \Config\Database::connect();
-    $sql = "SELECT DISTINCT xla_leads_comments.lead_id, xla_leads.*,xla_category.title as Category 
-    FROM `xla_leads_comments` join xla_leads on xla_leads_comments.lead_id = xla_leads.id 
-    join xla_category on xla_leads.Course_Value = xla_category.id WHERE call_status=9;";
+    $sql = "SELECT  xla_leads_comments.lead_id,xla_leads_comments.*,
+    xla_leads.Name,xla_leads.Email,xla_leads.Mob_1,xla_leads.City,xla_leads.Enq_Course,xla_category.title as category_name,
+    xla_call_status.title as call_status_title
+    FROM xla_leads_comments
+    LEFT JOIN xla_leads on xla_leads.id=xla_leads_comments.lead_id
+    LEFT JOIN xla_category on xla_leads.Enq_Course=xla_category.id
+    LEFT JOIN xla_call_status on xla_call_status.id=xla_leads_comments.call_status
+    WHERE xla_leads_comments.call_status=9";
     $data = $db->query($sql);
     return $data->getResult();
   }

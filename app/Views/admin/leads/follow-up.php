@@ -37,7 +37,7 @@
                 <?php if (!empty($followUpsLeads)) :?>
                   <?php foreach ($followUpsLeads as $lead) : ?>
                     <tr>
-                      <td><?= $lead['Name'] ?></td>
+                      <td><a href="<?= base_url('admin/add_lead/' . $lead['lead_id']) ?>" class="text-info"><?= $lead['Name'] ?></a></td>
                       <td><?= $lead['Email'] ?></td>
                       <td><?= $lead['Mob_1'] ?></td>
                       <td><?= $lead['course_name'] ?></td>

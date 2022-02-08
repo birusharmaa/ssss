@@ -397,7 +397,12 @@ helper(['number', 'general']);
                                 <h6 class="mb-0">Last updated by</h6>
                               </div>
                               <div class="col-sm-7">
-                                <h6 class="mb-0"> <?= getUser($lead->Last_Updated_By) ?></h6>
+                                <h6 class="mb-0"> <?= 
+                                
+                                 getUser($lead->Last_Updated_By)??'';
+                               
+                                
+                                ?></h6>
                               </div>
                             </div>
 

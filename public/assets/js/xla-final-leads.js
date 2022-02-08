@@ -45,8 +45,9 @@ const loadFollowUpTable = (data) => {
     if (data) {
 
         data.forEach(e => {
+            let name = `<a href="${BaseUrl+'/admin/add_lead/'+ e.id}" class="text-info">${e.Name}</a>`;
             let action = `<a href="#" class="unsubscribe-leads btn btn-outline-primary" data-id="${e.id}" status="${(e.Unsubscribe == 0)?1:0}"><i class="fas fa-strikethrough"></i>Unsubscribe</a>`;
-            let row = [e.Name, e.Email, e.Mob_1, e.Course_Value, action];
+            let row = [name, e.Email, e.Mob_1, e.Course_Value, action];
             dataSet.push(row);
         });
 
@@ -67,9 +68,10 @@ const loadUnSubTable = (data) => {
     let dataSet = [];
     if (data) {
         data.forEach(e => {
+            let name = `<a href="${BaseUrl+'/admin/add_lead/'+ e.id}" class="text-info">${e.Name}</a>`;
             let action = `<a href="#" class=" btn btn-outline-primary" data-id="${e.id}"><i class="fas fa-strikethrough"></i>Unsubscribe</a>`;
             action = '';
-            let row = [e.Name, e.Email, e.Mob_1, e.Course_Value, action];
+            let row = [name, e.Email, e.Mob_1, e.Course_Value, action];
             dataSet.push(row);
         });
     }

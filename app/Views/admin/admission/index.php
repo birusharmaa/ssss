@@ -68,12 +68,12 @@ $emp = $session->get('loginInfo');
                               <td><?= $lead->Email ?></td>
                               <td><?= $lead->Mob_1 ?></td>
                               <td><?= $lead->City ?></td>
-                              <td><?= $lead->Category ?></td>
+                              <td><?= $lead->category_name ?></td>
                               <td>
-                                <label class="badge badge-info">Admission</label>
+                                <label class="badge badge-info"><?= $lead->call_status_title?></label>
                               </td>
                               <td>
-                                <button class="btn btn-outline-primary"> <a href="<?= base_url('admin/add_lead/' . $lead->id) ?>">View</a> </button>
+                                <button class="btn btn-outline-primary"> <a href="<?= base_url('admin/add_lead/' . $lead->lead_id) ?>">View</a> </button>
                               </td>
                             </tr>
                           <?php endforeach; ?>
@@ -91,7 +91,6 @@ $emp = $session->get('loginInfo');
     </div>
     <?php include __DIR__ . '/../layout/jsLinks.php'; ?>
     <script src="<?= base_url(); ?>/assets/js/xla-update-lead.js"></script>
- 
     <script>
       $(document).ready(function() {
         $('#leads-table').DataTable();

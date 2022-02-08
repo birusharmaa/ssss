@@ -186,7 +186,7 @@
                       ?>
                         <?php foreach ($assignedLeads as $lead) : ?>
                           <tr>
-                            <td><?= $lead->Name ?></td>
+                            <td><a href="<?= base_url('admin/add_lead/' . $lead->id) ?>" class="text-info"><?= $lead->Name ?></a></td>
                             <td><?= $lead->Email ?></td>
                             <td><?= $lead->Mob_1 ?></td>
                             <td><?= $lead->Course_Value ?></td>
