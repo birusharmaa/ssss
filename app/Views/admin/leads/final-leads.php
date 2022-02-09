@@ -247,7 +247,6 @@
     $(document).ready(function() {
       $('#assign-leads-table').DataTable();
       $('#unsublead-leads-table').DataTable();
-
     });
   </script>
 </body>
