@@ -84,6 +84,7 @@ $routes->group('admin', ["filter" => "mysess"], function ($routes) {
     $routes->get('admission', 'Dashboard::admission');
     $routes->get('add_lead/(:any)', 'Dashboard::add_lead/$1');
     $routes->get('fee-collection', 'Dashboard::fee_collection');
+    $routes->get('status', 'Dashboard::status');
 });
 
 $routes->group('user', ["filter" => "mysess"], function ($routes) {    
@@ -154,6 +155,13 @@ $routes->group('subapi', ['filter' => 'myauth'], function ($routes) {
     $routes->put('update/(:any)','SubCategory::update/$1');  
 });
 
+$routes->group('status', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('all','Status::index');
+    $routes->get('show/(:any)','Status::show/$1');
+    $routes->post('insert','Status::create');
+    $routes->delete('delete/(:any)','Status::delete/$1');    
+    $routes->put('update/(:any)','Status::update/$1');  
+});
 
 
 /*

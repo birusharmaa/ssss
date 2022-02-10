@@ -9,6 +9,7 @@ use App\Models\api\LeadModel;
 use App\Models\api\SourceModel;
 use App\Models\CategoryModel;
 use App\Models\RoleModel;
+use App\Models\api\StatusModel;
 
 class Dashboard extends BaseController
 {
@@ -18,14 +19,16 @@ class Dashboard extends BaseController
     protected $session;
     protected $followUpModel;
     protected $sourceModel;
+    protected $callStatus;
 
 
     public function __construct()
     {
         $this->leadModel = new LeadsModel();
         $this->followUpModel = new LeadModel();
-        $this->CategoryModel = new CategoryModel();
+        $this->CategoryModel = new CategoryModel();       
         $this->sourceModel = new SourceModel();
+        $this->callStatus = new StatusModel();
         $this->session = \Config\Services::session();
         helper('general');
     }
@@ -145,6 +148,7 @@ class Dashboard extends BaseController
     {
         $empid = $this->session->get('loginInfo');
         $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Follow Up'];
+        $pageData['callStatus'] = $this->callStatus->getAllStatus();
         $pageData['followUpsLeads'] = $this->followUpModel->getFollowUpsLead($empid['emp_id']);
         return view('admin/leads/follow-up', $pageData);
     }
@@ -161,6 +165,7 @@ class Dashboard extends BaseController
         $pageData['comments'] = $this->leadModel->getLastComment($id);
         $pageData['categories'] = $this->CategoryModel->getCategories();
         $pageData['sources'] = $this->sourceModel->findAll();
+        $pageData['callStatus'] = $this->callStatus->getAllStatus();
         return view('admin/admission/view', $pageData);
     }
 
@@ -183,16 +188,31 @@ class Dashboard extends BaseController
      */
     public function fee_collection()
     {
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Fee collection'];
         $pageData['leads'] = $this->leadModel->fee_Collect();
         return view('admin/fee_collect/index', $pageData);
+    }
+
+    /**
+     * Function is used to show status page.
+     */
+    public function status(){
+        $empid = $this->session->get('loginInfo'); 
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Status', 'empid' => $empid['emp_id']];
+        return view('admin/dashboard/status/index',$pageData);
     }
 
     /**
      *  Function is used to logout the user and destroy the session
      */
     public function logout()
+
     {
         $this->session->remove('loginInfo');
         return redirect()->to(base_url());
     }
+     /**
+     *  Function is used to status page view.
+     */
+
 }

@@ -99,18 +99,15 @@
               <div class="col-sm-8">
                 <select id="callstatussel" class="form-control" name="call_status" required="">
                   <option value="">select</option>
-                  <option value="1">Didn't Answer</option>
-                  <option value="2">Unreachable</option>
-                  <option value="3">Switched off</option>
-                  <option value="4">Not Intrested</option>
-                  <option value="5">Already Taken</option>
-                  <option value="6">Connected</option>
-                  <option value="7">Follow Up</option>
-                  <option value="8">Intrested</option>
-                  <option value="9">Details Shared</option>
+                    <?php if ($callStatus):
+                      foreach($callStatus as $value): ?>
+                        <option value="<?= $value->id; ?>"><?= $value->title; ?></option>
+                      <?php endforeach;
+                    endif;?> 
                 </select>
               </div>
             </div>
+          
             <div class="row mt-2 d-none" id="subject_div">
               <div class="col-sm-4">Subject</div>
               <div class="col-sm-8">

@@ -35,8 +35,7 @@ helper(['number', 'general']);
             </h3>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="#">Admission</a></li>
+                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>               
                 <li class="breadcrumb-item active" aria-current="page">Lead</li>
               </ol>
             </nav>
@@ -72,7 +71,7 @@ helper(['number', 'general']);
                       <div class="col-sm-7">
                         <h6 class="mb-0"> <?= $lead->id ?></h6>
                       </div>
-                    </div>
+                    </div>                  
                     <div class="row custom_row">
                       <div class="col-sm-5">
                         <h6 class="mb-0">System Name</h6>
@@ -81,6 +80,7 @@ helper(['number', 'general']);
                         <h6 class="mb-0"> <?= $lead->Sys_Name ?></h6>
                       </div>
                     </div>
+                   
                     <div class="row custom_row">
                       <div class="col-sm-5">
                         <h6 class="mb-0">User Name</h6>
@@ -89,25 +89,6 @@ helper(['number', 'general']);
                         <h6 class="mb-0"><?= $sessData['full_name'] ?></h6>
                       </div>
                     </div>
-
-
-                    <div class="row custom_row">
-                      <div class="col-sm-5">
-                        <h6 class="mb-0">Owner</h6>
-                      </div>
-                      <div class="col-sm-7">
-                        <h6 class="mb-0"> <?= $lead->User_Name ?></h6>
-                      </div>
-                    </div>
-                    <div class="row custom_row">
-                      <div class="col-sm-5">
-                        <h6 class="mb-0">Course Value</h6>
-                      </div>
-                      <div class="col-sm-7">
-                        <h6 class="mb-0"> <?= number_to_amount($lead->Course_Value) ?></h6>
-                      </div>
-                    </div>
-
                     <div class="row custom_row">
                       <div class="col-sm-5">
                         <h6 class="mb-0">Entry Date</h6>
@@ -210,23 +191,31 @@ helper(['number', 'general']);
                             <lable>Source</lable>
                           </div>
                           <div class="col-sm-9">
-                            <select class="form-control" id="Source" name="Source">
+                            <select class="form-control" id="Source" name="Source" onchange="source_other(this.value)">
                               <option value="">Select</option>
                               <?php if (!empty($sources)) : ?>
                                 <?php foreach ($sources as $item) : ?>
                                   <option value="<?= $item['id'] ?>" 
                                   <?php
-                                                                      if ($lead->Source) {
-                                                                        echo ($item['id'] == $lead->Source) ? 'selected' : '';
-                                                                      }
-                                                                      ?>
-                                  
+                                      if ($lead->Source) {
+                                         echo ($item['id'] == $lead->Source) ? 'selected' : '';
+                                      }?>                                  
                                  ><?= $item['title'] ?></option>
                                 <?php endforeach;
                               else : ?>
                                 <option value="">Not Found</option>
                               <?php endif; ?>
                             </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group" id="other_sourse_area" style="display:none;">
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <lable>Other Source Description</lable>
+                          </div>
+                          <div class="col-sm-9">
+                            <textarea class="form-control" rows="1" cols="50" name="other_sourse"></textarea>   
                           </div>
                         </div>
                       </div>
@@ -257,15 +246,7 @@ helper(['number', 'general']);
                 </div>
                 <div class="card" id="View_card">
                   <div class="card-body">
-                    <h4 class="card-title"><strong>View Lead</strong></h4>
-                    <div class="row custom_row">
-                      <div class="col-sm-5">
-                        <h6 class="mb-0">Enquiry Date</h6>
-                      </div>
-                      <div class="col-sm-7">
-                        <h6 class="mb-0"> <?= dateFormat($lead->Enq_Dt) ?></h6>
-                      </div>
-                    </div>
+                    <h4 class="card-title"><strong>View Lead</strong></h4>                    
                     <div class="row custom_row">
                       <div class="col-sm-5">
                         <h6 class="mb-0">Full Name</h6>
@@ -314,14 +295,7 @@ helper(['number', 'general']);
                         <h6 class="mb-0"> <?= $lead->Location ?></h6>
                       </div>
                     </div>
-                    <div class="row custom_row">
-                      <div class="col-sm-5">
-                        <h6 class="mb-0">Source</h6>
-                      </div>
-                      <div class="col-sm-7">
-                        <h6 class="mb-0"> <?= !empty($lead->Source)? getSource($lead->Source):'' ?></h6>
-                      </div>
-                    </div>
+                    
                     <div class="row custom_row">
                       <div class="col-sm-5">
                         <h6 class="mb-0">Course Name</h6>
@@ -397,12 +371,7 @@ helper(['number', 'general']);
                                 <h6 class="mb-0">Last updated by</h6>
                               </div>
                               <div class="col-sm-7">
-                                <h6 class="mb-0"> <?= 
-                                
-                                 getUser($lead->Last_Updated_By)??'';
-                               
-                                
-                                ?></h6>
+                                <h6 class="mb-0"> <?= getUser($lead->Last_Updated_By) ?></h6>
                               </div>
                             </div>
 
@@ -415,26 +384,77 @@ helper(['number', 'general']);
                     <div class="card mt-2">
                       <div class="card-body">
                         <div class="row">
-                          <h5>Fee Status </h5>
+                          <h5></h5>
                         </div>
-                        <?php 
-                        $paid_amount = 0;
-                      
-                        if ($paid_amount ==  $lead->Course_Value) {
-                          $feeStatus = "Full Fee Submitted.";
-                        } else if ($paid_amount < $lead->Course_Value) {
-                          $feeStatus = "Pending.";
-                        } ?>
                         <div class="row custom_row">
-                          <h5 class="text-info"><?php echo  $feeStatus; ?></h5>
-                        </div>
-                        <div class="row mt-2">
+                          <div class="col-sm-5">
+                            <h6 class="mb-0">Enquiry Date</h6>
+                          </div>
+                          <div class="col-sm-7">
+                            <h6 class="mb-0"> <?= dateFormat($lead->Enq_Dt) ?></h6>
+                          </div>
+                        </div>                       
+
+                          <div class="row custom_row">
+                            <div class="col-sm-5">
+                              <h6 class="mb-0">Lead Owner</h6>
+                            </div>
+                            <div class="col-sm-7">
+                              <h6 class="mb-0"> <?= $lead->User_Name ?></h6>
+                            </div>
+                          </div>
+                          <div class="row custom_row">
+                            <div class="col-sm-5">
+                              <h6 class="mb-0">Course Value</h6>
+                            </div>
+                            <div class="col-sm-7">
+                              <h6 class="mb-0"> <?= number_to_amount($lead->Course_Value) ?></h6>
+                            </div>
+                          </div>  
+                           <div class="row custom_row">
+                              <div class="col-sm-5">
+                                <h6 class="mb-0">Source</h6>
+                              </div>
+                              <div class="col-sm-7">
+                                <h6 class="mb-0"> <?= !empty($lead->Source)? getSource($lead->Source):'' ?></h6>
+                              </div>
+                            </div>
+                            <?php if($lead->Source == 5): ?>
+                              <div class="row custom_row">
+                              <div class="col-sm-5">
+                                <h6 class="mb-0">Source Description</h6>
+                              </div>
+                              <div class="col-sm-7">
+                                <h6 class="mb-0"><?php echo $lead->other_sourse; ?></h6>
+                              </div>
+                            </div>
+                            <?php endif; ?>
+                          
+                            <div class="row custom_row">
+                              <div class="col-sm-5">
+                                <h6 class="mb-0">Status</h6>
+                              </div>
+                              <div class="col-sm-7">
+                                <h6 class="mb-0"> <?= !empty($lead->status)? 'Active':'' ?></h6>
+                              </div>
+                            </div>
+                        <?php 
+                        // $paid_amount = 0;
+                      
+                        // if ($paid_amount ==  $lead->Course_Value) {
+                        //   $feeStatus = "Full Fee Submitted.";
+                        // } else if ($paid_amount < $lead->Course_Value) {
+                        //   $feeStatus = "Pending.";
+                        // } ?>
+                        <!-- <div class="row custom_row">
+                          <h5 class="text-info"><?php // echo  $feeStatus; ?></h5>
+                        </div> -->
+                        <!-- <div class="row mt-2">
                           <strong>Click here for check fee Detials.<strong>
-                              <!-- Button trigger modal -->
-                              <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target=".bd-example-modal-lg">
+                             <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target=".bd-example-modal-lg">
                                 Fee detials.
                               </button>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>
@@ -477,15 +497,11 @@ helper(['number', 'general']);
                 <div class="col-sm-8">
                   <select id="callstatussel" class="form-control" name="call_status" required="">
                     <option value="">select</option>
-                    <option value="1">Didn't Answer</option>
-                    <option value="2">Unreachable</option>
-                    <option value="3">Switched off</option>
-                    <option value="4">Not Intrested</option>
-                    <option value="5">Already Taken</option>
-                    <option value="6">Connected</option>
-                    <option value="7">Follow Up</option>
-                    <option value="8">Intrested</option>
-                    <option value="9">Details Shared</option>
+                      <?php if ($callStatus):
+                        foreach($callStatus as $value): ?>
+                          <option value="<?= $value->id; ?>"><?= $value->title; ?></option>
+                        <?php endforeach;
+                      endif;?>  
                   </select>
                 </div>
               </div>
@@ -619,3 +635,13 @@ helper(['number', 'general']);
     </div>
   </div>
 </div>
+<script>
+    function source_other(value){
+    console.log(value);
+    if(value ==5){
+      document.getElementById('other_sourse_area').style.display = "block";
+    }else{
+      document.getElementById('other_sourse_area').style.display = "none";
+    }  
+  }
+</script>

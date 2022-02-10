@@ -138,6 +138,9 @@
           <li class="nav-item">
             <a class="nav-link" href="<?= base_url('admin/category'); ?>">Category </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('admin/status'); ?>">Call status</a>
+          </li>
         </ul>
       </div>
     </li>

@@ -17,9 +17,9 @@ $(function () {
                     url: urli,                   
                     success: function (data) {                    
                         $("#lead_id").val(data.id);
-                        $('#total_fee').val(data.Course_Value);
-                        $('#total_Paid').val(data.paid_amount);
-                        $('#balance_amount').val(data.Course_Value - data.paid_amount);
+                        $('#total_fee').text(data.Course_Value);
+                        $('#total_Paid').text(data.paid_amount);
+                        $('#balance_amount').text(data.Course_Value - data.paid_amount);
                     }
                 });
             }
@@ -28,12 +28,15 @@ $(function () {
 
     $('#fee_collection').on('submit', function (e) {
         e.preventDefault();
-        var total_fee = $('#total_fee').val();
-        var paid_amount = $('#paid_amound').val();
-  
-        if ( parseFloat(paid_amount) > parseFloat(total_fee)){
-            alert('You are not allowed to collect more than total fee.');
-            window.location.reload();
+        var total_fee = $('#total_fee').html();    // total fee of the course 
+        var total_Paid = $('#total_Paid').html();  // fee paid by lead
+        var balance_amount = $('#balance_amount').html();  // balance amount 
+        var paid_amount = $('#paid_amound').val();  // current amount paying by lead.
+        
+        if ( parseFloat(paid_amount) > parseFloat(total_fee) || parseFloat(paid_amount) > parseFloat(balance_amount)){
+            alert('You are not allowed to collect more than total fee.');         
+        }else if(parseFloat(total_Paid) == parseFloat(total_fee)){
+            alert('No Due Amount.');           
         }else{
             
         let urli = BaseUrl + `/fee/collect`;
@@ -48,28 +51,15 @@ $(function () {
                     },
                     url: urli,
                     data: formData,
-                    success: function (data) {  
-                                         
+                    success: function (data) {                                           
                         if (data.status===200) {
                             document.getElementById("fee_collection").reset();
-                            $('#exampleModal').modal('hide');
-                            message = `<div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong></strong> ${data.messages.success}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>`;
-                        $('#alertMessage').html(message); 
-                            setTimeout(() => { window.location.reload()  }, 600);
-                        } else {
-                            message = `<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong></strong> ${data.messages.success}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>`;
-                            $('#alertMessage').html(message);
-                            setTimeout(() => { window.location.reload() }, 600);
+                            $('#exampleModal').modal('hide');                          
+                            Notiflix.Notify.success(data.messages.success);                         
+                            setTimeout(() => { window.location.reload()}, 1000);
+                        } else {                            
+                            Notiflix.Notify.error(data.messages.success);                         
+                            setTimeout(() => { window.location.reload()}, 1000);
                         }
                     }
                 });
@@ -97,8 +87,8 @@ function loadTimeline(id){
                    $.each(data, function( index, val ) {
                       html2 += `<li class="tl-item" ng-repeat="item in retailer_history">`
                       html2 += `<div class="timestamp"><strong>${val.created_at}</strong></div>`                              
-                      html2 +=  `<div class="item-title"><strong>${val.subject}</strong></div>`
-                      html2 +=  `<div class="item-detail">${val.comments}</div></li>`                                
+                      html2 += `<div class="item-title"><strong>${val.subject}</strong></div>`
+                      html2 += `<div class="item-detail">${val.comments}</div></li>`                                
 
                     });
                    $('#dy_timeline').html(html2);                        
@@ -112,8 +102,7 @@ function View_Change(){
     document.getElementById("Update_card").style.display = "block";   
 }
 
-function payment(value){
-    var total_fee = $('#total_fee').val();
+function payment(value){ 
     if(value == 1){
         document.getElementById("payment_type").value = 'Partially';           
     }else {
@@ -121,3 +110,14 @@ function payment(value){
     }    
 }
 
+
+function changeStatus(value){ 
+    var total_fee = $('#total_fee').html();   
+    var balance_amount = $('#balance_amount').html();
+    if( parseFloat(value) > parseFloat(total_fee) || parseFloat(value) > parseFloat(balance_amount) ){        
+        $('#note').html('You are not allowed to collect more fee than total fee.');         
+    }else {
+        $('#note').html('');           
+    } 
+   
+}

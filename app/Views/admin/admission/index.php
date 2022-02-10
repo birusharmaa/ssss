@@ -64,7 +64,7 @@ $emp = $session->get('loginInfo');
                           <?php foreach ($leads as $lead) : ?>
                             <tr>
                               <td><?= $i++ ?></td>
-                              <td><?= $lead->Name ?></td>
+                              <td> <a href="<?= base_url('admin/add_lead/' . $lead->lead_id) ?>"> <?= $lead->Name ?></a></td>
                               <td><?= $lead->Email ?></td>
                               <td><?= $lead->Mob_1 ?></td>
                               <td><?= $lead->City ?></td>

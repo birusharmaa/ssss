@@ -1,8 +1,6 @@
 <?php
 $session = session();
 $emp = $session->get('loginInfo');
-
-
 ?>
 
 <!DOCTYPE html>
@@ -13,8 +11,9 @@ $emp = $session->get('loginInfo');
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>XLAcademy Admin</title>
   <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
-  <script src="<?= base_url(); ?>/assets/js/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/timeline.css">
+  <script src="<?= base_url(); ?>/assets/js/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body class="sidebar-fixed">
@@ -56,11 +55,13 @@ $emp = $session->get('loginInfo');
                         </tr>
                       </thead>
                       <tbody>
-
-                        <?php $num=0;
-                         if (!empty($leads)) : $i = 1; ?>
+                        <?php $num=0; if (!empty($leads)) :
+                          $i = 1;
+                        ?>
                           <?php foreach ($leads as $lead) : ?>
-                            <?php if($num==0){ $num= $lead->id; }?>                            
+                            <?php if($num==0){
+                                $num= $lead->id;
+                            }?>                            
                             <tr>
                               <td><?= $i++ ?></td>
                               <td>
@@ -75,10 +76,7 @@ $emp = $session->get('loginInfo');
                             </tr>
                           <?php endforeach; ?>
                           <input type="hidden" id="first_id" name="first_id" value="<?php echo $num?>">
-                        <?php else : ?>                           
-                          <tr>
-                            <td colspan="8">No lead found</td>
-                          </tr>
+                       
                         <?php endif; ?>
                       </tbody>
                     </table>
@@ -110,20 +108,40 @@ $emp = $session->get('loginInfo');
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">            
+      <div class="modal-body">
+            <div class="row">
+              <div class="col-4">
+                  <div class="form-group">
+                     <lable>Total Fee</lable>
+                     <input type="number" name="total_fee" id="total_fee" class="form-control" readonly>   
+                  </div>         
+              </div>
+              <div class="col-4">
+                  <div class="form-group">
+                     <lable>Total Paid</lable>
+                     <input type="number" name="total_Paid" id="total_Paid" class="form-control" readonly>   
+                  </div>          
+              </div>
+              <div class="col-4">
+                  <div class="form-group">
+                     <lable>Total Balance</lable>
+                     <input type="number" name="balance_amount" id="balance_amount" class="form-control" readonly>   
+                  </div>         
+              </div>
+            </div> 
         <form id="fee_collection">           
             <input type="hidden" id="lead_id" name="lead_id">  
-              <div class="row">
-                <div id="note" class="text-danger"></div>              
-              </div>                      
-              <div class="row">               
-                <div class="col-4">
+                         
+            <div class="row">               
+                <div class="col-12">
                     <div class="form-group">
                         <lable>Current Pay Amount</lable>
-                        <input type="number" name="paid_amount" id="paid_amound" class="form-control" onkeyup="changeStatus(this.value)" required>   
+                        <input type="number" name="paid_amount" id="paid_amound" class="form-control"  required>   
                     </div>
                 </div>
-                <div class="col-4">
+            </div>
+            <div class="row">
+               <div class="col-6">
                     <div class="form-group">
                         <lable>Payment Circle</lable>                        
                         <select class="form-control" name="payment_circle" onchange="payment(this.value);" required>
@@ -133,13 +151,13 @@ $emp = $session->get('loginInfo');
                         </select> 
                       </div>    
                 </div> 
-                <div class="col-4">
+                <div class="col-6">
                     <div class="form-group">
                         <lable>Payment Type</lable> 
                         <input type="text" name="payment_type" id="payment_type" class="form-control" readonly> 
                       </div>
                 </div>
-            </div>                         
+            </div>              
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
@@ -165,38 +183,18 @@ $emp = $session->get('loginInfo');
                 </div>
             </div>            
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <div class="text-group">
                         <lable>Remark</lable>
                         <textarea class="form-control" name="remark" required></textarea>
                     </div>                    
                 </div>
-                <div class="col-6">
-                <div class="row mt-2"> 
-                  <div class="col-md-6"></div>              
-                    <div class="col-md-6">
-                          <div class="row">
-                            <h5 class="text-primary mr-4" >Total Fee :- </h5> 
-                            <h5 id="total_fee"></h5> 
-                          </div>                        
-                          <div class="row">
-                            <h5 class="text-primary mr-4">Total Paid :- </h5>
-                            <h5 id="total_Paid"></h5> 
-                          </div> 
-                          <div class="row">
-                            <h5 class="text-primary mr-4">Total Balance :-</h5>
-                            <h5 id="balance_amount"></h5>
-                          </div>                                                           
-                        </div>         
-                    </div>
-                  </div>        
-                </div>          
-            </div>            
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div> 
-        </form>       
+        </form>
       </div>    
     </div>
   </div>
