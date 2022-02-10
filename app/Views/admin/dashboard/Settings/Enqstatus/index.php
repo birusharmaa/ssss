@@ -30,11 +30,40 @@ $data = $session->get('loginInfo');
               </ol>
             </nav>
           </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  
+          <div class="page-content">
+            <div class="card">
+              <div class="card-header">
+                <div class="row m-0">
+                  <div class="col-md-8"></div>
+                  <div class="col-md-8 offset-11"><button class="btn btn-primary"> <i class="fas fa-plus"></i> Add New</button></div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table id="leads-table" class="table">
+                    <thead>
+                      <tr>
+                        <th>Sr.No.</th>
+                        <th>Account</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php if (!empty($leads)) :
+                        $i = 1;
+                      ?>
+                        <?php foreach ($leads as $lead) : ?>
+                          <tr>
+                            <td><?= $i++ ?></td>
+                            <td> <a href="<?= base_url('admin/add_lead/' . $lead->lead_id) ?>"> <?= $lead->Name ?></a></td>
+                            <td>
+                              <button class="btn btn-outline-primary"> <a href="<?= base_url('admin/add_lead/' . $lead->lead_id) ?>">View</a> </button>
+                            </td>
+                          </tr>
+                        <?php endforeach; ?>
+                      <?php endif; ?>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
