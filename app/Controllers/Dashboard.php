@@ -66,7 +66,7 @@ class Dashboard extends BaseController
      */
     public function category()
     {
-        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Category & Subcategory'];
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Courses & Subjects'];
         return view('admin/dashboard/Category/index', $pageData);
     }
 
@@ -198,9 +198,81 @@ class Dashboard extends BaseController
      */
     public function status(){
         $empid = $this->session->get('loginInfo'); 
-        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Status', 'empid' => $empid['emp_id']];
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Call Status', 'empid' => $empid['emp_id']];
         return view('admin/dashboard/status/index',$pageData);
     }
+
+     /**
+     * Function is used to load account table views
+     *
+     * @return array
+     */
+    public function accounts()
+    {
+        $empid = $this->session->get('loginInfo');
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Accounts', 'empid' => $empid['emp_id']];
+        return view('admin/dashboard/Settings/Accounts/index', $pageData);
+    }
+    /**
+     * Function is used to show inquiry pages
+     *
+     * @return array
+     */
+    public function enqStatus()
+    {
+        $empid = $this->session->get('loginInfo');
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Enquiry status', 'empid' => $empid['emp_id']];
+        return view('admin/dashboard/Settings/Enqstatus/index', $pageData);
+    }
+
+    /**
+     *  Function is used to show location page     
+     * 
+     * @return array
+     */
+    public function location()
+    {
+        $empid = $this->session->get('loginInfo');
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Location', 'empid' => $empid['emp_id']];
+        return view('admin/dashboard/Settings/Location/index', $pageData);
+    }
+
+    /**
+     *  Function is used to show subject page
+     *
+     * @return array
+     */
+    public function subject()
+    {
+        $empid = $this->session->get('loginInfo');
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Subject', 'empid' => $empid['emp_id']];
+        return view('admin/dashboard/Settings/Subjects/index', $pageData);
+    }
+
+    /**
+     *  Function is used to show system details page
+     *
+     * @return array
+     */
+    public function systemDetails()
+    {
+        $empid = $this->session->get('loginInfo');
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'System Details', 'empid' => $empid['emp_id']];
+        return view('admin/dashboard/Settings/SystemSetails/index', $pageData);
+    }
+
+    /**
+     * Function is used to show list of teams
+     *
+     * @return array
+     */
+    public function team()
+    {
+        $empid = $this->session->get('loginInfo');
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Team List', 'empid' => $empid['emp_id']];
+        return view('admin/dashboard/Settings/TeamList/index', $pageData);
+    }
+
 
     /**
      *  Function is used to logout the user and destroy the session

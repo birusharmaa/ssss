@@ -87,6 +87,14 @@ $routes->group('admin', ["filter" => "mysess"], function ($routes) {
     $routes->get('status', 'Dashboard::status');
 });
 
+$routes->group('settings', ["filter" => "mysess"], function ($routes) {
+    $routes->get('accounts', 'Dashboard::accounts');
+    $routes->get('location', 'Dashboard::location');
+    $routes->get('subject', 'Dashboard::subject');
+    $routes->get('sysdetails', 'Dashboard::systemDetails');
+    $routes->get('team', 'Dashboard::team');
+    $routes->get('enqstatus', 'Dashboard::enqStatus');
+});
 $routes->group('user', ["filter" => "mysess"], function ($routes) {    
     $routes->get('profile-setting', 'Settings::index/');
 });
