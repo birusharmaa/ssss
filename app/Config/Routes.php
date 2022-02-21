@@ -130,6 +130,16 @@ $routes->group('profile', ["filter" => "myauth"], function ($routes) {
     $routes->get('search','ProfileController::search');
 });
 
+$routes->group('settings', ["filter" => "mysess"], function ($routes) {
+    $routes->get('accounts', 'Dashboard::accounts');
+    $routes->get('location', 'Dashboard::location');
+    $routes->get('subject', 'Dashboard::subject');
+    $routes->get('sysdetails', 'Dashboard::systemDetails');
+    $routes->get('team', 'Dashboard::team');
+    $routes->get('enqstatus', 'Dashboard::enqStatus');
+    $routes->get('teamview/(:any)', 'Dashboard::teamview/$1');
+});
+
 $routes->group('leads',['filter' => 'myauth'], function ($routes) {
     $routes->post('search','Lead::search');
 });
@@ -169,6 +179,56 @@ $routes->group('status', ['filter' => 'myauth'], function ($routes) {
     $routes->post('insert','Status::create');
     $routes->delete('delete/(:any)','Status::delete/$1');    
     $routes->put('update/(:any)','Status::update/$1');  
+});
+
+$routes->group('account', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('all','Account::index');
+    $routes->get('show/(:any)','Account::show/$1');
+    $routes->post('insert','Account::create');
+    $routes->delete('delete/(:any)','Account::delete/$1');    
+    $routes->put('update/(:any)','Account::update/$1');  
+});
+
+$routes->group('enquiry', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('all','EnqStatus::index');
+    $routes->get('show/(:any)','EnqStatus::show/$1');
+    $routes->post('insert','EnqStatus::create');
+    $routes->delete('delete/(:any)','EnqStatus::delete/$1');    
+    $routes->put('update/(:any)','EnqStatus::update/$1');  
+});
+
+$routes->group('location', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('all','Location::index');
+    $routes->get('show/(:any)','Location::show/$1');
+    $routes->post('insert','Location::create');
+    $routes->delete('delete/(:any)','Location::delete/$1');    
+    $routes->put('update/(:any)','Location::update/$1');  
+});
+
+$routes->group('system', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('all','SystemDetials::index');
+    $routes->get('show/(:any)','SystemDetials::show/$1');
+    $routes->post('insert','SystemDetials::create');
+    $routes->delete('delete/(:any)','SystemDetials::delete/$1');    
+    $routes->put('update/(:any)','SystemDetials::update/$1');  
+});
+
+$routes->group('subject', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('all','Subject::index');
+    $routes->get('show/(:any)','Subject::show/$1');
+    $routes->post('insert','Subject::create');
+    $routes->delete('delete/(:any)','Subject::delete/$1');    
+    $routes->put('update/(:any)','Subject::update/$1');  
+});
+
+$routes->group('team', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('all','Team::index');
+    $routes->get('show/(:any)','Team::show/$1');
+    $routes->post('insert','Team::create');
+    $routes->delete('delete/(:any)','Team::delete/$1');    
+    $routes->put('update/(:any)','Team::update/$1');
+    $routes->post('insertImage/(:any)','Team::insertImage/$1'); 
+    $routes->put('deleteImage/(:any)','Team::deleteImage/$1');    
 });
 
 

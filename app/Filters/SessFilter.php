@@ -32,6 +32,7 @@ class SessFilter implements FilterInterface
         if (!$session->has('loginInfo')) {
             return redirect()->to(base_url());
         }
+        
         if (!$session->has('setting_sess')) {
             $model = new SettingModel();
             $pageData['settingData'] = $model->get()->getResult('array');

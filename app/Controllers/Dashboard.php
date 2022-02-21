@@ -10,6 +10,11 @@ use App\Models\api\SourceModel;
 use App\Models\CategoryModel;
 use App\Models\RoleModel;
 use App\Models\api\StatusModel;
+use App\Models\api\FeeModel;
+use App\Models\api\AccountModel;
+use App\Models\api\LocationModel;
+use App\Models\api\SystemModel;
+use App\Models\api\TeamModel;
 
 class Dashboard extends BaseController
 {
@@ -29,6 +34,10 @@ class Dashboard extends BaseController
         $this->CategoryModel = new CategoryModel();       
         $this->sourceModel = new SourceModel();
         $this->callStatus = new StatusModel();
+        $this->accountModel = new AccountModel();
+        $this->locationModel = new LocationModel();
+        $this->systemModel = new SystemModel();
+        $this->teamModel = new TeamModel();
         $this->session = \Config\Services::session();
         helper('general');
     }
@@ -261,7 +270,8 @@ class Dashboard extends BaseController
         return view('admin/dashboard/Settings/SystemSetails/index', $pageData);
     }
 
-    /**
+
+      /**
      * Function is used to show list of teams
      *
      * @return array
@@ -269,10 +279,22 @@ class Dashboard extends BaseController
     public function team()
     {
         $empid = $this->session->get('loginInfo');
-        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Team List', 'empid' => $empid['emp_id']];
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Team', 'empid' => $empid['emp_id']];
+        $pageData['account'] = $this->accountModel->findAll();
+        $pageData['location'] =  $this->locationModel->findAll();
+        $pageData['system'] =  $this->systemModel->findAll();        
         return view('admin/dashboard/Settings/TeamList/index', $pageData);
     }
 
+    public function teamview($id= null){
+        $empid = $this->session->get('loginInfo');
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Team View', 'empid' => $empid['emp_id']];
+        $pageData['account'] = $this->accountModel->findAll();
+        $pageData['location'] =  $this->locationModel->findAll();
+        $pageData['system'] =  $this->systemModel->findAll();   
+        $pageData['team'] = $this->teamModel->findTeam($id);     
+        return view('admin/dashboard/Settings/TeamList/view', $pageData);
+    }
 
     /**
      *  Function is used to logout the user and destroy the session

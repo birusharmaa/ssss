@@ -1,7 +1,7 @@
 /**
  * Function for load all users except admin from DB
  */
-function loadAllUses() {
+ function loadAllUses() {
     let url = BaseUrl + "/api/users";
     $.ajax
         ({
@@ -126,41 +126,46 @@ function loadAllCategories() {
 
 function getAllCategory(data) {
     let html = ``;
-    let html2 = `<option value="">select</option>`;
+    let html2 = ``;
     var first = 0;
-    if (data.length > 0) {
-
-
-        var num = 0;
-        html += `<tbody>`;
-        data.forEach((e) => {
-            if (first == 0) { first = e.id; }
-            html += `<tr>
-            <td>${++num}</td>
-            <td><a href= "#" style="color: #000000;" onclick="loadAllSubCategories(${e.id})">${e.title}</a></td>
-            <td>
-            <i class="fas fa-edit text-info"  id="${e.id}" onClick="editCat_click(this.id)"></i>
-            <i class="fas fa-trash-alt text-danger" id="${e.id}"  onClick="deleteCat_click(this.id)"></i>
-          </tr>`;
-        });
-        html += `</tbody>`;
-    
-        $('#Catfirstid').val(first);
-        $('#allCategory').html(html);
-      
+    var num = 0;
+    if (data.length > 0) {        
+        html2 += `<option>select</option>`;
         data.forEach((c) => {
             html2 += `<option value="${c.id}"> ${c.title} </option>`;
         });
     } else {
+        html = '<tr><td colspan="3">No Record found</td></tr>';
         html2 = '<option>No Record found</option>';
+    }   
+    $('#allCategory').html(html);   
+
+    /**
+     * Datatable of all Category.
+     */
+
+    let table = $('#allCategory').DataTable();
+    let dataSet = [];
+    if (data) {
+        data.forEach(e => {
+            if (first == 0) { first = e.id; }
+            let action = `<i class="fas fa-edit text-info"  id="${e.id}" onClick="editCat_click(this.id)"></i>
+            <i class="fas fa-trash-alt text-danger" id="${e.id}"  onClick="deleteCat_click(this.id)"></i>`;
+            let title =`<a href= "#" style="color: #000000;" onclick="loadAllSubCategories(${e.id})">${e.title}</a>`;
+            let row = [++num, title,action];
+            dataSet.push(row);
+        });
     }
+    $('#Catfirstid').val(first);
+    table.destroy();
+    $('#allCategory').DataTable({
+        data: dataSet,
+    });
 
-    $('#selCat').html(html2);
+    $('#selCat1').html(html2);
+    loadAllSubCategories(first); 
 
-    loadAllSubCategories(first);
 }
-
-
 /**
 * Function for load all SubCategory from DB
 */

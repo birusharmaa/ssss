@@ -35,7 +35,7 @@ class Database extends Config
         'hostname' => 'localhost',
         'username' => 'root', //thewings_xlacademy
         'password' => '', //oX5sczh^KoX~
-        'database' => 'xlacademy', //thewings_xlacademy
+        'database' => 'xlanew', //xlacademy
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,

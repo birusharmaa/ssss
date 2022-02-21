@@ -39,17 +39,18 @@
           <li class="nav-item d-none d-lg-block">
             <a class="nav-link" href="<?= base_url(); ?>/admin/new-leads">New Leads</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?= base_url() ?>/admin/final-leads">Final Leads</a>
+          
+           <li class="nav-item">
+            <a class="nav-link" href="<?= base_url()?>/admin/final-leads">Final Leads</a>
           </li>
           <li class="nav-item d-none d-lg-block">
-            <a class="nav-link" href="<?= base_url() ?>/admin/follow-up">Follow Ups</a>
+            <a class="nav-link" href="<?= base_url()?>/admin/follow-up">Follow Ups</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?= base_url() ?>/admin/admission">Admission</a>
+            <a class="nav-link" href="<?= base_url()?>/admin/admission">Admission</a>
           </li>
           <li class="nav-item d-none d-lg-block">
-            <a class="nav-link" href="<?= base_url() ?>/admin/fee-collection">Fee Collection</a>
+            <a class="nav-link" href="<?= base_url()?>/admin/fee-collection">Fee Collection</a>
           </li>
         </ul>
       </div>
@@ -128,14 +129,14 @@
       </a>
       <div class="collapse" id="web-setting">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" href="<?= base_url('settings/accounts'); ?>">Account</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('admin/status'); ?>">Call status</a>
+            <a class="nav-link" href="<?= base_url('admin/status'); ?>">Call Status </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('admin/category'); ?>">Course</a>
+            <a class="nav-link" href="<?= base_url('admin/category'); ?>">Category </a>
           </li>
           <li class="nav-item d-none d-lg-block">
             <a class="nav-link" href="<?= base_url('settings/enqstatus'); ?>">Enquire status</a>
@@ -146,9 +147,6 @@
           <li class="nav-item d-none d-lg-block">
             <a class="nav-link" href="<?= base_url('settings/location'); ?>">Location</a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('admin/roles'); ?>">Role & Permission </a>
-          </li> -->
           <li class="nav-item">
             <a class="nav-link" href="<?= base_url('settings/subject'); ?>">Subject</a>
           </li>
@@ -158,6 +156,11 @@
           <li class="nav-item">
             <a class="nav-link" href="<?= base_url('settings/team'); ?>">Team</a>
           </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('admin/roles'); ?>">Role & Permission </a>
+          </li> -->
+         
+          
         </ul>
       </div>
     </li>
