@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>XLAcademy Admin</title>
   <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
-  <script src="<?=base_url();?>/public/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="<?=base_url();?>/public/public/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 <body class="sidebar-fixed">
   <div class="container-scroller">
@@ -33,7 +33,7 @@
                   <div class="row">
                     <div class="col-lg-4">
                       <div class="border-bottom text-center pb-4">
-                        <img src="<?=base_url();?>/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3"/>
+                        <img src="<?=base_url();?>/public/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3"/>
                         <h3>David Grey. H</h3>
                       </div>
                       <div class="py-4">
@@ -248,7 +248,7 @@
                   <div class="row">
                     <div class="col-lg-4">
                       <div class="border-bottom text-center pb-4">
-                        <img src="<?=base_url();?>/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3"/>
+                        <img src="<?=base_url();?>/public/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3"/>
                         <h3>David Grey. H</h3>
                       </div>
                       <div class="py-4">

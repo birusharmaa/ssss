@@ -11,7 +11,7 @@ helper(['number', 'general']);
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>XLAcademy Admin</title>
   <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
-  <script src="<?= base_url(); ?>/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="<?= base_url(); ?>/public/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 <style>
   .custom_row {
@@ -51,7 +51,7 @@ helper(['number', 'general']);
                         <!-- <img src="https://www.sarojhospital.com/images/testimonials/dummy-profile.png" alt="profile" class="img-lg rounded-circle mb-3" /> -->
                         <img src="<?= $lead->Photo ?>" alt="profile" class="img-lg rounded-circle mb-3" />
                       <?php else : ?>
-                        <img src="/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
+                        <img src="/public/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
 
                       <?php endif; ?>
                       <h3><?= ucfirst($lead->Name) ?></h3>
@@ -466,9 +466,9 @@ helper(['number', 'general']);
       </div>
     </div>
     <?php include __DIR__ . '/../layout/jsLinks.php'; ?>
-    <script src="<?= base_url(); ?>/assets/js/xla-update-lead.js"></script>
-    <script src="<?= base_url(); ?>/assets/js/xla_fee_collection.js"></script>
-    <script src="<?= base_url(); ?>/assets/js/xla-followups.js"></script>
+    <script src="<?= base_url(); ?>/public/assets/js/xla-update-lead.js"></script>
+    <script src="<?= base_url(); ?>/public/assets/js/xla_fee_collection.js"></script>
+    <script src="<?= base_url(); ?>/public/assets/js/xla-followups.js"></script>
     <!-- Modal -->
     <div class="modal fade" id="followupsModal" tabindex="-1" role="dialog" aria-labelledby="followupsModalTitle" aria-hidden="true">
       <div class="modal-dialog" role="document">

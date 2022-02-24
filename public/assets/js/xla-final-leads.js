@@ -119,7 +119,7 @@ const loadLeadView = (obj) => {
     let html = '';
     let assignHtml = '';
     if (obj) {
-        let avatar = (obj.Photo != null && obj.Photo != '') ? obj.Photo : BaseUrl + '/assets/images/faces/face13.jpg';
+        let avatar = (obj.Photo != null && obj.Photo != '') ? obj.Photo : BaseUrl + '/public/assets/images/faces/face13.jpg';
         html += `<div class="card" style="width: 18rem;">
             <img class="card-img-top" src="${avatar}" alt="Card image cap">
             <div class="card-body">

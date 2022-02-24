@@ -92,7 +92,7 @@
     </div>
   </div>
   <?php include __DIR__ . '/../../layout/jsLinks.php'; ?>
-  <script src="<?= base_url(); ?>/assets/js/xla-role-permission.js"></script>
+  <script src="<?= base_url(); ?>/public/assets/js/xla-role-permission.js"></script>
 </body>
 
 </html>

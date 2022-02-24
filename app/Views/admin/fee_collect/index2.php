@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title><?= $pageTitle ?></title>
   <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
-  <script src="<?= base_url(); ?>/assets/js/jquery-3.6.0.min.js"></script>
-  <script src="<?= base_url(); ?>/assets/css/dropzone.css"></script>
+  <script src="<?= base_url(); ?>/public/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="<?= base_url(); ?>/public/assets/css/dropzone.css"></script>
 </head>
 
 <body class="sidebar-fixed">
@@ -279,8 +279,8 @@
     </div>
   </div>
 
-  <script src="<?= base_url(); ?>/assets/js/xla-update-lead.js"></script>
-  <script src="<?= base_url(); ?>/assets/js/dropzone.js"></script>
+  <script src="<?= base_url(); ?>/public/assets/js/xla-update-lead.js"></script>
+  <script src="<?= base_url(); ?>/public/assets/js/dropzone.js"></script>
   <script>
     $(document).ready(function() {
       $('#leads-table').DataTable();

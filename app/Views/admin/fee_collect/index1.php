@@ -11,8 +11,8 @@ $emp = $session->get('loginInfo');
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>XLAcademy Admin</title>
   <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
-  <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/timeline.css">
-  <script src="<?= base_url(); ?>/assets/js/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="<?= base_url(); ?>/public/assets/css/timeline.css">
+  <script src="<?= base_url(); ?>/public/assets/js/jquery-3.6.0.min.js"></script>
 
 </head>
 
@@ -199,8 +199,8 @@ $emp = $session->get('loginInfo');
     </div>
   </div>
 </div>
-<script src="<?= base_url(); ?>/assets/js/xla_fee_collection.js"></script>                       
-<script src="<?= base_url(); ?>/assets/js/xla-update-lead.js"></script>
+<script src="<?= base_url(); ?>/public/assets/js/xla_fee_collection.js"></script>                       
+<script src="<?= base_url(); ?>/public/assets/js/xla-update-lead.js"></script>
    
     <script>
       $(document).ready(function() {

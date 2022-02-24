@@ -1468,7 +1468,7 @@ if (!function_exists("get_custom_theme_color_list")) {
     {
         //scan the css files for theme color and show a list
         try {
-            $dir = getcwd() . '/assets/css/color/';
+            $dir = getcwd() . '/public/assets/css/color/';
             $files = scandir($dir);
             if ($files && is_array($files)) {
 

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>XLAcademy Admin</title>
   <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
-  <script src="<?= base_url(); ?>/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="<?= base_url(); ?>/public/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body class="sidebar-fixed">
@@ -37,7 +37,7 @@
                         <?php if (!empty($lead->Photo)) : ?>
                           <img src="<?= $lead->Photo ?>" alt="profile" class="img-lg rounded-circle mb-3" />
                         <?php else : ?>
-                          <img src="<?= base_url(); ?>/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
+                          <img src="<?= base_url(); ?>/public/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
                         <?php endif; ?>
                         <h3><?= $lead->Name ?></h3>
                       </div>
@@ -166,7 +166,7 @@
       </div>
     </div>
     <?php include __DIR__ . '/../layout/jsLinks.php'; ?>
-    <script src="<?= base_url(); ?>/assets/js/xla-update-lead.js"></script>
+    <script src="<?= base_url(); ?>/public/assets/js/xla-update-lead.js"></script>
 
 
     <script>
