@@ -8,11 +8,11 @@ class EnqStatusModel extends Model
     protected $table = 'xla_enq_status';
     protected $primaryKey = 'id';
     protected $allowedFields = [
-      'title', 
-      'description',
-      'created_at',
-      'update_at',      
-      'status'
+        'title', 
+        'description',
+        'created_at',
+        'update_at',      
+        'status'
     ];
     
     public function insertEnqStatus($data) {

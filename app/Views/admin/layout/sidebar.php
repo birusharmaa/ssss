@@ -6,7 +6,7 @@
           <?php if (!empty($sessData['picture_attachment'])) : ?>
             <img src="<?= $sessData['picture_attachment'] ?>" alt="profile" class="img-lg rounded-circle mb-3" />
           <?php else : ?>
-            <img src="<?= base_url(); ?>/public/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
+            <img src="<?= base_url(); ?>/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
           <?php endif; ?>
         </div>
         <div class="profile-name">
@@ -28,7 +28,7 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#daily-activity" aria-expanded="false" aria-controls="daily-activity">
         <i class="fas fa-briefcase menu-icon"></i>
         <span class="menu-title">Daily Activity</span>
@@ -54,6 +54,12 @@
           </li>
         </ul>
       </div>
+    </li> -->
+    <li class="nav-item">
+      <a class="nav-link" href="<?= base_url('admin/enquiry'); ?>">
+        <i class="fa fa-home menu-icon"></i>
+        <span class="menu-title">Enquiry</span>
+      </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#attendance" aria-expanded="false" aria-controls="attendance">
@@ -160,7 +166,7 @@
             <a class="nav-link" href="<?= base_url('admin/roles'); ?>">Role & Permission </a>
           </li> -->
          
-          
+
         </ul>
       </div>
     </li>

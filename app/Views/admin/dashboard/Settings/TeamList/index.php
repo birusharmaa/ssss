@@ -10,7 +10,7 @@ $data = $session->get('loginInfo');
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?= $pageTitle ?></title>
     <?php include __DIR__ . '/../../../layout/cssLinks.php'; ?>
-    <script src="<?= base_url(); ?>/public/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 <style>
     .error { color: red;}
@@ -203,9 +203,9 @@ $data = $session->get('loginInfo');
         <?php include __DIR__ . '/../../../layout/footer.php'; ?>
     </div>
     <?php include __DIR__ . '/../../../layout/jsLinks.php'; ?>
-    <script src="<?= base_url(); ?>/public/assets/js/jquery.validate.min.js"></script>
-    <script src="<?= base_url(); ?>/public/assets/js/xla-profile.js"></script>
-    <script src="<?= base_url(); ?>/public/assets/js/team.js"></script>
+    <script src="<?= base_url(); ?>/assets/js/jquery.validate.min.js"></script>
+    <script src="<?= base_url(); ?>/assets/js/xla-profile.js"></script>
+    <script src="<?= base_url(); ?>/assets/js/team.js"></script>
 </body>
 
 </html>

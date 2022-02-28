@@ -9,7 +9,7 @@ $data = $session->get('loginInfo');
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>XLAcademy Admin</title>
   <?php include __DIR__ . '/../../layout/cssLinks.php'; ?>
-  <script src="<?= base_url(); ?>/public/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="<?= base_url(); ?>/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body class="sidebar-fixed">
@@ -41,7 +41,7 @@ $data = $session->get('loginInfo');
                         <?php if (!empty($user['picture_attachment'])) : ?>
                           <img src="<?= $user['picture_attachment'] ?>" alt="profile" class="img-lg rounded-circle mb-3" />
                         <?php else : ?>
-                          <img src="<?= base_url(); ?>/public/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
+                          <img src="<?= base_url(); ?>/assets/images/faces/face12.jpg" alt="profile" class="img-lg rounded-circle mb-3" />
                         <?php endif; ?>
                         <h3><?= $user['full_name'] ?? '' ?></h3>
                       </div>
@@ -200,7 +200,7 @@ $data = $session->get('loginInfo');
     </div>
   </div>
   <?php include __DIR__ . '/../../layout/jsLinks.php'; ?>
-  <script src="<?= base_url(); ?>/public/assets/js/xla-profile.js"></script>
+  <script src="<?= base_url(); ?>/assets/js/xla-profile.js"></script>
 
   <script>
     $(document).ready(function() {

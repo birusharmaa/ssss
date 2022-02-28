@@ -85,6 +85,7 @@ $routes->group('admin', ["filter" => "mysess"], function ($routes) {
     $routes->get('add_lead/(:any)', 'Dashboard::add_lead/$1');
     $routes->get('fee-collection', 'Dashboard::fee_collection');
     $routes->get('status', 'Dashboard::status');
+    $routes->get('enquiry', 'Enquiry::index');
 });
 
 $routes->group('settings', ["filter" => "mysess"], function ($routes) {
@@ -230,6 +231,19 @@ $routes->group('team', ['filter' => 'myauth'], function ($routes) {
     $routes->post('insertImage/(:any)','Team::insertImage/$1'); 
     $routes->put('deleteImage/(:any)','Team::deleteImage/$1');    
 });
+
+$routes->group('leadsApi', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('all','Enquiry::getAllLeads');
+    $routes->get('show/(:num)','Enquiry::show/$1');
+    $routes->post('fetchData','Enquiry::fetchData');
+    $routes->post('saveComment','Enquiry::saveComment');
+    $routes->post('updateUserDetails','Enquiry::updateUserDetails');
+    // $routes->delete('delete/(:any)','Category::delete/$1');    
+    // $routes->put('update/(:any)','Category::update/$1');  
+});
+
+
+
 
 
 /*

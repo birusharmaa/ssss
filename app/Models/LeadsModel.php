@@ -8,6 +8,7 @@ class LeadsModel extends Model
 {
   protected $table = 'xla_leads';
   protected $primaryKey = 'id';
+  protected $allowedFields = ['Name', 'Enq_Dt', 'Follow_Up_Dt', 'Lead_Owner', 'Follow_Up_Comment', 'FollouUp_Counts', 'Unsubscribe', 'status'];
 
   public function getAllLeads()
   {

@@ -37,3 +37,7 @@ a {
 .jsgrid .jsgrid-table td, .jsgrid .jsgrid-table th, .table td, .table th{
     padding:2px !important;
 }
+
+input.form-control{
+    height: calc(2.25rem + 2px);
+}
