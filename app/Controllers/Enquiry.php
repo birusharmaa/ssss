@@ -15,22 +15,24 @@ use App\Models\api\EnqStatusModel;
 use App\Models\UserModel;
 use App\Models\api\SourceModel;
 use App\Models\api\LeadsCommentsModal;
-use CodeIgniter\HTTP\IncomingRequest;
 
 class Enquiry extends BaseController
 {
     use ResponseTrait;
     protected $leadModel;
     public function __construct(){
+        $this->request = service('request');
         $this->leadModel = new LeadsModel();
+        $validation =  \Config\Services::validation();
+
         $this->session = session();
         if (!$this->session->has('loginInfo')) {
             return redirect()->to(base_url());
         }
-        $request = service('request');
-
+        
     }
 
+    //Load index with defaults data
     public function index(){
         $pageData['pageTitle'] = "Enquiry";
         $pageData['pageHeading'] = "Lead Enquiry";
@@ -63,6 +65,7 @@ class Enquiry extends BaseController
 
         $this->enqStatusModel = new EnqStatusModel();
         $pageData['enqStatus'] = $this->enqStatusModel->findAll();
+
         return view('admin/enquiry/index', $pageData);
     }
 
@@ -84,7 +87,7 @@ class Enquiry extends BaseController
         
         if($data) {            
             return $this->respond($data);
-        } else {
+        }else{
             return $this->respond('No record found.');
         }
     }
@@ -113,16 +116,17 @@ class Enquiry extends BaseController
         }
     }
 
+    //Get filter data 
     public function fetchData($request = null){
-        $request    = service('request');
-        $enq_status  =  $request->getPost('enqStatus');
-        $owner_id    =  $request->getPost('ownerId');
-        $source_id   =  $request->getPost('sourceId');
-        $follow_up   =  $request->getPost('followUp');
-        $enq_date    =  $request->getPost('enqDate');
-        $follow_date =  $request->getPost('followUpDate');
-        $location    =  $request->getPost('location');
-        $city        =  $request->getPost('city');
+        
+        $enq_status  =  $this->request->getPost('enqStatus');
+        $owner_id    =  $this->request->getPost('ownerId');
+        $source_id   =  $this->request->getPost('sourceId');
+        $follow_up   =  $this->request->getPost('followUp');
+        $enq_date    =  $this->request->getPost('enqDate');
+        $follow_date =  $this->request->getPost('followUpDate');
+        $location    =  $this->request->getPost('location');
+        $city        =  $this->request->getPost('city');
 
         $where_condition = array();
 
@@ -182,7 +186,6 @@ class Enquiry extends BaseController
             $where_condition = array_merge($where_condition,$where);
         }
 
-        
         $this->leadModel->join('xla_users', 'xla_users.emp_id = xla_leads.Lead_Owner', 'LEFT');
         $this->leadModel->join('xla_source', 'xla_source.id = xla_leads.Source', 'LEFT');
         $this->leadModel->select('xla_users.full_name AS owner_name');
@@ -200,62 +203,79 @@ class Enquiry extends BaseController
         }
     }
 
+    //Save comments details
     public function saveComment(){
-        $request    = service('request');
-        $session = session();
-        $lead_id     =  $request->getPost('loadId');
-        $comments    =  $request->getPost('comments');
-        $created_by  = $session->get('loginInfo')['emp_id'];
+        $session     = session();
+        $validation =  \Config\Services::validation();
 
-        $data = array(
-            "lead_id" => $lead_id,
-            "comments" => $comments,
-            "created_by" => $created_by
-        );
+        $lead_id     =  $this->request->getPost('loadId');
+        $comments    =  $this->request->getPost('comments');
+        $created_by  =  $session->get('loginInfo')['emp_id'];
+        
+        if ($this->validate([
+            'loadId' => 'required',
+            'comments' => 'required',
+        ])){
+            $data = array(
+                "lead_id"    => $lead_id,
+                "comments"   => $comments,
+                "created_by" => $created_by
+            );
 
-        $lead_comment_model = new LeadsCommentsModal();
-        if($lead_comment_model->insert($data)){
-
-            $lead_comment_model->join('xla_users', 'xla_users.emp_id = xla_leads_comments.created_by', 'LEFT');
-            $lead_comment_model->select('xla_users.full_name');
-            $lead_comment_model->select('xla_leads_comments.created_at AS fallow_comments_time, xla_leads_comments.comments');
-            $lead_comment_model->orderBy('xla_leads_comments.id','DESC');            
-            $data['follow_comment'] = $lead_comment_model->where('lead_id',$lead_id)->findAll(5);
-            return $this->respond($data);
-        }else{
-
+            $lead_comment_model = new LeadsCommentsModal();
+            if($lead_comment_model->insert($data)){
+                $lead_comment_model->join('xla_users', 'xla_users.emp_id = xla_leads_comments.created_by', 'LEFT');
+                $lead_comment_model->select('xla_users.full_name');
+                $lead_comment_model->select('xla_leads_comments.created_at AS fallow_comments_time, xla_leads_comments.comments');
+                $lead_comment_model->orderBy('xla_leads_comments.id','DESC');            
+                $data['follow_comment'] = $lead_comment_model->where('lead_id',$lead_id)->findAll(5);
+                return $this->respond($data);
+            }else{
+                return $this->fail($data);
+            }
+        } else {
+            return $this->fail($validation->getErrors());
         }
     }
 
+    //Update user details data
     public function updateUserDetails(){
-
-        $request    = service('request');
-        $session = session();
-        $lead_id     =  $request->getPost('loadId');
-        $user_name    =  $request->getPost('userName');
-        $user_status    =  $request->getPost('userStatus');
-        $user_fallow    =  $request->getPost('userFallow');
-        $user_last_call    =  $request->getPost('userLastCall');
-        $user_next_call    =  $request->getPost('userNextCall');
-        $unsubscribe    =  $request->getPost('unsubscribe');
-
-        $user = $this->leadModel->find($lead_id);
-        if($user){
-            $data = [
-                'Enq_Dt' => $user_last_call,
-                'Follow_Up_Dt'    => $user_next_call,
-                "FollouUp_Counts" => $user_fallow,
-                "Unsubscribe"=> $unsubscribe,
-                "status"=> $user_status,
-                "Name"=> $user_name
-            ];
-            $this->leadModel->update($lead_id, $data);
-            $result = array("status" => 1, 'message' => "User details updated successfully.");
-            return $this->respond($result);
-        }else{
-            $result = ["message"=>"No record found."];
-            return $this->fail($result);
+        $validation =  \Config\Services::validation();
+        $session        = session();
+        $lead_id        = $this->request->getPost('loadId');
+        $user_name      = $this->request->getPost('userName');
+        $user_status    = $this->request->getPost('userStatus');
+        $user_fallow    = $this->request->getPost('userFallow');
+        $user_last_call = $this->request->getPost('userLastCall');
+        $user_next_call = $this->request->getPost('userNextCall');
+        $unsubscribe    = $this->request->getPost('unsubscribe');
+        if ($this->validate([
+            'loadId' => 'required',
+            'userName' => 'required',
+            'userStatus' => 'required',
+        ])){
+            $user = $this->leadModel->find($lead_id);
+            if($user){
+                $data = [
+                    'Enq_Dt' => $user_last_call,
+                    'Follow_Up_Dt'    => $user_next_call,
+                    "FollouUp_Counts" => $user_fallow,
+                    "Unsubscribe"=> $unsubscribe,
+                    "status"=> $user_status,
+                    "Name"=> $user_name
+                ];
+                $this->leadModel->update($lead_id, $data);
+                $result = array("status" => 1, 'message' => "User details updated successfully.");
+                return $this->respond($result);
+            }else{
+                $result = ["message"=>"No record found."];
+                return $this->fail($result);
+            }
+        } else {
+            return $this->fail($validation->getErrors());
         }
     }
+
+
 
 }

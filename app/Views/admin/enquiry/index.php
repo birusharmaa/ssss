@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?= $pageTitle ?></title>
     <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
-    <script src="<?= base_url(); ?>/assets/js/jquery-3.6.0.min.js"></script>
-    <script src="<?= base_url(); ?>/assets/css/dropzone.css"></script>
     <style type="text/css">
         .bottom-row{
             min-height: 215px;
@@ -175,7 +173,7 @@
                                         </div>
                                         
                                         <div class="col-sm-2">
-                                            <div class="row">
+                                            <div class="row mt-5">
                                                 <div class="col-md-8">
                                                     Total Leads
                                                 </div>
@@ -198,7 +196,7 @@
                                         </div>
 
                                         <div class="col-sm-3">
-                                            <div class="row">
+                                            <div class="row mt-5">
                                                 <div class="col-md-6">
                                                     Sales
                                                 </div>
@@ -629,6 +627,14 @@
                         if (jqxhr.status == 404) {
                             alert('No data found');
                         }
+                        if(jqxhr.responseJSON.messages.comments){
+                            $("#comments").addClass("input-error");
+                            $("#comments").parent().append('<span class="text-danger validation">'+jqxhr.responseJSON.messages.comments+'</span>');
+                        }
+                        if(jqxhr.responseJSON.messages.loadId){
+                            $("#comments").addClass("input-error");
+                            $("#comments").parent().append('<span class="text-danger validation">Please select lead</span>');
+                        }
                     }
                 });
             }
@@ -720,6 +726,18 @@
                     error: function (jqxhr, eception) {
                         if (jqxhr.status == 404) {
                             alert('No data found');
+                        }
+                        if(jqxhr.responseJSON.messages.userStatus){
+                            $("#userStatus").addClass("input-error");
+                            $("#userStatus").parent().append('<span class="text-danger validation">'+jqxhr.responseJSON.messages.userStatus+'</span>');
+                        }
+                        if(jqxhr.responseJSON.messages.userName){
+                            $("#userName").addClass("input-error");
+                            $("#userName").parent().append('<span class="text-danger validation">'+jqxhr.responseJSON.messages.userName+'</span>');
+                        }
+                        if(jqxhr.responseJSON.messages.loadId && !jqxhr.responseJSON.messages.userName){
+                            $("#userName").addClass("input-error");
+                            $("#userName").parent().append('<span class="text-danger validation">Please select lead</span>');
                         }
                     }
                 });
