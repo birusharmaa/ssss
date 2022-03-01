@@ -94,7 +94,7 @@ class Enquiry extends BaseController
 
         $this->leadModel->join('xla_enq_status', 'xla_enq_status.id = xla_leads.status', 'LEFT');
         $this->leadModel->select('xla_enq_status.title AS status_name');
-        $this->leadModel->select('xla_leads.id,xla_leads.status, xla_leads.Unsubscribe, xla_leads.FollouUp_Counts,xla_leads.name, xla_leads.Enq_Dt, xla_leads.FollowUp_Days');
+        $this->leadModel->select('xla_leads.id,xla_leads.status, xla_leads.Unsubscribe, xla_leads.FollouUp_Counts,xla_leads.name, xla_leads.Enq_Dt, xla_leads.Follow_Up_Dt');
         $data['data'] = $this->leadModel->find($id);
 
         //Fallow comments
@@ -105,7 +105,6 @@ class Enquiry extends BaseController
         $lead_comment_model->select('xla_leads_comments.created_at AS fallow_comments_time, xla_leads_comments.comments');
         $lead_comment_model->orderBy('xla_leads_comments.id','DESC');            
         $data['follow_comment'] = $lead_comment_model->where('lead_id',$id)->findAll(5);
-      
 
         if($data) {            
             return $this->respond($data);
@@ -124,7 +123,7 @@ class Enquiry extends BaseController
         $follow_date =  $request->getPost('followUpDate');
         $location    =  $request->getPost('location');
         $city        =  $request->getPost('city');
-        
+
         $where_condition = array();
 
         if(!empty($enq_status)){
@@ -157,14 +156,14 @@ class Enquiry extends BaseController
 
         if(!empty($enq_date)){
             $where = array(
-                'xla_leads.created_at'=> $enq_date
+                'xla_leads.Enq_Dt'=> $enq_date
             );
             $where_condition = array_merge($where_condition,$where);
         }
 
         if(!empty($follow_date)){
             $where = array(
-                'xla_leads.created_at'=> $follow_date
+                'xla_leads.Follow_Up_Dt'=> $follow_date
             );
             $where_condition = array_merge($where_condition,$where);
         }
@@ -189,8 +188,11 @@ class Enquiry extends BaseController
         $this->leadModel->select('xla_users.full_name AS owner_name');
         $this->leadModel->select('xla_source.title AS source_name');
         $this->leadModel->select('xla_leads.*');
-        $data = $this->leadModel->where($where_condition)->findAll();
-        
+        $data['details'] = $this->leadModel->where($where_condition)->findAll();
+
+        $this->leadModel->select('xla_leads.id');
+        $data['count_leads'] = $this->leadModel->where($where_condition)->findAll();
+        $data['count_leads'] = count($data['count_leads'] );
         if($data) {            
             return $this->respond($data);
         } else {
@@ -226,6 +228,7 @@ class Enquiry extends BaseController
     }
 
     public function updateUserDetails(){
+
         $request    = service('request');
         $session = session();
         $lead_id     =  $request->getPost('loadId');
@@ -246,7 +249,8 @@ class Enquiry extends BaseController
                 "status"=> $user_status,
                 "Name"=> $user_name
             ];
-            $result =  $this->leadModel->update($lead_id, $data);
+            $this->leadModel->update($lead_id, $data);
+            $result = array("status" => 1, 'message' => "User details updated successfully.");
             return $this->respond($result);
         }else{
             $result = ["message"=>"No record found."];
