@@ -233,12 +233,15 @@ $routes->group('team', ['filter' => 'myauth'], function ($routes) {
 });
 
 $routes->group('leadsApi', ['filter' => 'myauth'], function ($routes) {
+
     $routes->get('all','Enquiry::getAllLeads');
     $routes->get('show/(:num)','Enquiry::show/$1');
     $routes->post('fetchData','Enquiry::fetchData');
     $routes->post('saveComment','Enquiry::saveComment');
     $routes->post('updateUserDetails','Enquiry::updateUserDetails');
-    // $routes->delete('delete/(:any)','Category::delete/$1');    
+    $routes->post('insertLead','Enquiry::insertLead');
+    $routes->post('import','Enquiry::import');
+    //$routes->delete('delete/(:any)','Category::delete/$1');    
     // $routes->put('update/(:any)','Category::update/$1');  
 });
 

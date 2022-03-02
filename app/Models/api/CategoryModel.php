@@ -8,10 +8,10 @@ class CategoryModel extends Model
     protected $table = 'xla_category';
     protected $primaryKey = 'id';
     protected $allowedFields = [
-      'title', 
-      'status',
-      'created_at',
-      'updated_at'
+        'title', 
+        'status',
+        'created_at',
+        'updated_at'
     ];
     
     public function insertCategory($data) {

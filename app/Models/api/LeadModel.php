@@ -8,6 +8,8 @@ class LeadModel extends Model
 {
     protected $table = 'xla_leads';
     protected $primaryKey = 'id';
+    protected $createdField   = ['created_at','Data_Entry'];
+    protected $updatedField   = 'updated_at';
     protected $allowedFields = [
         'Sys_Name',
         'User_Name',
@@ -32,14 +34,14 @@ class LeadModel extends Model
         'Photo',
         'Course_Value',
         'Last_Updated_By',
-        'status',
-        'created_at'
+        'status'
     ];
 
     public function insertLeads($data)
     {
         $db = \Config\Database::connect();
         $builder = $db->table('xla_leads');
+
         return $builder->insert($data);
     }
 

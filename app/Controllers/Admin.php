@@ -121,7 +121,7 @@ class Admin extends ResourceController
         $data = $model->where('deleted', 0)->get()->getResultArray();
 
         $formData = $this->request->getRawInput();
-
+        
         if (empty($formData)) {
             $response = [
                 'status'   => 404,

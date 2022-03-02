@@ -5,6 +5,7 @@ namespace App\COntrollers;
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\LeadsModel;
+use App\Models\api\LeadModel;
 use App\Controllers\BaseController;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception; 
@@ -14,6 +15,7 @@ use Config\Services;
 use App\Models\api\EnqStatusModel;
 use App\Models\UserModel;
 use App\Models\api\SourceModel;
+use App\Models\api\CategoryModel;
 use App\Models\api\LeadsCommentsModal;
 
 class Enquiry extends BaseController
@@ -23,7 +25,8 @@ class Enquiry extends BaseController
     public function __construct(){
         $this->request = service('request');
         $this->leadModel = new LeadsModel();
-        $validation =  \Config\Services::validation();
+        $this->_leadModel = new LeadModel();
+        $this->validation =  \Config\Services::validation();
 
         $this->session = session();
         if (!$this->session->has('loginInfo')) {
@@ -35,7 +38,7 @@ class Enquiry extends BaseController
     //Load index with defaults data
     public function index(){
         $pageData['pageTitle'] = "Enquiry";
-        $pageData['pageHeading'] = "Lead Enquiry";
+        $pageData['pageHeading'] = "Leads Enquiry";
         $pageData['username'] = "username";
 
         //Select enqstatusmodel table data;
@@ -52,6 +55,11 @@ class Enquiry extends BaseController
         $this->sourceModel = new SourceModel();
         $this->sourceModel->select(['id', 'title']);
         $pageData['sourceModel'] = $this->sourceModel->findAll();
+
+        //Select all course or category data
+        $this->categoryModel = new CategoryModel();
+        $this->categoryModel->select(['id', 'title']);
+        $pageData['courseName'] = $this->categoryModel->findAll();
 
         $this->leadModel->join('xla_users', 'xla_users.emp_id = xla_leads.Lead_Owner', 'LEFT');
         $this->leadModel->join('xla_source', 'xla_source.id = xla_leads.Source', 'LEFT');
@@ -118,6 +126,8 @@ class Enquiry extends BaseController
 
     //Get filter data 
     public function fetchData($request = null){
+
+
         
         $enq_status  =  $this->request->getPost('enqStatus');
         $owner_id    =  $this->request->getPost('ownerId');
@@ -273,6 +283,180 @@ class Enquiry extends BaseController
             }
         } else {
             return $this->fail($validation->getErrors());
+        }
+    }
+
+
+    public function insertLead(){
+
+        
+        $photo= $this->request->getFile('photo');
+        $new_name = "";
+        if($photo->isValid()){
+            $new_name = $photo->getRandomName();
+            $photo->move('uploads', $new_name);
+        }
+       
+        $this->validation->setRules([
+            'sysName'         => ['label' => 'system name', 'rules' => 'required'],
+            'leadUserName'    => ['label' => 'user name', 'rules' => 'required'],
+            'name'            => 'required',
+            'email'           => 'required|valid_email',
+            'mob_1'           => ['label' => 'mobile 1', 'rules' => 'required'],
+            'mob_2'           => ['label' => 'mobile 2', 'rules' => 'required'],
+            'leadCity'        => ['label' => 'city', 'rules' => 'required'],
+            'leadLocation'    => ['label' => 'location', 'rules' => 'required'],
+            'leadEnqDate'     => ['label' => 'enquiry date', 'rules' => 'required'],
+            'FollowUpDate'    => ['label' => 'follow up date', 'rules' => 'required'],
+            'leadOwner'       => ['label' => 'lead owner', 'rules' => 'required'],
+            'enqCourse'       => ['label' => 'enquiry course', 'rules' => 'required'],
+            'courseValue'     => ['label' => 'course value', 'rules' => 'required'],
+            'source'          => ['label' => 'source', 'rules' => 'required'],
+            'status'          => ['label' => 'status', 'rules' => 'required'],
+            'keyComment'      => ['label' => 'key comment', 'rules' => 'required'],
+            'followUpComment' => ['label' => 'follow up comment', 'rules' => 'required'],
+            'FollowUpDays'    => ['label' => 'follow days', 'rules' => 'required'],
+            'FollouUpCounts'  => ['label' => 'follow up counts', 'rules' => 'required'],
+            'leadUnsubscribe' => ['label' => 'unsubscribe', 'rules' => 'required'],
+        ]);
+
+        if($this->validation->withRequest($this->request)->run()){       
+            $time = time();
+            $data = [
+                'Sys_Name'          => $this->request->getVar('sysName'),
+                'User_Name'         => $this->request->getVar('leadUserName'),
+                'Data_Entry'        => date('Y-m-d h:i:s'),
+                'Enq_Dt'            => $this->request->getVar('leadEnqDate'),
+                'Name'              => $this->request->getVar('name'),
+                'City'              => $this->request->getVar('leadCity'),
+                'Location'          => $this->request->getVar('leadLocation'),
+                'Mob_1'             => $this->request->getVar('mob_1'),
+                'mob_2'             => $this->request->getVar('mob_2'),
+                'Email'             => $this->request->getVar('email'),
+                'Follow_Up_Dt'      => $this->request->getVar('FollowUpDate'),
+                'Lead_Owner'        => $this->request->getVar('leadOwner'),
+                'Source'            => $this->request->getVar('source'),
+                'Enq_Course'        => $this->request->getVar('enqCourse'),
+                'Key_Comment'       => $this->request->getVar('keyComment'),
+                'Follow_Up_Comment' => $this->request->getVar('followUpComment'),
+                'Status_value'      => $this->request->getVar('statusValue'),
+                'FollowUp_Days'     => $this->request->getVar('FollowUpDays'),
+                'FollouUp_Counts'   => $this->request->getVar('FollouUpCounts'),
+                'Unsubscribe'       => $this->request->getVar('leadUnsubscribe'),
+                'Photo'             => $new_name,
+                'Course_Value'      => $this->request->getVar('courseValue'),
+                'Last_Updated_By'   => isset($this->session->get('loginInfo')['emp_id'])?$this->session->get('loginInfo')['emp_id']:"0",
+                'status'            => $this->request->getVar('status')
+            ];
+            
+            try {
+                $user = $this->_leadModel->insert($data);
+                $data = array('status'=>'Sucess', 'message' => '');
+                return $this->respond(json_encode($data));
+            } catch (\Exception $e) {
+                return $this->fail($e->getMessage(), 400);
+                return redirect()->route('leads');
+            }    
+        }else{
+            return $this->fail($this->validation->getErrors(), 400);
+            return redirect()->route('leads');
+        }
+    }
+
+    public function import(){
+
+       $this->validation->setRules([
+            'username'        => ['label' => 'system name', 'rules' => 'required'],
+            'importCourseVaue'=> ['label' => 'course ', 'rules' => 'required'],
+            'file_csv'        => ['label' => 'csv', 'rules'=> 'uploaded[file_csv]|ext_in[file_csv,csv]' ]
+        ]);
+
+        if($this->validation->withRequest($this->request)->run()){
+            date_default_timezone_set('Asia/Kolkata');
+            $session        = session();
+            $emp            = $session->get('loginInfo');
+            $model          = new LeadModel();
+            $username       = $this->request->getPost('username');
+            $file_name      = rand() . $_FILES['file_csv']['name'];
+            $filewithpath   = base_url() . "/public/temp/" . $file_name;
+            $file           = $this->request->getFile('file_csv');
+            $file->move('./temp', $file_name);
+            
+            $data           = $this->request->getPost();
+            $catid          = $this->request->getPost('importCourseVaue');
+            $subcatid       = NULL;
+            $handle1        = fopen('./temp/' . $file_name, "r");
+            $num            = 0;
+            $countLead      = 0;
+            $header         = fgetcsv($handle1, 1024, ",");
+            $header         = implode(",", $header);
+            $header         = '(' . $header . ')';
+            $leads          = [];
+
+            $host_name      = getHostName();
+            $Sys_Name       = getHostName();
+
+            try{
+                while (($row = fgetcsv($handle1, 1024, ",")) != FALSE) {
+                    
+                    ++$num;
+                    if (count($row) > 0) {          
+                        $Enq_Dt            = strtotime($row[0]);
+                        $Enq_Dt            = date('Y-m-d h:i:s', $Enq_Dt);
+                        $Follow_Up_Dt      = strtotime($row[7]);
+                        $Follow_Up_Dt      = date('Y-m-d h:i:s', $Follow_Up_Dt);
+                        $FollowUp_Days     = strtotime($row[12]);
+                        $FollowUp_Days     = date('Y-m-d h:i:s', $FollowUp_Days);
+
+                        $lead = array(
+                            "Sys_Name"     => $Sys_Name,
+                            "host_name"    => $host_name,
+                            "User_Name"    => $username,
+                            "Data_Entry"   => date('Y-m-d h:i:s'),
+                            "Enq_Dt"       => $Enq_Dt,
+                            "Name"         => $row[1],
+                            "City"         => $row[2],
+                            "Location"     => $row[3],
+                            "Mob_1"        => $row[4],
+                            "mob_2"        => $row[5],
+                            "Email"        => $row[6],
+                            "Follow_Up_Dt" => $Follow_Up_Dt,
+                            "Lead_Owner"   => $emp['emp_id'],
+                            "Source"       => $row[8],
+                            "Enq_Course"   => $catid,
+                            "Key_Comment"  => $row[9],
+                            "Status_value" => $row[11],
+                            "FollowUp_Days"=> $FollowUp_Days,
+                            "subcategory"  => $subcatid,
+                            "Course_Value" => $row[13],
+                            "created_at"   => date('Y-m-d h:i:s')
+                        );
+                        array_push($leads, $lead);
+                    }
+                }
+            
+                if ($model->importLeads($leads)) {
+                    $response = [
+                        'status'   => 200,
+                        'error'    => null,
+                        'messages' => [
+                            'success' =>  $num . ' Data Import Successfully.'
+                        ]
+                    ];
+                    return $this->respond($response);
+                    //$session->markAsFlashdata("import_lead_message", $num.' Data Import Successfully.');                   
+                    return redirect()->route('leads');
+                } else {
+                    return $this->fail('Data import unsuccessfull.', 400);
+                    return redirect()->route('leads');
+                }
+            }catch(\Exception $e){
+                return $this->fail("Please select valid format file.", 400);
+                return redirect()->route('leads');
+            }
+        }else{
+            return $this->fail($this->validation->getErrors(), 400);
+            return redirect()->route('leads');
         }
     }
 

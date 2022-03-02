@@ -111,41 +111,41 @@ $(function () {
      * Import Leads
      */
 
-    $('#import_form').on('submit', function (e) {
-        e.preventDefault();
-        let url = BaseUrl + `/leadsapi/import`;
-        var formData = new FormData(this);
-        if (formData) {
-            $.ajax
-                ({
-                    type: "post",
-                    url: url,
-                    data: formData,
-                    headers: {
-                        'email': email,
-                        'password': passw,
-                    },
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function (data) {
-                        if (data.status == 200) {
-                            document.getElementById("import_form").reset();
-                            $('#leadModelImport').modal('hide');
-                            Notiflix.Notify.success(data.messages.success);
-                            setTimeout(() => { window.location.reload() }, 600);
-                        }
+    // $('#import_form').on('submit', function (e) {
+    //     e.preventDefault();
+    //     let url = BaseUrl + `/leadsapi/import`;
+    //     var formData = new FormData(this);
+    //     if (formData) {
+    //         $.ajax
+    //             ({
+    //                 type: "post",
+    //                 url: url,
+    //                 data: formData,
+    //                 headers: {
+    //                     'email': email,
+    //                     'password': passw,
+    //                 },
+    //                 cache: false,
+    //                 contentType: false,
+    //                 processData: false,
+    //                 success: function (data) {
+    //                     if (data.status == 200) {
+    //                         document.getElementById("import_form").reset();
+    //                         $('#leadModelImport').modal('hide');
+    //                         Notiflix.Notify.success(data.messages.success);
+    //                         setTimeout(() => { window.location.reload() }, 600);
+    //                     }
 
-                    }, error: function (jqxhr, eception) {
+    //                 }, error: function (jqxhr, eception) {
 
-                        if (jqxhr.status == 404) {
-                            Notiflix.Notify.warning(data.messages.success);
-                            setTimeout(() => { window.location.reload() }, 600);
-                        }
-                    }
-                });
-        }
-    });
+    //                     if (jqxhr.status == 404) {
+    //                         Notiflix.Notify.warning(data.messages.success);
+    //                         setTimeout(() => { window.location.reload() }, 600);
+    //                     }
+    //                 }
+    //             });
+    //     }
+    // });
 
 
     $('#category').on('change', function () {

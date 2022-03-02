@@ -457,8 +457,7 @@ class Lead extends ResourceController
         return $this->respond($response);
     }
 
-    public function import()
-    {
+    public function import(){
 
         date_default_timezone_set('Asia/Kolkata');
         $session = session();
