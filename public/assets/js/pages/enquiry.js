@@ -145,7 +145,12 @@ function fetchData(){
         },
         dataType:'json',
         success: function (data) {
-            $('#totalLeads').text(data.count_leads);
+            $('#totalLeads').text(data.total_leads[0].id);
+            $('#totalLeadsLastMonth').text(data.total_leads_last_month[0].id);
+            $('#currentLeads').text(data.current_leads[0].id);
+            $('#currentLeadsLastMonth').text(data.current_leads_last_month[0].id);
+            $('#openLeads').text(data.open_leads[0].id);
+            $('#openLeadsLastMonth').text(data.open_leads_last_month[0].id);
             getAllLeads(data.details);
         },
         error: function (jqxhr, eception) {

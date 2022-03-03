@@ -61,12 +61,65 @@ class Enquiry extends BaseController
         $this->categoryModel->select(['id', 'title']);
         $pageData['courseName'] = $this->categoryModel->findAll();
 
-        $this->leadModel->join('xla_users', 'xla_users.emp_id = xla_leads.Lead_Owner', 'LEFT');
-        $this->leadModel->join('xla_source', 'xla_source.id = xla_leads.Source', 'LEFT');
-        $this->leadModel->select('xla_users.full_name AS owner_name');
-        $this->leadModel->select('xla_source.title AS source_name');
-        $this->leadModel->select('xla_leads.*');
-        $pageData['cound_leads'] = $this->leadModel->countAll();
+        // $this->leadModel->join('xla_users', 'xla_users.emp_id = xla_leads.Lead_Owner', 'LEFT');
+        // $this->leadModel->join('xla_source', 'xla_source.id = xla_leads.Source', 'LEFT');
+        // $this->leadModel->select('xla_users.full_name AS owner_name');
+        // $this->leadModel->select('xla_source.title AS source_name');
+        
+        //Count current month leads
+        $this->leadModel->selectCount('id');
+        $this->leadModel->where('MONTH(created_at)', date('m'));
+        $this->leadModel->where('YEAR(created_at)', date('Y'));
+        $pageData['current_month_count'] = $this->leadModel->findAll();
+
+        //Count previous month leads
+        $this->leadModel->selectCount('id');
+        $this->leadModel->where('MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
+        $this->leadModel->where('YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)');
+        $pageData['last_month_count'] = $this->leadModel->findAll();
+
+        //Count current month open leads
+        $this->leadModel->selectCount('id');
+        //$this->leadModel->where('lead_action_status', 0);
+        $this->leadModel->where('MONTH(created_at)', date('m'));
+        $this->leadModel->where('YEAR(created_at)', date('Y'));
+        $this->leadModel->where('MONTH(updated_at)', null);
+        $this->leadModel->where('YEAR(updated_at)', null);
+        $pageData['open_leads'] = $this->leadModel->findAll();
+        // echo $this->leadModel->getLastQuery();
+        // echo "<pre>";
+        // print_r($pageData['open_leads']);
+        // exit;
+
+        //Count previous month open leads
+        $this->leadModel->selectCount('id');
+        //$this->leadModel->where('lead_action_status !=', 0);
+        $this->leadModel->where('MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
+        $this->leadModel->where('MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
+        $this->leadModel->where('MONTH(updated_at)', null);
+        $this->leadModel->where('MONTH(updated_at)', null);
+        //$this->leadModel->where('MONTH(updated_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
+        //$this->leadModel->where('MONTH(updated_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
+        $pageData['last_open_leads'] = $this->leadModel->findAll();
+
+        //Count current month current leads
+        $this->leadModel->selectCount('id');
+        //$this->leadModel->where('lead_action_status !=', 0);
+        // $this->leadModel->where('MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
+        // $this->leadModel->where('YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)');
+        $this->leadModel->where('MONTH(updated_at)', date('m'));
+        $this->leadModel->where('YEAR(updated_at)', date('Y'));
+        $pageData['current_leads'] = $this->leadModel->findAll();
+
+        //Count previous month current leads
+        $this->leadModel->selectCount('id');
+        //$this->leadModel->where('lead_action_status !=', 0);
+        // $this->leadModel->where('MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
+        // $this->leadModel->where('YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)');
+        $this->leadModel->where('MONTH(updated_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
+        $this->leadModel->where('YEAR(updated_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)');
+        $pageData['last_leads'] = $this->leadModel->findAll();
+       
 
         $this->leadModel->selectSum('xla_leads.Course_Value');
         $pageData['leads_sum'] = $this->leadModel->findAll();
@@ -127,8 +180,6 @@ class Enquiry extends BaseController
     //Get filter data 
     public function fetchData($request = null){
 
-
-        
         $enq_status  =  $this->request->getPost('enqStatus');
         $owner_id    =  $this->request->getPost('ownerId');
         $source_id   =  $this->request->getPost('sourceId');
@@ -138,57 +189,57 @@ class Enquiry extends BaseController
         $location    =  $this->request->getPost('location');
         $city        =  $this->request->getPost('city');
 
+        //Current month leads count
         $where_condition = array();
-
         if(!empty($enq_status)){
             $where = array(
                 'xla_leads.status'=> $enq_status
             );
             $where_condition = array_merge($where_condition,$where);
         }
-
         if(!empty($owner_id)){
             $where = array(
                 'xla_leads.Lead_Owner'=> $owner_id
             );
             $where_condition = array_merge($where_condition,$where);
         }
-
         if(!empty($source_id)){
             $where = array(
                 'xla_leads.Source'=> $source_id
             );
             $where_condition = array_merge($where_condition,$where);
         }
-
         if(!empty($follow_up)){
             $where = array(
                 'xla_leads.FollouUp_Counts'=> $follow_up
             );
             $where_condition = array_merge($where_condition,$where);
         }
-
         if(!empty($enq_date)){
             $where = array(
                 'xla_leads.Enq_Dt'=> $enq_date
             );
             $where_condition = array_merge($where_condition,$where);
         }
-
         if(!empty($follow_date)){
             $where = array(
                 'xla_leads.Follow_Up_Dt'=> $follow_date
             );
             $where_condition = array_merge($where_condition,$where);
         }
-
+        if(empty($enq_date) && empty($follow_date)){
+            $where = array(
+                'MONTH(xla_leads.created_at)'=> date('m'),
+                'YEAR(xla_leads.created_at)'=> date('Y')
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
         if(!empty($location)){
             $where = array(
                 'xla_leads.Location'=> $location
             );
             $where_condition = array_merge($where_condition,$where);
         }
-
         if(!empty($city)){
             $where = array(
                 'xla_leads.City'=> $city
@@ -202,10 +253,357 @@ class Enquiry extends BaseController
         $this->leadModel->select('xla_source.title AS source_name');
         $this->leadModel->select('xla_leads.*');
         $data['details'] = $this->leadModel->where($where_condition)->findAll();
+        $this->leadModel->selectCount('id');
+        $data['total_leads'] = $this->leadModel->where($where_condition)->findAll();
 
-        $this->leadModel->select('xla_leads.id');
-        $data['count_leads'] = $this->leadModel->where($where_condition)->findAll();
-        $data['count_leads'] = count($data['count_leads'] );
+        //Last month total leads count
+        $where_condition = array();
+        $where = array();
+        if(!empty($enq_status)){
+            $where = array(
+                'xla_leads.status'=> $enq_status
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($owner_id)){
+            $where = array(
+                'xla_leads.Lead_Owner'=> $owner_id
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($source_id)){
+            $where = array(
+                'xla_leads.Source'=> $source_id
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($follow_up)){
+            $where = array(
+                'xla_leads.FollouUp_Counts'=> $follow_up
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($enq_date)){
+            $where = array(
+                'xla_leads.Enq_Dt'=> $enq_date
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($follow_date)){
+            $where = array(
+                'xla_leads.Follow_Up_Dt'=> $follow_date
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(empty($enq_date) && empty($follow_date)){
+            $where = array(
+                'MONTH(xla_leads.created_at)'=> (int) date('m', strtotime('-1 months')),
+                'YEAR(xla_leads.created_at)'=> (int) date('Y', strtotime('-1 months'))
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($location)){
+            $where = array(
+                'xla_leads.Location'=> $location
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($city)){
+            $where = array(
+                'xla_leads.City'=> $city
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        $this->leadModel->selectCount('id');
+        $data['total_leads_last_month'] = $this->leadModel->where($where_condition)->findAll();
+
+
+        //open lead counts data
+        $where_condition = array();
+        // $static = ['1', '2', '3', '4'];
+        //$where_condition = array_merge($where_condition,$where);
+        $where = array();
+        if(!empty($enq_status)){
+            $where = array(
+                'xla_leads.status'=> $enq_status
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($owner_id)){
+            $where = array(
+                'xla_leads.Lead_Owner'=> $owner_id
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($source_id)){
+            $where = array(
+                'xla_leads.Source'=> $source_id
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($follow_up)){
+            $where = array(
+                'xla_leads.FollouUp_Counts'=> $follow_up
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($enq_date)){
+            $where = array(
+                'xla_leads.Enq_Dt'=> $enq_date
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($follow_date)){
+            $where = array(
+                'xla_leads.Follow_Up_Dt'=> $follow_date
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(empty($enq_date) && empty($follow_date)){
+            $where = array(
+                'MONTH(xla_leads.created_at)'=> date('m'),
+                'YEAR(xla_leads.created_at)'=> date('Y'),
+                // 'MONTH(updated_at)' => date('m'),
+                // 'YEAR(updated_at)' => date('Y')
+                'MONTH(updated_at)' => null,
+                'YEAR(updated_at)' => null
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($location)){
+            $where = array(
+                'xla_leads.Location'=> $location
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($city)){
+            $where = array(
+                'xla_leads.City'=> $city
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        
+        $this->leadModel->selectCount('id');
+        $data['open_leads'] = $this->leadModel
+                                            ->where($where_condition)
+                                            //->whereIn('xla_leads.lead_action_status', $static)
+                                            ->findAll();
+
+
+        //last month open lead counts
+        $where_condition = array();
+        //$static = ['1', '2', '3', '4'];
+        //$where_condition = array_merge($where_condition,$where);
+        $where = array();
+        if(!empty($enq_status)){
+            $where = array(
+                'xla_leads.status'=> $enq_status
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($owner_id)){
+            $where = array(
+                'xla_leads.Lead_Owner'=> $owner_id
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($source_id)){
+            $where = array(
+                'xla_leads.Source'=> $source_id
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($follow_up)){
+            $where = array(
+                'xla_leads.FollouUp_Counts'=> $follow_up
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($enq_date)){
+            $where = array(
+                'xla_leads.Enq_Dt'=> $enq_date
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($follow_date)){
+            $where = array(
+                'xla_leads.Follow_Up_Dt'=> $follow_date
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(empty($enq_date) && empty($follow_date)){
+            $where = array(
+                'MONTH(xla_leads.created_at)'=> (int) date('m', strtotime('-1 months')),
+                'YEAR(xla_leads.created_at)'=> (int) date('Y', strtotime('-1 months')),
+                // 'MONTH(updated_at)' => (int) date('m', strtotime('-2 months')),
+                // 'YEAR(updated_at)' => (int) date('Y', strtotime('-2 months'))
+                'MONTH(updated_at)' => null,
+                'YEAR(updated_at)' => null
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($location)){
+            $where = array(
+                'xla_leads.Location'=> $location
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($city)){
+            $where = array(
+                'xla_leads.City'=> $city
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        $this->leadModel->selectCount('id');
+        $data['open_leads_last_month'] = $this->leadModel
+                                            ->where($where_condition)
+                                            //->whereIn('xla_leads.lead_action_status', $static)
+                                            ->findAll();
+
+
+        //current lead counts data
+        $where_condition = array();
+        $static = ['1', '2', '3', '4'];
+        $where = array();
+        //$where_condition = array_merge($where_condition,$where);
+        if(!empty($enq_status)){
+            $where = array(
+                'xla_leads.status'=> $enq_status
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($owner_id)){
+            $where = array(
+                'xla_leads.Lead_Owner'=> $owner_id
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($source_id)){
+            $where = array(
+                'xla_leads.Source'=> $source_id
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($follow_up)){
+            $where = array(
+                'xla_leads.FollouUp_Counts'=> $follow_up
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($enq_date)){
+            $where = array(
+                'xla_leads.Enq_Dt'=> $enq_date
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($follow_date)){
+            $where = array(
+                'xla_leads.Follow_Up_Dt'=> $follow_date
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(empty($enq_date) && empty($follow_date)){
+            $where = array(
+                //'MONTH(xla_leads.created_at)'=> (int) date('m', strtotime('-1 months')),
+                //'YEAR(xla_leads.created_at)'=> (int) date('Y', strtotime('-1 months')),
+                'MONTH(updated_at)' => date('m'),
+                'YEAR(updated_at)' => date('Y')
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($location)){
+            $where = array(
+                'xla_leads.Location'=> $location
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($city)){
+            $where = array(
+                'xla_leads.City'=> $city
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        
+        
+        $this->leadModel->selectCount('id');
+        $data['current_leads'] = $this->leadModel
+                                            ->where($where_condition)
+                                            //->whereIn('xla_leads.lead_action_status', $static)
+                                            ->findAll();
+                                            // echo "<pre>";
+                                            // print_r($where_condition);
+                                            // echo $this->leadModel->getLastQuery();
+                                            // exit;
+
+        //last month current lead counts
+        $where_condition = array();
+        $static = ['1', '2', '3', '4'];
+        //$where_condition = array_merge($where_condition,$where);
+        $where = array();
+        if(!empty($enq_status)){
+            $where = array(
+                'xla_leads.status'=> $enq_status
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($owner_id)){
+            $where = array(
+                'xla_leads.Lead_Owner'=> $owner_id
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($source_id)){
+            $where = array(
+                'xla_leads.Source'=> $source_id
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($follow_up)){
+            $where = array(
+                'xla_leads.FollouUp_Counts'=> $follow_up
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($enq_date)){
+            $where = array(
+                'xla_leads.Enq_Dt'=> $enq_date
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($follow_date)){
+            $where = array(
+                'xla_leads.Follow_Up_Dt'=> $follow_date
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(empty($enq_date) && empty($follow_date)){
+            $where = array(
+                // 'MONTH(xla_leads.created_at)'=> (int) date('m', strtotime('-1 months')),
+                // 'YEAR(xla_leads.created_at)'=> (int) date('Y', strtotime('-1 months')),
+                'MONTH(updated_at)' => (int) date('m', strtotime('-1 months')),
+                'YEAR(updated_at)' => (int) date('Y', strtotime('-1 months'))
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($location)){
+            $where = array(
+                'xla_leads.Location'=> $location
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($city)){
+            $where = array(
+                'xla_leads.City'=> $city
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        $this->leadModel->selectCount('id');
+        $data['current_leads_last_month'] = $this->leadModel
+                                            ->where($where_condition)
+                                            //->whereIn('xla_leads.lead_action_status', $static)
+                                            ->findAll();
+
+        //Return data for view page
         if($data) {            
             return $this->respond($data);
         } else {

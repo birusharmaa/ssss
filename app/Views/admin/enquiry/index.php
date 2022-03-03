@@ -1,6 +1,8 @@
 <?php
 $session = session();
-
+// echo "<pre>";
+// print_r($current_leads);
+// exit;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +11,7 @@ $session = session();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?= $pageTitle ?></title>
     <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
+    
     <style type="text/css">
         .bottom-row{
             min-height: 215px;
@@ -40,47 +43,65 @@ $session = session();
                             <div class="row">
                                 <div class="col-md-9">
                                     <div class="row card-title shadow-lg p-3 mb-2 bg-white rounded border" style="font-size:smaller;">
-                                        <div class="col-md-2 offset-6">
+                                        <div class="col-md-4 offset-3">
                                             <div class="row">
-                                                <div class="col-md-8">
+                                                <div class="col-md-4 text-right">
+                                                    <span ><?= $last_month_count[0]['id']; ?>
+                                                </div>
+                                                <div class="col-md-4">
                                                     Total Leads
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <span ><?= $cound_leads; ?>
+                                                    <span ><?= $current_month_count[0]['id']; ?>
                                                 </div>
-                                                <div class="col-md-8 mt-2">
+                                                <div class="col-md-4 text-right mt-2">
+                                                    <span><?= $last_open_leads[0]['id']; ?></span>
+                                                </div>
+                                                <div class="col-md-4 mt-2">
                                                     Open Leads
                                                 </div>
                                                 <div class="col-md-4 mt-2">
-                                                    10
+                                                    <span><?= $open_leads[0]['id']; ?></span>
                                                 </div>
-                                                <div class="col-md-8 mt-2">
+                                                <div class="col-md-4 text-right mt-2">
+                                                    <?= $last_leads[0]['id']; ?>
+                                                </div>
+                                                <div class="col-md-4 mt-2">
                                                     Current Leads
                                                 </div>
                                                 <div class="col-md-4 mt-2">
-                                                    20
+                                                    <?= $current_leads[0]['id']; ?>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    Sales
-                                                </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-4 text-right">
                                                     30
                                                 </div>
-                                                <div class="col-md-6 mt-2">
-                                                    Revenue
+                                                <div class="col-md-4">
+                                                    Sales
                                                 </div>
-                                                <div class="col-md-6 mt-2">
+                                                <div class="col-md-4">
+                                                    30
+                                                </div>
+                                                <div class="col-md-4 text-right mt-2">
                                                     10
                                                 </div>
-                                                <div class="col-md-6 mt-2">
+                                                <div class="col-md-4 mt-2">
+                                                    Revenue
+                                                </div>
+                                                <div class="col-md-4 mt-2">
+                                                    10
+                                                </div>
+                                                <div class="col-md-4 text-right mt-2">
+                                                    10
+                                                </div>
+                                                <div class="col-md-4 mt-2">
                                                     Due
                                                 </div>
-                                                <div class="col-md-6 mt-2">
+                                                <div class="col-md-4 mt-2">
                                                     20
                                                 </div>
                                             </div>
@@ -90,9 +111,9 @@ $session = session();
                                             <button type="button" class="btn btn-primary float-right m-2" data-toggle="modal" data-target     ="#leadModel">
                                                 New Lead
                                             </button>
-                                            <button type="button" class="btn btn-primary float-right m-0" data-toggle="modal" data-target     ="#leadModelImport">
+                                            <!-- <button type="button" class="btn btn-primary float-right m-0" data-toggle="modal" data-target     ="#leadModelImport">
                                                 Import Lead
-                                            </button>
+                                            </button> -->
                                         </div>
                                     </div>
                                   
@@ -179,47 +200,65 @@ $session = session();
                                             </div>
                                         </div>
                                         
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-3">
                                             <div class="row mt-5">
-                                                <div class="col-md-8">
+                                                <div class="col-md-2 text-right">
+                                                    <span id="totalLeadsLastMonth"><?= $last_month_count[0]['id']; ?>
+                                                </div>
+                                                <div class="col-md-6">
                                                     Total Leads
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <span id="totalLeads"><?= $cound_leads; ?>
+                                                    <span id="totalLeads"><?= $current_month_count[0]['id']; ?>
                                                 </div>
-                                                <div class="col-md-8 mt-2">
+                                                <div class="col-md-2 text-right mt-2">
+                                                    <span class="" id="openLeadsLastMonth"><?= $last_open_leads[0]['id']; ?></span>
+                                                </div>
+                                                <div class="col-md-6 mt-2">
                                                     Open Leads
                                                 </div>
                                                 <div class="col-md-4 mt-2">
-                                                    <span class="">30</span>
+                                                    <span class="" id="openLeads"><?= $open_leads[0]['id']; ?></span>
                                                 </div>
-                                                <div class="col-md-8 mt-2">
+                                                <div class="col-md-2 text-right mt-2">
+                                                    <span class="" id="currentLeadsLastMonth"><?= $last_leads[0]['id']; ?></span>
+                                                </div>
+                                                <div class="col-md-6 mt-2">
                                                     Current Leads
                                                 </div>
                                                 <div class="col-md-4 mt-2">
-                                                    <span class="">30</span>
+                                                    <span class="" id="currentLeads"><?= $current_leads[0]['id']; ?></span>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-sm-3">
                                             <div class="row mt-5">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4 text-right">
+                                                    <span class="">12</span>
+                                                </div>
+                                                <div class="col-md-4">
                                                     Sales
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <span class="">30</span>
-                                                </div>
-                                                <div class="col-md-6 mt-2 mt-2" >
-                                                    Revenue
-                                                </div>
-                                                <div class="col-md-6 mt-2">
+                                                <div class="col-md-4">
                                                     <span class="">10</span>
                                                 </div>
-                                                <div class="col-md-6 mt-2">
+                                                <div class="col-md-4 text-right mt-2">
+                                                    <span class="">30</span>
+                                                </div>
+                                                <div class="col-md-4 mt-2 mt-2" >
+                                                    Revenue
+                                                </div>
+                                                <div class="col-md-4 mt-2">
+                                                    <span class="">10</span>
+                                                </div>
+                                                <div class="col-md-4 text-right mt-2">
+                                                    <span class="">10</span>
+                                                </div>
+                                                <div class="col-md-4 mt-2">
                                                     Due
                                                 </div>
-                                                <div class="col-md-6 mt-2">
+                                                <div class="col-md-4 mt-2">
                                                     <span class="">20</span>
                                                 </div>
                                             </div>
@@ -384,6 +423,7 @@ $session = session();
     <script src="<?= base_url(); ?>/assets/js/dropzone.js"></script>
     <script src="<?= base_url(); ?>/assets/js/sweetalert2.js"></script>
     <script src="<?= base_url(); ?>/assets/js/pages/enquiry.js"></script>
+    
     <script type="text/javascript">
         // Mobile number valid
         function validatePhone(e, id){
