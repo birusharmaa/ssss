@@ -43,10 +43,9 @@
           </form>  
               <input type="hidden" id="statusid">   
             <div class="row">            
-              <div class="col-md-12 mt-2">        
-            
-                <div class="table-responsive">
-                    <table class="table" id="allstatus">
+              <div class="col-md-12 mt-2 bg-white">        
+                <div class="table-responsive border mt-2 p-2">
+                    <table class="display responsive nowrap" id="allstatus" style="width:100%">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -55,6 +54,8 @@
                           <th scope="col">Action</th>
                         </tr>
                       </thead>
+                      <tbody>
+                      </tbody>
                     </table>
                   </div>                
                 </div>

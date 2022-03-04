@@ -10,11 +10,14 @@ $session = session();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?= $pageTitle ?></title>
-    <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
-    
+    <?php include __DIR__ . '/../layout/cssLinks.php'; ?>    
     <style type="text/css">
         .bottom-row{
-            min-height: 215px;
+            min-height: 186px;
+        }
+        div.dataTables_wrapper {
+            width: 1050px;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -43,7 +46,7 @@ $session = session();
                             <div class="row">
                                 <div class="col-md-9">
                                     <div class="row card-title shadow-lg p-3 mb-2 bg-white rounded border" style="font-size:smaller;">
-                                        <div class="col-md-4 offset-3">
+                                        <div class="col-md-4 offset-md-3">
                                             <div class="row">
                                                 <div class="col-md-4 text-right">
                                                     <span ><?= $last_month_count[0]['id']; ?>
@@ -175,13 +178,17 @@ $session = session();
                                                     <label>Enq_Dt</label>
                                                 </div>
                                                 <div class="col-md-8 pl-0">
-                                                    <input type="date" id="enqDate" class="form-control" onchange="fetchData()" onkeyup="fetchData()"/>
+                                                    
+                                                    <input class="form-control input-group" style="background-color: #f6f8f9;" id="enqDate" onchange="fetchData()" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" />
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                 </div>
                                                 <div class="col-md-4 mt-2 pr-0">
                                                     Follow-up Date
                                                 </div>
                                                 <div class="col-md-8 mt-2 pl-0">
-                                                    <input type="date" id="followUpDate" class="form-control" onchange="fetchData()" onkeyup="fetchData()" />
+                                                    <!-- <input type="date" id="followUpDate" class="form-control" onchange="fetchData()" onkeyup="fetchData()" /> -->
+                                                     <input class="form-control input-group" style="background-color: #f6f8f9;" id="followUpDate" onchange="fetchData()" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" />
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                 </div>
                                                 
                                                 <div class="col-md-4 mt-2 pr-0">
@@ -265,17 +272,17 @@ $session = session();
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-12 shadow-lg p-3 mb-5 bg-white rounded border">
-                                            <div class="table-responsive">
-                                                <table id="leads-table" class="table">
+                                    <div class="row card-title shadow-lg p-3 mb-2 bg-white rounded border"  style="font-size:smaller;">
+                                        <div class="col-md-12 mt-2 bg-white">
+                                            <div class="table-responsive border p-2">
+                                                <table id="leads-table" class="" style="width:100%">
                                                     <thead>
                                                         <tr>
                                                             <th>Sr.No.</th>
                                                             <th>Lead _Id</th>
+                                                            <th>Name</th>
                                                             <th>Owner</th>
                                                             <th>Source</th>
-                                                            <th>Name</th>
                                                             <th>Email</th>
                                                             <th>Mob_1</th>
                                                             <th>Mob_2</th>
@@ -328,13 +335,17 @@ $session = session();
                                                         Last Call :
                                                     </div>
                                                     <div class="col-7 mt-2">
-                                                        <input type="date" name="" placeholder="Last Call" id="userLastCall" class="form-control" />
+                                                        <!-- <input type="date" name="" placeholder="Last Call" id="userLastCall" class="form-control" /> -->
+                                                        <input class="form-control input-group" style="background-color: #f6f8f9;" id="userLastCall" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" />
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                     </div>
                                                     <div class="col-5 mt-3">
                                                         Next Call:
                                                     </div>
                                                     <div class="col-7 mt-2">
-                                                        <input type="date" name="" placeholder="Next Call" id="userNextCall" class="form-control" />
+                                                        <!-- <input type="date" name="" placeholder="Next Call" id="userNextCall" class="form-control" /> -->
+                                                        <input class="form-control input-group" style="background-color: #f6f8f9;" id="userNextCall" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" />
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                     </div>
                                                     <div class="col-5 mt-3">
                                                         Unsubscribe
@@ -416,6 +427,7 @@ $session = session();
                 </div>
             </div>
         </div>
+        
         <?php include __DIR__ . '/../layout/jsLinks.php'; ?>
     </div>
     <?= require("modal.php");?>
@@ -425,6 +437,7 @@ $session = session();
     <script src="<?= base_url(); ?>/assets/js/pages/enquiry.js"></script>
     
     <script type="text/javascript">
+
         // Mobile number valid
         function validatePhone(e, id){
             $(e).parent().find('.validation').remove();

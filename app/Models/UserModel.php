@@ -25,17 +25,16 @@ class UserModel extends Model
   public function updateImage($id, $data)
   {
     $session = session();
-
     $db = \Config\Database::connect();
     $builder = $db->table($this->table);
     $builder->set($data);
     $builder->where('emp_id', $id);
 
     if($session->has('loginInfo')){
-      
-      $session->set('picture_attachment',$data['picture_attachment']);
+      if(isset($data['picture_attachment'])){
+        $session->set('picture_attachment', $data['picture_attachment']);
+      }
     }
-    
     return $builder->update();
   }
 }

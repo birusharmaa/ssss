@@ -41,6 +41,7 @@ function getAllSubject(data) {
     table.destroy();
     $('#subjectDatatables').DataTable({
         data: dataSet,
+        "responsive": true,
     });
     }   
   }

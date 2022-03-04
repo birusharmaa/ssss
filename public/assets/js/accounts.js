@@ -53,6 +53,18 @@ function getAllStatus(data) {
     table.destroy();
     $('#accountDatatables').DataTable({
         data: dataSet,
+        "responsive": true,
+        "columnDefs": [
+            {
+                "targets": [],
+                "visible": false,
+                "searchable": false
+            },
+            {
+                "targets": [],
+                "visible": false
+            }
+        ]
     });
     }   
   }

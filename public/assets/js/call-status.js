@@ -41,6 +41,7 @@ function getAllStatus(data) {
     table.destroy();
     $('#allstatus').DataTable({
         data: dataSet,
+        "responsive": true
     });
     }   
   }

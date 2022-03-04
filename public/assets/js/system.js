@@ -41,6 +41,7 @@ function getAllSystem(data) {
     table.destroy();
     $('#systemDatatables').DataTable({
         data: dataSet,
+        "responsive": true,
     });
     }   
   }

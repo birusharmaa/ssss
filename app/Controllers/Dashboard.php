@@ -6,7 +6,7 @@ use App\Models\SettingModel;
 use App\Models\DashboardModel;
 use App\Models\LeadsModel;
 use App\Models\api\LeadModel;
-use App\Models\api\SourceModel;
+use App\Models\api\SourceModel; 
 use App\Models\CategoryModel;
 use App\Models\RoleModel;
 use App\Models\api\StatusModel;
@@ -55,7 +55,7 @@ class Dashboard extends BaseController
         $pageData['dashboardData'] = $userData->dashboardData();
         return view('admin/dashboard/index', $pageData);
     }
-    /**
+    /** 
      *  Function is used to load setting page view
      *
      * @return array

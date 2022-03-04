@@ -41,6 +41,7 @@ function getAlllocation(data) {
     table.destroy();
     $('#locationDatatables').DataTable({
         data: dataSet,
+        "responsive": true,
     });
     }   
   }

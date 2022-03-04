@@ -50,8 +50,8 @@ $data = $session->get('loginInfo');
                                 <button type="button" onclick="addTeam();" class="btn btn-primary">Add</button>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="teamDatatables" class="table">
+                                <div class="table-responsive border p-2">
+                                    <table id="teamDatatables" class="display responsive nowrap">
                                         <thead>
                                             <tr>
                                                 <th>Sr.No.</th>

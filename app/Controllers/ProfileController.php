@@ -87,8 +87,9 @@ class ProfileController extends ResourceController
     if ($data) {
       if (password_verify($current_pass, $data['password'])) {
         if ($status) {
-          $data = array('password' => $pwd_hashed);
-          $model->updateImage($id, $data);
+          $newdata = array('password' => $pwd_hashed);
+          $model->updateImage($id, $newdata);
+
           $response = [
             'status'   => 200,
             'error'    => null,
@@ -98,7 +99,7 @@ class ProfileController extends ResourceController
           ];
 
           $sess = session();
-          $sess->set('updated_password',['email'=>$data['personal_emmail'],'password'=>$pwd]);
+          $sess->set('updated_password',['password'=>$pwd]);
 
           return $this->respond($response);
         } else {
@@ -131,6 +132,7 @@ class ProfileController extends ResourceController
   }
 
 
+
   public function update_general($id = null)
   {
     $validation =  \Config\Services::validation();
@@ -149,7 +151,7 @@ class ProfileController extends ResourceController
       if ($status) {
         $data = array(
           'full_name' => $input['full_name'],
-          'designation' => $input['designation'],
+          'designation' => $input['designation']??'',
           'personal_email' => $input['personal_email'],
           'office_number' => $input['office_number'],
           'personal_number' => $input['personal_number'],

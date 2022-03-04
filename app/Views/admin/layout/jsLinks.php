@@ -16,3 +16,10 @@ $userInfo = $sess->has('updated_password') ? $sess->get('updated_password') : ''
 <script src="<?= base_url(); ?>/assets/js/todolist.js"></script>
 <script src="<?= base_url(); ?>/assets/js/dashboard.js"></script>
 <script src="<?= base_url(); ?>/assets/js/custom.js"></script>
+<script type="text/javascript" src="<?= base_url(); ?>/assets/js/jquery.dataTables.js"></script>
+<!-- <script type="text/javascript" src="<?= base_url(); ?>/assets/js/dataTables.responsive.min.js"></script>
+ -->
+<!-- <script type="text/javascript" src="<?//= base_url(); ?>>/assets/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/dataTables.jqueryui.min.js"></script>
+<script type="text/javascript" src="<?//= base_url(); ?>>/assets/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.jqueryui.min.js"></script> -->

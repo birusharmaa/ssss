@@ -661,6 +661,9 @@ class Enquiry extends BaseController
             'loadId' => 'required',
             'userName' => 'required',
             'userStatus' => 'required',
+            'userFallow' => 'required',
+            'userLastCall' => 'required',
+            'userNextCall' => 'required',
         ])){
             $user = $this->leadModel->find($lead_id);
             if($user){

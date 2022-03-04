@@ -43,6 +43,18 @@ function getAllenq(data) {
     table.destroy();
     $('#enqDatatable').DataTable({
         data: dataSet,
+        "responsive": true,
+        "columnDefs": [
+            {
+                "targets": [],
+                "visible": false,
+                "searchable": false
+            },
+            {
+                "targets": [],
+                "visible": false
+            }
+        ]
     });
     }   
   }

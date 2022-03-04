@@ -1,6 +1,48 @@
+$.extend( $.fn.dataTable.defaults, {
+    responsive: true
+} );
 $(document).ready(function() {
     loadtAllLeads();
 });
+$("#enqDate").datepicker({ 
+    autoclose: true, 
+    todayHighlight: false,
+}).datepicker();
+
+$("#followUpDate").datepicker({ 
+    autoclose: true, 
+    todayHighlight: false,
+}).datepicker();
+
+$("#userLastCall").datepicker({ 
+    autoclose: true, 
+    todayHighlight: false,
+    orientation: "bottom"
+}).datepicker();
+
+
+$("#userNextCall").datepicker({ 
+    autoclose: true, 
+    todayHighlight: false,
+    orientation: "bottom",
+    width: '300px'
+}).datepicker();
+
+const ChangeDateFormat = (oldDate)=>{
+    const date = new Date(oldDate);
+    //extract the parts of the date
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    const year = date.getFullYear(); 
+    if(day<10){
+        day = `0${day}`;
+    }
+    if(month<10){
+        month = '0'+month;
+    }
+    let finalDate = `${day+'-'+month+'-'+year}`;
+    return finalDate;
+}
 
 function loadtAllLeads() {
     let url = BaseUrl + "/leadsApi/all";
@@ -45,8 +87,8 @@ function getAllLeads(data) {
             }else{
               finalDate = finalDate+" Days";
             }
-            let name =`<a href= "#" class="text-info"  onclick="leadDetails(${e.id})">${e.Name}</a>`;
-            let row = [++num, e.id, e.owner_name, e.source_name, name,e.Email,e.Mob_1, e.mob_2, finalDate, e.Enq_Dt, e.Follow_Up_Dt];
+            let name =`<a href= "#" class="text-info"  onclick="leadDetails(${e.id}, this)">${e.Name}</a>`;
+            let row = [++num, e.id, name, e.owner_name, e.source_name, e.Email,e.Mob_1, e.mob_2, finalDate, e.Enq_Dt, e.Follow_Up_Dt];
             dataSet.push(row);
         });
     }
@@ -54,13 +96,40 @@ function getAllLeads(data) {
     table.destroy();
     $('#leads-table').DataTable({
         data: dataSet,
+        "responsive": true,
+        "columnDefs": [
+            {
+                "targets": [8],
+                "visible": false,
+                "searchable": false
+            },
+            {
+                "targets": [],
+                "visible": false
+            }
+        ],
+        "scrollX": true
+        
     });
     //$('#leads-table').DataTable().ajax.reload();
 }
 
+    function checkRowSelection(e){
+        // $('#leads-table tbody').on('click', 'tr', function () {
+        $("#leads-table tbody tr").removeClass('selected');
+        $(e).closest('tr').addClass('selected');
+    }
+
+    // $('#leads-table thead').on('click', 'th', function () {
+    //     $("#leads-table tbody tr").removeClass('selected');
+    // });
+
 //Get select user details
-function leadDetails(id=null){
+function leadDetails(id=null,e){
     if(id){
+       
+
+       checkRowSelection(e);
         let url = BaseUrl + "/leadsApi/show/"+id;
         $.ajax({
             type: "Get",
@@ -71,7 +140,6 @@ function leadDetails(id=null){
             url: url,
             success: function (data) {
                 //getAllLeads(data)
-                console.log(data.follow_comment);
                 $("#counsellerStates").html("");
 
                 if(data){
@@ -81,8 +149,22 @@ function leadDetails(id=null){
                     $("#userStatus select").val(data.data['status']);
 
                     $('#userFallow').val(data.data['FollouUp_Counts']);
-                    $('#userLastCall').val(data.data['Enq_Dt']);
-                    $('#userNextCall').val(data.data['Follow_Up_Dt']);
+                    //$('#userLastCall').val(data.data['Enq_Dt']);
+                    
+                    if(data.data['Enq_Dt'] && data.data['Enq_Dt'] != "0000-00-00"){
+                        let enqDate = ChangeDateFormat(data.data['Enq_Dt']);
+                        $('#userLastCall').val(enqDate);
+                    }else{
+                        $('#userLastCall').val('');
+                    }
+
+                    if(data.data['Follow_Up_Dt'] && data.data['Follow_Up_Dt'] != "0000-00-00"){
+                        let followUpDate = ChangeDateFormat(data.data['Follow_Up_Dt']);
+                        $('#userNextCall').val(followUpDate);
+                    }else{
+                        $('#userNextCall').val('');
+                    }
+
                     if(data.data['Unsubscribe']=="1"){
                       $('#subscribeYes').prop('checked', true);
                       $('#subscribeNo').prop('checked', false);

@@ -132,7 +132,7 @@ $routes->group('profile', ["filter" => "myauth"], function ($routes) {
 });
 
 $routes->group('settings', ["filter" => "mysess"], function ($routes) {
-    $routes->get('accounts', 'Dashboard::accounts');
+    $routes->get('accounts', 'Dashboard::accounts'); 
     $routes->get('location', 'Dashboard::location');
     $routes->get('subject', 'Dashboard::subject');
     $routes->get('sysdetails', 'Dashboard::systemDetails');

@@ -58,8 +58,8 @@ $data = $session->get('loginInfo');
                     </div>
                   </div>
                   <div class="card-body">
-                    <div class="table-responsive">
-                      <table id="accountDatatables" class="table">
+                    <div class="table-responsive border p-2">
+                      <table id="accountDatatables" class="display responsive nowrap">
                         <thead>
                           <tr>
                             <th>Sr.No.</th>
@@ -88,7 +88,7 @@ $data = $session->get('loginInfo');
                 </div>
               </div>
             </div>
-          </div>
+          </div> 
         </div>
         <?php include __DIR__ . '/../../../layout/footer.php'; ?>
     </div>

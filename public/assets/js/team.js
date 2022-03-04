@@ -41,6 +41,7 @@ function getAllTeam(data) {
         table.destroy();
         $('#teamDatatables').DataTable({
             data: dataSet,
+            "responsive": true,
         });
     }
 }

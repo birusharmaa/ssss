@@ -57,8 +57,8 @@ $data = $session->get('loginInfo');
                     </div>
                   </div>
                   <div class="card-body">
-                    <div class="table-responsive">
-                      <table id="subjectDatatables" class="table">
+                    <div class="table-responsive border p-2">
+                      <table id="subjectDatatables" class="display responsive nowrap">
                         <thead>
                           <tr>
                             <th>Sr.No.</th>

@@ -74,8 +74,8 @@
                 <div class="cord-body">
                   <div class="row">
                     <div class="col-md-6">
-                      <div class="table-responsive">
-                      <table class="table"  id="allCategory">
+                      <div class="table-responsive mt-2 border p-2">
+                      <table class="display responsive nowrap"  id="allCategory">
                         <thead>
                             <tr>
                               <th scope="col">#</th>
@@ -88,8 +88,8 @@
                     </div>
 
                     <div class="col-md-6">
-                      <div class="table-responsive">
-                      <table class="table" id="SuballCategory">
+                      <div class="table-responsive mt-2 border p-2">
+                      <table class="display responsive nowrap" id="SuballCategory">
                           <thead>
                             <tr>
                               <th scope="col">#</th>
@@ -119,8 +119,12 @@
 
   <script>
     $(document).ready(function() {
-      $('#allCategory').dataTable();
-      $('#SuballCategory').dataTable();
+      $('#allCategory').dataTable({
+        "responsive" : true
+      });
+      $('#SuballCategory').dataTable({
+        "responsive" : true
+      });
     });
   </script>
 </body>
