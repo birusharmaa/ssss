@@ -1,8 +1,8 @@
 <?php
 $session = session();
 // echo "<pre>";
-// print_r($current_leads);
-// exit;
+// echo count($allFirstMobiles);
+//exit;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +11,8 @@ $session = session();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?= $pageTitle ?></title>
     <?php include __DIR__ . '/../layout/cssLinks.php'; ?>    
+
+
     <style type="text/css">
         .bottom-row{
             min-height: 186px;
@@ -19,6 +21,16 @@ $session = session();
             width: 1050px;
             margin: 0 auto;
         }
+        .hide_me {
+          display: none!important;
+        }
+        .select2-results__option[aria-selected=true]{
+            display: none;
+        }
+        /*.select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: yellowgreen;
+            color: white;
+        }*/
     </style>
 </head>
 <body class="sidebar-fixed">
@@ -373,28 +385,67 @@ $session = session();
                                                         Bulk SMS :
                                                     </div>
                                                     <div class="col-7">
-                                                        <input type="text" name="" placeholder="Bulk SMS" id="bulkSms" class="form-control" />
+                                                        <select id="bulkSms" class="form-control">
+                                                            <option value="">Select</option>
+                                                            <option value="all">All</option>
+                                                        </select>
+                                                        <?php 
+                                                        if($session()->has('error')){
+                                                            echo $session->error;
+                                                        } 
+                                                        ?>
                                                     </div>
                                                     <div class="col-5 mt-2">
                                                         Smart SMS :
                                                     </div>
                                                     <div class="col-7  mt-2">
-                                                        <input type="text" name="" placeholder="Smart SMS" id="smartSms" class="form-control" />
+                                                        <select id="smartSms" class="form-control" multiple="multiple">
+                                                            <?php if(count($allFirstMobiles)>0){foreach($allFirstMobiles as $mobile){
+                                                                ?>
+                                                                <option value="<?= $mobile['Mob_1'] ;?>"><?= $mobile['Mob_1'] ;?></option>
+                                                                <?php
+                                                            }}?>
+                                                        </select>
+
                                                     </div>
                                                     <div class="col-5 mt-3">
                                                         What'sApp :
                                                     </div>
                                                     <div class="col-7 mt-2">
-                                                        <input type="text" name="" placeholder="What'sApp" id="whatapp" class="form-control" />
+                                                        <!-- <div class="radioButton mt-2">
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="optradio" checked>All
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="optradio">Select
+                                                            </label>
+                                                        </div>
+                                                        <select id="whatsApp" class="form-control" multiple="multiple">
+                                                            <option value="All" class="all" data-type="all">All</option>
+                                                        </select> -->
+                                                        <select id="whatsApp" class="form-control" multiple="multiple" >
+
+                                                            <?php if(count($allFirstMobiles)>0){foreach($allFirstMobiles as $mobile){
+                                                                ?>
+                                                                <option class="singlewhatsApp" data-type="number" value="+91<?= $mobile['Mob_1'] ;?>"><?= $mobile['Mob_1'] ;?></option>
+                                                                <?php
+                                                            }}?>
+                                                        </select>
                                                     </div>
                                                     <div class="col-5 mt-3">
                                                         Bulk Email :
                                                     </div>
                                                     <div class="col-7 mt-2">
-                                                        <input type="text" name="" placeholder="Bulk Email" id="bulkEmail" class="form-control" />
+                                                        <select id="bulkEmails" class="form-control" multiple="multiple">
+                                                            <?php if(count($allEmails)>0){foreach($allEmails as $all_email){
+                                                                ?>
+                                                                <option class="single" data-type="number" value="<?= $all_email['Email'] ;?>"><?= $all_email['Email'] ;?></option>
+                                                                <?php
+                                                            }}?>
+                                                        </select>
                                                     </div>
                                                     <div class="col-7 offset-5 mt-2 text-right">
-                                                        <button class="btn btn-primary">Send</button>
+                                                        <button id="sendMessage" class="btn btn-primary">Send</button>
                                                     </div>
                                                     
                                                 </div>
@@ -436,6 +487,7 @@ $session = session();
     <script src="<?= base_url(); ?>/assets/js/sweetalert2.js"></script>
     <script src="<?= base_url(); ?>/assets/js/pages/enquiry.js"></script>
     
+
     <script type="text/javascript">
 
         // Mobile number valid

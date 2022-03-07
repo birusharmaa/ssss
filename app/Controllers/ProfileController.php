@@ -84,7 +84,7 @@ class ProfileController extends ResourceController
 
     $pwd_hashed = password_hash($pwd, PASSWORD_DEFAULT);
     
-    if ($data) {
+    if ($data) { 
       if (password_verify($current_pass, $data['password'])) {
         if ($status) {
           $newdata = array('password' => $pwd_hashed);
@@ -117,10 +117,10 @@ class ProfileController extends ResourceController
         }
       } else {
         $response = [
-          'status'   => 200,
-          'error'    => null,
+          'status'   => 404,
+          'error'    => true,
           'messages' => [
-            'error-messages' => "Current Password don't match "
+            'error_message' => "Current Password don't match "
           ]
         ];
         return $this->respond($response);
@@ -133,11 +133,13 @@ class ProfileController extends ResourceController
 
 
 
+
   public function update_general($id = null)
   {
     $validation =  \Config\Services::validation();
     $model = new UserModel();
     $data = $model->where('emp_id', $id)->first();
+
     $input = $this->request->getRawInput();
     $status =  $this->validate([
       'full_name' => 'required|min_length[5]',

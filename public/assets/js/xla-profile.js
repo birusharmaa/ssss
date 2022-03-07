@@ -24,7 +24,7 @@ $(function () {
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>`;
-                $('#alertMessage').html(message);
+                        $('#alertMessage').html(message);
                         setTimeout(() => { window.location.reload() }, 600);
                     },
                     error: function (jqxhr, eception) {
@@ -56,20 +56,26 @@ $(function () {
                     url: url,
                     data: formData,
                     success: function (data) {
-                        message = `<div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong></strong> ${data.messages.success}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>`;
-                $('#alertMessage').html(message);
-                        setTimeout(() => { 
-                                window.location.href = BaseUrl +'/logout';
-                        }, 600);
+                        if (data.error) {
+                            if (data.messages.error_message.newPass) {
+                                Notiflix.Notify.warning(data.messages.error_message.newPass);
+                            } else if (data.messages.error_message.confPass) {
+                                Notiflix.Notify.warning(data.messages.error_message.confPass);
+                            } else {
+                                Notiflix.Notify.warning(data.messages.error_message);
+                            }
+
+                        } else {
+                            Notiflix.Notify.success(data.messages.success);
+                            setTimeout(() => {
+                                window.location.href = BaseUrl + '/logout';
+                            }, 600);
+                        }
+
                     },
                     error: function (jqxhr, eception) {
                         if (jqxhr.status == 404) {
-                            alert('No data found');
+                            Notiflix.Notify.failure(data.messages.error_message);
                         }
                     }
                 });

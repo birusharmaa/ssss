@@ -3,7 +3,43 @@ $.extend( $.fn.dataTable.defaults, {
 } );
 $(document).ready(function() {
     loadtAllLeads();
+
+
 });
+    
+//Select 2 declarition
+$(document).ready(function(){
+    $('#smartSms').select2({
+        allowClear: false,
+        minimumResultsForSearch: 5,
+        placeholder: "Select",
+        // theme: "classic"
+    });
+
+    $('#whatsApp').select2({
+        allowClear: true,
+        minimumResultsForSearch: -1,
+        placeholder: "Select",
+        selectOnClose: false
+    });
+             
+    $("#whatsApp").on("select2:select", function(evt) {
+        var element = evt.params.data.element;
+        var $element = $(element);
+        $element.detach();
+        $(this).append($element);
+        $(this).trigger("change");
+    });
+
+    $('#bulkEmails').select2({
+        allowClear: true,
+        minimumResultsForSearch: -1,
+        placeholder: "Select",
+    });
+             
+    // s
+});
+
 $("#enqDate").datepicker({ 
     autoclose: true, 
     todayHighlight: false,
@@ -340,7 +376,7 @@ $(document).on('click', '#saveComments',function(){
                 }
             }
         });
-    }
+    } 
 });
 
 //Save seleceted user details
@@ -847,3 +883,98 @@ $("#importCourseVaue").change(function(event) {
 $("#file_csv").change(function(event) {
     $(this).parent().find('.validation').remove();
 });
+
+
+$('#whatsApp').on('select2:open', function () {
+    // get values of selected option
+    var values = $(this).val();
+    // get the pop up selection
+    var pop_up_selection = $('.select2-results__options');
+    if (values != null ) {
+      // hide the selected values
+       pop_up_selection.find("li[aria-selected=true]").hide();
+    } else {
+      // show all the selection values
+      pop_up_selection.find("li[aria-selected=true]").show();
+    }
+});
+
+$(document).click(function (e) {
+    e.preventDefault();
+    let bulkSms = $("#bulkSms").val();
+    let smartSms = $("#smartSms").val();
+    let whatsApp = $("#whatsApp").val();
+    let bulkEmails = $("#bulkEmails").val();
+
+    let url = BaseUrl + "/leadsApi/sendMessage";
+    $.ajax({
+        type: "POST",
+        headers: {
+            'email': email,
+            'password': passw,
+        },
+        url: url,
+        data:{
+            "bulkSms" : bulkSms,
+            "smartSms": smartSms,
+            "whatsApp": whatsApp,
+            "bulkEmails":bulkEmails
+        },
+
+        dataType:'json',
+        success: function (data) {
+            
+            Swal.fire(
+              'Success!',
+              'User details changed successfully!',
+              'success'
+            );  
+            $("#userId").val("");
+            $("#userName").val("");
+            $("#userStatus").val("");
+            $("#userFallow").val("");
+            $("#userLastCall").val("");
+            $("#userNextCall").val("");
+            $('#subscribeYes').prop('checked', false);
+            $('#subscribeNo').prop('checked', false);
+            loadtAllLeads();
+
+        },
+        error: function (jqxhr, eception) {
+            if (jqxhr.status == 404) {
+                alert('No data found');
+            }
+            // if(jqxhr.responseJSON.messages.bulkEmails){
+            //     $("#bulkEmails").addClass("input-error");
+            //     $("#bulkEmails").parent().append('<span class="text-danger validation">'+jqxhr.responseJSON.messages.bulkEmails+'</span>');
+            // }
+            // if(jqxhr.responseJSON.messages.bulkSms){
+            //     $("#bulkSms").addClass("input-error");
+            //     $("#bulkSms").parent().append('<span class="text-danger validation">'+jqxhr.responseJSON.messages.bulkSms+'</span>');
+            // }
+            // if(jqxhr.responseJSON.messages.smartSms){
+            //     $("#smartSms").addClass("input-error");
+            //     $("#smartSms").parent().append('<span class="text-danger validation">'+jqxhr.responseJSON.messages.smartSms+'</span>');
+            // }
+            // if(jqxhr.responseJSON.messages.whatsApp){
+            //     $("#whatsApp").addClass("input-error");
+            //     $("#whatsApp").parent().append('<span class="text-danger validation">'+jqxhr.responseJSON.messages.whatsApp+'</span>');
+            // }
+        }
+    });
+})
+
+$("#bulkEmails").change(function(event) {
+    $(this).parent().find('.validation').remove();
+});
+$("#bulkSms").change(function(event) {
+    $(this).parent().find('.validation').remove();
+});
+$("#smartSms").change(function(event) {
+    $(this).parent().find('.validation').remove();
+});
+$("#whatsApp").change(function(event) {
+    $(this).parent().find('.validation').remove();
+});
+
+

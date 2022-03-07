@@ -192,7 +192,7 @@ $data = $session->get('loginInfo');
                   </div>
                 </div>
               </div>
-            </div>
+            </div> 
           </div>
         </div>
         <?php include __DIR__ . '/../../layout/footer.php'; ?>

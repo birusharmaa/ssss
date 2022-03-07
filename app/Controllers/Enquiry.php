@@ -56,6 +56,18 @@ class Enquiry extends BaseController
         $this->sourceModel->select(['id', 'title']);
         $pageData['sourceModel'] = $this->sourceModel->findAll();
 
+        //Select phone number first;
+        $pageData['allFirstMobiles'] = Array();
+        $this->leadModel = new leadModel();
+        $this->leadModel->select('Mob_1');
+        $pageData['allFirstMobiles'] = $this->leadModel->findAll();
+
+        //Select email address from lead email field;
+        $pageData['allEmails'] = Array();
+        $this->leadModel = new leadModel();
+        $this->leadModel->select('Email');
+        $pageData['allEmails'] = $this->leadModel->findAll();
+
         //Select all course or category data
         $this->categoryModel = new CategoryModel();
         $this->categoryModel->select(['id', 'title']);
@@ -855,6 +867,37 @@ class Enquiry extends BaseController
                 return $this->fail("Please select valid format file.", 400);
                 return redirect()->route('leads');
             }
+        }else{
+            return $this->fail($this->validation->getErrors(), 400);
+            return redirect()->route('leads');
+        }
+    }
+
+    public function sendMessage(){
+
+        $this->validation->setRules([
+            'bulkSms'     => ['label' => 'Bulk sms', 'rules' => 'required'],
+            'smartSms'    => ['label' => 'Smart sms', 'rules' => 'required'],
+            'whatsApp'    => ['label' => 'Whatsapp number', 'rules' => 'required'],
+            'bulkEmails'  => ['label' => 'Bulk email', 'rules' => 'required'],
+        ]);
+
+        if($this->validation->withRequest($this->request)->run()){       
+            $time = time();
+            $data = [
+                'bulkSms'          => $this->request->getVar('bulkSms'),
+                'smartSms'         => $this->request->getVar('smartSms'),
+                'whatsApp'            => $this->request->getVar('whatsApp'),
+                'bulkEmails'              => $this->request->getVar('bulkEmails'),
+            ];
+            try {
+                // $user = $this->_leadModel->insert($data);
+                // $data = array('status'=>'Sucess', 'message' => '');
+                return $this->respond(json_encode($data));
+            } catch (\Exception $e) {
+                return $this->fail($e->getMessage(), 400);
+                return redirect()->route('leads');
+            }    
         }else{
             return $this->fail($this->validation->getErrors(), 400);
             return redirect()->route('leads');
