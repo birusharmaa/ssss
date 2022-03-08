@@ -3,9 +3,8 @@ $.extend( $.fn.dataTable.defaults, {
 } );
 $(document).ready(function() {
     loadtAllLeads();
-
-
 });
+//alert("Hieght="+$(window).height()+" Width="+$(window).width());
     
 //Select 2 declarition
 $(document).ready(function(){
@@ -36,8 +35,7 @@ $(document).ready(function(){
         minimumResultsForSearch: -1,
         placeholder: "Select",
     });
-             
-    // s
+    $(".loader").hide();
 });
 
 $("#enqDate").datepicker({ 
@@ -843,8 +841,6 @@ $('#import_form').on('submit', function (e) {
                         'success'
                     ); 
                 }
-                console.log("aaa");
-
             }, error: function (jqxhr, eception) {
                 if (jqxhr.status == 404) {
                     // Notiflix.Notify.warning(data.messages.success);
@@ -899,14 +895,14 @@ $('#whatsApp').on('select2:open', function () {
     }
 });
 
-$(document).click(function (e) {
+$("#sendMessage").click(function (e) {
     e.preventDefault();
     let bulkSms = $("#bulkSms").val();
     let smartSms = $("#smartSms").val();
     let whatsApp = $("#whatsApp").val();
     let bulkEmails = $("#bulkEmails").val();
-
     let url = BaseUrl + "/leadsApi/sendMessage";
+    $(".loader").show();
     $.ajax({
         type: "POST",
         headers: {
@@ -923,24 +919,19 @@ $(document).click(function (e) {
 
         dataType:'json',
         success: function (data) {
-            
+            $(".loader").hide();
             Swal.fire(
               'Success!',
-              'User details changed successfully!',
+              'Message sent successfully!',
               'success'
             );  
-            $("#userId").val("");
-            $("#userName").val("");
-            $("#userStatus").val("");
-            $("#userFallow").val("");
-            $("#userLastCall").val("");
-            $("#userNextCall").val("");
-            $('#subscribeYes').prop('checked', false);
-            $('#subscribeNo').prop('checked', false);
-            loadtAllLeads();
-
+            $("#bulkSms").val("");
+            $("#smartSms").val("").trigger('change');
+            $("#whatsApp").val("").trigger('change');
+            $("#bulkEmails").val("").trigger('change');
         },
         error: function (jqxhr, eception) {
+            $(".loader").hide();
             if (jqxhr.status == 404) {
                 alert('No data found');
             }

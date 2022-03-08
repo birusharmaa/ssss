@@ -887,10 +887,53 @@ class Enquiry extends BaseController
             $data = [
                 'bulkSms'          => $this->request->getVar('bulkSms'),
                 'smartSms'         => $this->request->getVar('smartSms'),
-                'whatsApp'            => $this->request->getVar('whatsApp'),
-                'bulkEmails'              => $this->request->getVar('bulkEmails'),
+                'whatsApp'         => $this->request->getVar('whatsApp'),
+                'bulkEmails'       => $this->request->getVar('bulkEmails'),
             ];
+            
             try {
+                    //Load custom helper
+                    helper('send');
+
+                    $email = $this->request->getVar('bulkEmails');
+                    $subject = "Test";
+                    $message = "Message";
+                    $to      = $email;
+                    $from    =  "sartiadevelopment@gmail.com";
+                    $name    = "Test Demo";
+                    $status = "";
+                    
+                    //Send email message
+                    if(count($email)>0){
+                        $i = 0;
+                        while($i <count($email)) {
+                            if(myMail($email[$i], $from, $subject, $message, $name)){
+                                $status = 1;
+                            }
+                            $i++;
+                        }
+                    }
+
+                    $status = "";
+                    $numbers =  $this->request->getVar('smartSms');                    
+                    
+                    //Send sms message
+                    if(count($numbers)>0){
+                        $i = 0;
+                        while($i <count($numbers)) {
+                            $fields = array(
+                                "variables_values" => "5599",
+                                "route" => "otp",
+                                "numbers" => $numbers[$i]
+                            );
+                            if(sendSms($fields)){
+                                $status = 1;
+                            }
+                            $i++;
+                        }
+                    }
+                    echo $status;
+                    exit;
                 // $user = $this->_leadModel->insert($data);
                 // $data = array('status'=>'Sucess', 'message' => '');
                 return $this->respond(json_encode($data));

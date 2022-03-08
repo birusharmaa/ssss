@@ -34,6 +34,8 @@ $session = session();
     </style>
 </head>
 <body class="sidebar-fixed">
+    <?php include __DIR__ . '/../layout/loader.php'; ?>
+
     <div class="container-scroller">
         <?php include __DIR__ . '/../layout/navbar.php'; ?>
         <div class="container-fluid page-body-wrapper">
@@ -311,7 +313,7 @@ $session = session();
                                         </div>
                                     </div>
                                 </div>
-
+                                
                                 <div class="col-md-3">
                                     <div class="ml-2">
                                         <input type="hidden" id="userId" value="" />
@@ -389,11 +391,7 @@ $session = session();
                                                             <option value="">Select</option>
                                                             <option value="all">All</option>
                                                         </select>
-                                                        <?php 
-                                                        if($session()->has('error')){
-                                                            echo $session->error;
-                                                        } 
-                                                        ?>
+                                                        
                                                     </div>
                                                     <div class="col-5 mt-2">
                                                         Smart SMS :
