@@ -7,7 +7,7 @@
   display: block;
   background-color: #fff;
   z-index: 2000 !important;
-  text-align: center;
+  text-align: center; 
 }
 
 #loading-image {
@@ -34,14 +34,14 @@
   z-index: 9999;
 }
 
-.loader-circle {
+/*.loader-circle {
       width: 48px;
       height: 48px;
       border-radius: 50%;
       position: relative;
       animation: rotate 1s linear infinite
-    }
-    .loader-circle::before {
+    }*/
+    /*.loader-circle::before {
       content: "";
       box-sizing: border-box;
       position: absolute;
@@ -49,9 +49,9 @@
       border-radius: 50%;
       border: 5px solid #FFF;
       animation: prixClipFix 2s linear infinite ;
-    }
+    }*/
 
-    @keyframes rotate {
+    /*@keyframes rotate {
       100%   {transform: rotate(360deg)}
     }
 
@@ -61,7 +61,7 @@
         50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
         75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
         100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
-    }
+    }*/
 
 
 #searchlist{
