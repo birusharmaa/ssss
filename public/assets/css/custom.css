@@ -107,9 +107,9 @@ a {
     padding:2px !important;
 }*/
 
-input.form-control{
+/*input.form-control{
     height: calc(2.25rem + 2px);
-}
+}*/
 .dataTables_wrapper .dataTable thead .sorting:before, .dataTables_wrapper .dataTable thead .sorting_asc:before, .dataTables_wrapper .dataTable thead .sorting_asc_disabled:before, .dataTables_wrapper .dataTable thead .sorting_desc:before, .dataTables_wrapper .dataTable thead .sorting_desc_disabled:before {
     content: "\f077";
     right: 1.2em;

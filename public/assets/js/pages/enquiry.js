@@ -3,6 +3,8 @@ $.extend( $.fn.dataTable.defaults, {
 } );
 $(document).ready(function() {
     loadtAllLeads();
+     
+    //$(".sidebar-fixed").addClass("sidebar-icon-only");
 });
 //alert("Hieght="+$(window).height()+" Width="+$(window).width());
     
@@ -131,6 +133,7 @@ function getAllLeads(data) {
     $('#leads-table').DataTable({
         data: dataSet,
         "responsive": true,
+        "bFilter": false,
         "columnDefs": [
             {
                 "targets": [8],
@@ -177,6 +180,7 @@ function leadDetails(id=null,e){
                 $("#counsellerStates").html("");
 
                 if(data){
+                    $("#counsellerStates").closest(".card-title").removeClass("d-none");
                     $('#userId').val(data.data['id']);
                     $('#userName').val(data.data['name']);
                     $('#userStatus').val(data.data['status']);
@@ -267,6 +271,50 @@ function fetchData(){
             $('#currentLeadsLastMonth').text(data.current_leads_last_month[0].id);
             $('#openLeads').text(data.open_leads[0].id);
             $('#openLeadsLastMonth').text(data.open_leads_last_month[0].id);
+            getAllLeads(data.details);
+        },
+        error: function (jqxhr, eception) {
+            if (jqxhr.status == 404) {
+                alert('No data found');
+            }
+        }
+    });
+
+}
+
+//On key up or key change function
+function searchValue(){
+    let enqStatus = $("#enqStatus").val();
+    let ownerId   = $("#ownerId option:selected").val();
+    let sourceId  = $("#sourceId").val();
+    let followUp = $("#followUp").val();
+    let enqDate = $("#enqDate").val();
+    let followUpDate = $("#followUpDate").val();
+    let location = $("#location").val();
+    let city = $("#city").val();
+    let searchValue = $("#searchValue").val();
+
+    let url = BaseUrl + "/leadsApi/searchValue";
+    $.ajax({
+        type: "POST",
+        headers: {
+            'email': email,
+            'password': passw,
+        },
+        url: url,
+        data:{
+            "enqStatus":enqStatus,
+            "ownerId" : ownerId,
+            "sourceId" : sourceId,
+            "followUp" : followUp,
+            "enqDate" :enqDate,
+            "followUpDate" : followUpDate,
+            "location": location,
+            "city": city,
+            "searchValue" : searchValue
+        },
+        dataType:'json',
+        success: function (data) {
             getAllLeads(data.details);
         },
         error: function (jqxhr, eception) {

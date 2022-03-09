@@ -139,6 +139,14 @@ class Enquiry extends BaseController
         $this->enqStatusModel = new EnqStatusModel();
         $pageData['enqStatus'] = $this->enqStatusModel->findAll();
 
+
+        $lead_comment_model = new LeadsCommentsModal();
+        $lead_comment_model->join('xla_users', 'xla_users.emp_id = xla_leads_comments.created_by', 'LEFT');
+        $lead_comment_model->select('xla_users.full_name');
+        $lead_comment_model->select('xla_leads_comments.created_at AS fallow_comments_time, xla_leads_comments.comments');
+        $lead_comment_model->orderBy('xla_leads_comments.id','ASC');            
+        $pageData['follow_comment'] = $lead_comment_model->findAll(5);
+
         return view('admin/enquiry/index', $pageData);
     }
 
@@ -944,6 +952,95 @@ class Enquiry extends BaseController
         }else{
             return $this->fail($this->validation->getErrors(), 400);
             return redirect()->route('leads');
+        }
+    }
+
+    public function searchValue(){
+        $enq_status  =  $this->request->getPost('enqStatus');
+        $owner_id    =  $this->request->getPost('ownerId');
+        $source_id   =  $this->request->getPost('sourceId');
+        $follow_up   =  $this->request->getPost('followUp');
+        $enq_date    =  $this->request->getPost('enqDate');
+        $follow_date =  $this->request->getPost('followUpDate');
+        $location    =  $this->request->getPost('location');
+        $city        =  $this->request->getPost('city');
+        $searchValue        =  $this->request->getPost('searchValue');
+
+        //Current month leads count
+        $where_condition = array();
+        if(!empty($enq_status)){
+            $where = array(
+                'xla_leads.status'=> $enq_status
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($owner_id)){
+            $where = array(
+                'xla_leads.Lead_Owner'=> $owner_id
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($source_id)){
+            $where = array(
+                'xla_leads.Source'=> $source_id
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($follow_up)){
+            $where = array(
+                'xla_leads.FollouUp_Counts'=> $follow_up
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($enq_date)){
+            $where = array(
+                'xla_leads.Enq_Dt'=> $enq_date
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($follow_date)){
+            $where = array(
+                'xla_leads.Follow_Up_Dt'=> $follow_date
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(empty($enq_date) && empty($follow_date)){
+            $where = array(
+                'MONTH(xla_leads.created_at)'=> date('m'),
+                'YEAR(xla_leads.created_at)'=> date('Y')
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($location)){
+            $where = array(
+                'xla_leads.Location'=> $location
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        if(!empty($city)){
+            $where = array(
+                'xla_leads.City'=> $city
+            );
+            $where_condition = array_merge($where_condition,$where);
+        }
+        
+        $this->leadModel->join('xla_users', 'xla_users.emp_id = xla_leads.Lead_Owner', 'LEFT');
+        $this->leadModel->join('xla_source', 'xla_source.id = xla_leads.Source', 'LEFT');
+        $this->leadModel->select('xla_users.full_name AS owner_name');
+        $this->leadModel->select('xla_source.title AS source_name');
+        $this->leadModel->select('xla_leads.*');
+        $this->leadModel->like('xla_leads.Name',$searchValue);
+        $this->leadModel->orLike('xla_leads.Email',$searchValue);
+        $this->leadModel->orLike('xla_leads.Mob_1',$searchValue);
+        $data['details'] = $this->leadModel->where($where_condition)->findAll();
+        $this->leadModel->selectCount('id');
+        $data['total_leads'] = $this->leadModel->where($where_condition)->findAll();
+
+        //Return data for view page
+        if($data) {            
+            return $this->respond($data);
+        } else {
+            return $this->respond($data, false);
         }
     }
 

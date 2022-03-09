@@ -242,7 +242,10 @@ $routes->group('leadsApi', ['filter' => 'myauth'], function ($routes) {
     $routes->post('updateUserDetails','Enquiry::updateUserDetails');
     $routes->post('insertLead','Enquiry::insertLead');
     $routes->post('import','Enquiry::import');
-    $routes->post('sendMessage','Enquiry::sendMessage');    
+    $routes->post('sendMessage','Enquiry::sendMessage'); 
+    $routes->post('searchValue','Enquiry::searchValue');   
+
+    
     // $routes->put('update/(:any)','Category::update/$1');  
 });
 
