@@ -19,7 +19,7 @@ $data = $session->get('loginInfo');
     padding-top: 10px;  min-height: 40px;
   }
 </style>
-<body class="sidebar-fixed">
+<body class="sidebar-icon-only">
     <div class="container-scroller">
         <?php include __DIR__ . '/../../../layout/navbar.php'; ?>
         <div class="container-fluid page-body-wrapper">

@@ -135,6 +135,7 @@ $routes->group('profile', ["filter" => "myauth"], function ($routes) {
 $routes->group('settings', ["filter" => "mysess"], function ($routes) {
     $routes->get('accounts', 'Dashboard::accounts'); 
     $routes->get('location', 'Dashboard::location');
+    $routes->get('sources', 'Dashboard::sources');
     $routes->get('subject', 'Dashboard::subject');
     $routes->get('sysdetails', 'Dashboard::systemDetails');
     $routes->get('team', 'Dashboard::team');
@@ -226,7 +227,7 @@ $routes->group('subject', ['filter' => 'myauth'], function ($routes) {
 $routes->group('team', ['filter' => 'myauth'], function ($routes) {
     $routes->get('all','Team::index');
     $routes->get('show/(:any)','Team::show/$1');
-    $routes->post('insert','Team::create');
+    $routes->post('insert','Team::create'); 
     $routes->delete('delete/(:any)','Team::delete/$1');    
     $routes->put('update/(:any)','Team::update/$1');
     $routes->post('insertImage/(:any)','Team::insertImage/$1'); 
@@ -234,7 +235,6 @@ $routes->group('team', ['filter' => 'myauth'], function ($routes) {
 });
 
 $routes->group('leadsApi', ['filter' => 'myauth'], function ($routes) {
-
     $routes->get('all','Enquiry::getAllLeads');
     $routes->get('show/(:num)','Enquiry::show/$1');
     $routes->post('fetchData','Enquiry::fetchData');
@@ -243,12 +243,19 @@ $routes->group('leadsApi', ['filter' => 'myauth'], function ($routes) {
     $routes->post('insertLead','Enquiry::insertLead');
     $routes->post('import','Enquiry::import');
     $routes->post('sendMessage','Enquiry::sendMessage'); 
-    $routes->post('searchValue','Enquiry::searchValue');   
-
-    
+    $routes->post('searchValue','Enquiry::searchValue');  
+    $routes->GET('getLocation/(:num)','Enquiry::getLocation/$1');    
     // $routes->put('update/(:any)','Category::update/$1');  
 });
 
+
+$routes->group('sources', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('all','Sources::index');
+    $routes->get('show/(:any)','Sources::show/$1');
+    $routes->post('insert','Sources::create');
+    $routes->delete('delete/(:any)','Sources::delete/$1');    
+    $routes->put('update/(:any)','Sources::update/$1');  
+});
 
 
 

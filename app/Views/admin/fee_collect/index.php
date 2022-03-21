@@ -17,7 +17,7 @@ $emp = $session->get('loginInfo');
   <link rel="stylesheet" href="<?= base_url(); ?>/assets/css/timeline.css">
 </head>
 
-<body class="sidebar-fixed">
+<body class="sidebar-icon-only">
   <div class="container-scroller">
     <?php include __DIR__ . '/../layout/navbar.php'; ?>
     <div class="container-fluid page-body-wrapper">

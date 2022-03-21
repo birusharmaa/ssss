@@ -4,7 +4,7 @@ $sessData = $session->get('loginInfo');
 $model = new \App\Models\SettingModel();
 $settingData = $model->get()->getResult('array');
 $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_value'] : base_url() . '/assets/images/logo.png';
-?>
+?> 
 <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row default-layout-navbar">
   <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
     <a class="navbar-brand brand-logo" href="<?= base_url(); ?>/admin/dashboard"><img src="<?= $logo ?>" alt="logo" /></a>
@@ -14,7 +14,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
     <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
       <span class="fas fa-bars"></span>
     </button>
-    <ul class="navbar-nav">
+    <!-- <ul class="navbar-nav">
       <li class="nav-item nav-search d-none d-md-flex">
         <div class="nav-link">
           <div class="input-group">
@@ -29,7 +29,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
           </div>
         </div>
       </li>
-    </ul>
+    </ul> -->
     <ul class=" navbar-nav navbar-nav-right">
       <!-- <li class="nav-item d-none d-lg-flex">
             <a class="nav-link" href="#">

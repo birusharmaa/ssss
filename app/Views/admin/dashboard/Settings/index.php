@@ -12,7 +12,7 @@ $data = $session->get('loginInfo');
   <script src="<?= base_url(); ?>/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 
-<body class="sidebar-fixed">
+<body class="sidebar-icon-only">
   <div class="container-scroller">
     <?php include __DIR__ . '/../../layout/navbar.php'; ?>
     <div class="container-fluid page-body-wrapper">

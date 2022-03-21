@@ -17,6 +17,9 @@ use App\Models\UserModel;
 use App\Models\api\SourceModel;
 use App\Models\api\CategoryModel;
 use App\Models\api\LeadsCommentsModal;
+use App\Models\CitiesMadel;
+use App\Models\StatesMadel;
+use App\Models\api\LocationModel;
 
 class Enquiry extends BaseController
 {
@@ -26,6 +29,9 @@ class Enquiry extends BaseController
         $this->request = service('request');
         $this->leadModel = new LeadsModel();
         $this->_leadModel = new LeadModel();
+        $this->city_model = new CitiesMadel();
+        $this->states_madel = new StatesMadel();
+        $this->location_model = new LocationModel();
         $this->validation =  \Config\Services::validation();
 
         $this->session = session();
@@ -141,11 +147,33 @@ class Enquiry extends BaseController
 
 
         $lead_comment_model = new LeadsCommentsModal();
+
         $lead_comment_model->join('xla_users', 'xla_users.emp_id = xla_leads_comments.created_by', 'LEFT');
         $lead_comment_model->select('xla_users.full_name');
+        $lead_comment_model->selectCount('xla_leads_comments.id');
         $lead_comment_model->select('xla_leads_comments.created_at AS fallow_comments_time, xla_leads_comments.comments');
         $lead_comment_model->orderBy('xla_leads_comments.id','ASC');            
         $pageData['follow_comment'] = $lead_comment_model->findAll(5);
+
+        //Get all states name
+        // $this->states_madel->select('id');
+        // $status = $this->states_madel->where('country_id', 101)->findAll();
+
+        $this->city_model->select('id, name');
+        $this->city_model->orderby('name', 'Asc');            
+        $pageData['cities'] = $this->city_model->where('state_id >', 0)->where('state_id <', 40)->findAll();
+        $this->location_model->select('id, location_name');
+        $this->location_model->orderby('location_name', 'Asc');            
+        $pageData['locations'] = $this->location_model->findAll();
+
+        if(count($pageData['follow_comment'])>0){
+            for($i=0; $i<count($pageData['follow_comment']); $i++){
+                $date = date($pageData['follow_comment'][$i]['fallow_comments_time']);
+                $middle = strtotime($date); 
+                $new_date = date('d-M-Y H:i A', $middle);
+                $pageData['follow_comment'][$i]['fallow_comments_time'] = $new_date;
+            }
+        }
 
         return view('admin/enquiry/index', $pageData);
     }
@@ -182,13 +210,28 @@ class Enquiry extends BaseController
         $data['data'] = $this->leadModel->find($id);
 
         //Fallow comments
-        
+
         $lead_comment_model = new LeadsCommentsModal();
+
+        $lead_comment_model->select('xla_leads_comments.id');
+        $lead_comment_model->join('xla_leads', 'xla_leads.id = xla_leads_comments.lead_id', 'LEFT');
+        $data['comment_counts'] = $lead_comment_model->where('xla_leads_comments.lead_id', $id)->countAllResults();
+
+
         $lead_comment_model->join('xla_users', 'xla_users.emp_id = xla_leads_comments.created_by', 'LEFT');
         $lead_comment_model->select('xla_users.full_name');
         $lead_comment_model->select('xla_leads_comments.created_at AS fallow_comments_time, xla_leads_comments.comments');
         $lead_comment_model->orderBy('xla_leads_comments.id','DESC');            
         $data['follow_comment'] = $lead_comment_model->where('lead_id',$id)->findAll(5);
+        
+        if(count($data['follow_comment'])>0){
+            for($i=0; $i<count($data['follow_comment']); $i++){
+                $date = date($data['follow_comment'][$i]['fallow_comments_time']);
+                $middle = strtotime($date); 
+                $new_date = date('d-M-Y H:i A', $middle);
+                $data['follow_comment'][$i]['fallow_comments_time'] = $new_date;
+            }
+        }
 
         if($data) {            
             return $this->respond($data);
@@ -247,7 +290,7 @@ class Enquiry extends BaseController
             );
             $where_condition = array_merge($where_condition,$where);
         }
-        if(empty($enq_date) && empty($follow_date)){
+        if(!empty($enq_date) && !empty($follow_date)){
             $where = array(
                 'MONTH(xla_leads.created_at)'=> date('m'),
                 'YEAR(xla_leads.created_at)'=> date('Y')
@@ -638,20 +681,43 @@ class Enquiry extends BaseController
 
         $lead_id     =  $this->request->getPost('loadId');
         $comments    =  $this->request->getPost('comments');
+
+        $user_name      = $this->request->getPost('userName');
+        $user_status    = $this->request->getPost('userStatus');
+        $user_last_call = $this->request->getPost('userLastCall');
+        $user_next_call = $this->request->getPost('userNextCall');
+        $unsubscribe    = $this->request->getPost('unsubscribe');
+
         $created_by  =  $session->get('loginInfo')['emp_id'];
         
         if ($this->validate([
             'loadId' => 'required',
-            'comments' => 'required',
+            'userName' => 'required',
+            'userStatus' => 'required',
         ])){
-            $data = array(
-                "lead_id"    => $lead_id,
-                "comments"   => $comments,
-                "created_by" => $created_by
-            );
-
             $lead_comment_model = new LeadsCommentsModal();
-            if($lead_comment_model->insert($data)){
+            if(!empty($comments)){
+                $comennts_data = array(
+                    "lead_id"    => $lead_id,
+                    "comments"   => $comments,
+                    "created_by" => $created_by
+                );
+                $lead_comment_model->insert($comennts_data);
+            }
+
+            $user = $this->leadModel->find($lead_id);
+            if($user){
+                $user_data = [
+                    'Enq_Dt' => $user_last_call,
+                    'Follow_Up_Dt'    => $user_next_call,
+                    "Unsubscribe"=> $unsubscribe,
+                    "status"=> $user_status,
+                    "Name"=> $user_name
+                ];
+                $this->leadModel->update($lead_id, $user_data);
+
+                $data['message'] = array("status" => 1, 'message' => "User details updated successfully.");
+                
                 $lead_comment_model->join('xla_users', 'xla_users.emp_id = xla_leads_comments.created_by', 'LEFT');
                 $lead_comment_model->select('xla_users.full_name');
                 $lead_comment_model->select('xla_leads_comments.created_at AS fallow_comments_time, xla_leads_comments.comments');
@@ -659,8 +725,10 @@ class Enquiry extends BaseController
                 $data['follow_comment'] = $lead_comment_model->where('lead_id',$lead_id)->findAll(5);
                 return $this->respond($data);
             }else{
-                return $this->fail($data);
+                $result = ["message"=>"No record found."];
+                return $this->fail($result);
             }
+        
         } else {
             return $this->fail($validation->getErrors());
         }
@@ -964,7 +1032,7 @@ class Enquiry extends BaseController
         $follow_date =  $this->request->getPost('followUpDate');
         $location    =  $this->request->getPost('location');
         $city        =  $this->request->getPost('city');
-        $searchValue        =  $this->request->getPost('searchValue');
+        $searchValue =  $this->request->getPost('searchValue');
 
         //Current month leads count
         $where_condition = array();
@@ -1004,7 +1072,7 @@ class Enquiry extends BaseController
             );
             $where_condition = array_merge($where_condition,$where);
         }
-        if(empty($enq_date) && empty($follow_date)){
+        if(!empty($enq_date) && !empty($follow_date)){
             $where = array(
                 'MONTH(xla_leads.created_at)'=> date('m'),
                 'YEAR(xla_leads.created_at)'=> date('Y')
@@ -1025,6 +1093,7 @@ class Enquiry extends BaseController
         }
         
         $this->leadModel->join('xla_users', 'xla_users.emp_id = xla_leads.Lead_Owner', 'LEFT');
+        $this->leadModel->join('xla_leads_comments', 'xla_leads_comments.lead_id = xla_leads.id', 'LEFT');
         $this->leadModel->join('xla_source', 'xla_source.id = xla_leads.Source', 'LEFT');
         $this->leadModel->select('xla_users.full_name AS owner_name');
         $this->leadModel->select('xla_source.title AS source_name');
@@ -1032,11 +1101,27 @@ class Enquiry extends BaseController
         $this->leadModel->like('xla_leads.Name',$searchValue);
         $this->leadModel->orLike('xla_leads.Email',$searchValue);
         $this->leadModel->orLike('xla_leads.Mob_1',$searchValue);
+        $this->leadModel->orLike('xla_leads.Mob_2',$searchValue);
+        $this->leadModel->orLike('xla_leads.Follow_Up_Comment',$searchValue);
+        $this->leadModel->orLike('xla_leads_comments.comments',$searchValue);
         $data['details'] = $this->leadModel->where($where_condition)->findAll();
+        // echo $this->leadModel->getLastQuery();
+        // exit;
         $this->leadModel->selectCount('id');
         $data['total_leads'] = $this->leadModel->where($where_condition)->findAll();
 
         //Return data for view page
+        if($data) {            
+            return $this->respond($data);
+        } else {
+            return $this->respond($data, false);
+        }
+    }
+
+    function getLocation($city_id = null){
+        $location_model = new LocationModel();
+        $location_model->select(['location_name','id']);
+        $data = $location_model->where('city_id', $city_id)->findAll();
         if($data) {            
             return $this->respond($data);
         } else {

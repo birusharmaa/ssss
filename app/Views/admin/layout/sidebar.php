@@ -23,7 +23,7 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="<?= base_url('admin/dashboard'); ?>">
+      <a class="nav-link" href="<?= base_url('admin/dashboard'); ?>" title="Dashboard">
         <i class="fa fa-home menu-icon"></i>
         <span class="menu-title">Dashboard</span>
       </a>
@@ -56,13 +56,13 @@
       </div>
     </li> -->
     <li class="nav-item">
-      <a class="nav-link" href="<?= base_url('admin/enquiry'); ?>">
-        <i class="fa fa-home menu-icon"></i>
+      <a class="nav-link" href="<?= base_url('admin/enquiry'); ?>" title="Enquiry">
+        <i class="fas fa-info menu-icon"></i>
         <span class="menu-title">Enquiry</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#attendance" aria-expanded="false" aria-controls="attendance">
+      <a class="nav-link" data-toggle="collapse" href="#attendance" aria-expanded="false" aria-controls="attendance"  title="Attendance">
         <i class="fas fa-calendar-day menu-icon"></i>
         <span class="menu-title">Attendance</span>
         <i class="menu-arrow"></i>
@@ -79,7 +79,7 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#announcements" aria-expanded="false" aria-controls="announcements">
+      <a class="nav-link" data-toggle="collapse" href="#announcements" aria-expanded="false" aria-controls="announcements" title="Announcements & Advt.">
         <i class="fas fa-bullhorn menu-icon"></i>
         <span class="menu-title">Announcements & Advt.</span>
         <i class="menu-arrow"></i>
@@ -99,7 +99,7 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#learning-management" aria-expanded="false" aria-controls="learning-management">
+      <a class="nav-link" data-toggle="collapse" href="#learning-management" aria-expanded="false" aria-controls="learning-management"  title="Learning Management">
         <i class="fas fa-tasks menu-icon"></i>
         <span class="menu-title">Learning Management</span>
         <i class="menu-arrow"></i>
@@ -116,19 +116,19 @@
       </div>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="#" title="Finance">
         <i class="fas fa-coins menu-icon"></i>
         <span class="menu-title">Finance</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="#" title="Transactions">
         <i class="fas fa-money-check-alt menu-icon"></i>
         <span class="menu-title">Transactions</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#web-setting" aria-expanded="false" aria-controls="web-setting">
+      <a class="nav-link" data-toggle="collapse" href="#web-setting" aria-expanded="false" aria-controls="web-setting" title="Settings">
         <i class="fas fa-cog menu-icon"></i>
         <span class="menu-title">Settings</span>
         <i class="menu-arrow"></i>
@@ -161,6 +161,9 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="<?= base_url('settings/team'); ?>">Team</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('settings/sources'); ?>">Sources</a>
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link" href="<?= base_url('admin/roles'); ?>">Role & Permission </a>

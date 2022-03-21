@@ -41,7 +41,6 @@ function getAlllocation(data) {
     table.destroy();
     $('#locationDatatables').DataTable({
         data: dataSet,
-        "responsive": true,
     });
     }   
   }
@@ -61,11 +60,11 @@ function editlocation(id) {
             url: url,
             success: function (data) {
                 if (data.id > 0) {
-                  console.log(data);
-                    $("#inputField").show();
-                    $("#inputField").addClass("d-flex");
+                    $(".comman").show();
+                    $(".comman").addClass("d-flex");
                     $("#location_name").val(data.location_name);
                     $('#locationid').val(data.id);
+                    $('#city_id').val(data.city_id);
                     $(".save-location").removeClass('save-location').addClass('update-location');
                     $(".add-new").removeClass('add-new').addClass('update-location');
                     $(".update-location").html('');
@@ -100,9 +99,10 @@ function deletelocation(id) {
                 },
                 url: url,
                 success: function (data) {
-                    if (data.status === 200) {                      
+                    if (data.status === 200) { 
+                      loadAlllocation()                     
                         Notiflix.Notify.success(data.messages.success);                     
-                        setTimeout(() => { loadAlllocation()}, 1000);  
+                        setTimeout(() => { }, 1000);  
                     }                   
                 },
                 error: function (jqxhr, eception) {
@@ -122,11 +122,10 @@ function deletelocation(id) {
 $(function () {
     loadAlllocation();
     $(document).on('click', '.save-location', function (e) {
-        e.preventDefault();     
+        e.preventDefault(); 
         let url = BaseUrl + '/location/insert';
         let formData = $("#locationForm").serialize();      
-
-        if($("#location_name").val()!=""){            
+        if($("#leadCity").val()!=""){
           $.ajax({
               type: "POST",
               headers: {
@@ -136,7 +135,8 @@ $(function () {
               url: url,
               data: formData,
               success: function (data) {              
-                  if (data.status === 200) {                      
+                  if (data.status === 200) {   
+                  loadAlllocation();                   
                   Notiflix.Notify.success(data.messages.success);  
                   hideAccountFeild(); 
                   setTimeout(() => { loadAlllocation()}, 1000);  
@@ -144,14 +144,16 @@ $(function () {
               },
               error: function (jqxhr, eception) {
                 Notiflix.Notify.warning(jqxhr.responseJSON.messages.location_name);
+                if(jqxhr.responseJSON.messages.city_id){
+                    Notiflix.Notify.warning(jqxhr.responseJSON.messages.city_id);
+                }
               }
           });
-        }else{   
-         
-            
+        }else{
+            Notiflix.Notify.warning("Please select city.");
         }
     })
-});
+}); 
 
 $(function () {
     loadAlllocation();
@@ -173,6 +175,7 @@ $(function () {
                     success: function (data) {
 
                         if (data.status === 200) {
+                          loadAlllocation();
                             Notiflix.Notify.success(data.messages.success);  
                             hideAccountFeild(); 
                             setTimeout(() => { loadAlllocation()}, 1000);  
@@ -182,6 +185,14 @@ $(function () {
                         if (jqxhr.status === 404) {  
                             Notiflix.Notify.error(data.messages);  
                             //setTimeout(() => { window.location.reload()}, 1000);  
+
+                        }else{
+                            if(jqxhr.responseJSON.messages.city_id){
+                                Notiflix.Notify.warning(jqxhr.responseJSON.messages.city_id);
+                            }
+                            if(jqxhr.responseJSON.messages.location_name){
+                                Notiflix.Notify.warning(jqxhr.responseJSON.messages.location_name);
+                            }
                         } 
                     }
                 });                
@@ -193,21 +204,20 @@ $(function () {
     
     $(".add-new").click(function (e) {
         e.preventDefault();
-        $("#inputField").show();
-        $("#inputField").addClass("d-flex");
-        $("#location_name").focus();
+        $(".comman").show();
+        $(".comman").addClass("d-flex");
         $(".add-new").removeClass('add-new').addClass('save-location');
         $(".save-location").html('');
         $(".save-location").html('<i class="far fa-save mr-2"></i>Save');
-      });
+    });
 
 
 });
 
 function hideAccountFeild(){
     $("#location_name").val("");
-    $("#inputField").removeClass("d-flex");
-    $("#inputField").hide();
+    $(".comman").removeClass("d-flex");
+    $(".comman").hide();
     $(".save-location").removeClass('save-location').addClass('add-new');
     $(".add-new").html('');
     $(".add-new").html('<i class="fas fa-plus mr-2"></i>Add New');

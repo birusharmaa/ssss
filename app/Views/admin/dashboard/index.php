@@ -9,7 +9,7 @@
   <?php include __DIR__ . '/../layout/cssLinks.php'; ?>
 </head>
 
-<body class="sidebar-fixed">
+<body class="sidebar-icon-only">
   <div class="container-scroller">
     <?php include __DIR__ . '/../layout/navbar.php'; ?>
     <div class="container-fluid page-body-wrapper">

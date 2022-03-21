@@ -14,4 +14,3 @@
 
 <!-- For notiflix -->
 <link rel="stylesheet" href="<?=base_url();?>/assets/notify/dist/notiflix-3.2.4.min.css" />
-<script src="<?=base_url();?>/assets/notify/dist/notiflix-3.2.4.min.js"></script>

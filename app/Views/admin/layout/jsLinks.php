@@ -16,6 +16,7 @@ $userInfo = $sess->has('updated_password') ? $sess->get('updated_password') : ''
 <script src="<?= base_url(); ?>/assets/js/todolist.js"></script>
 <script src="<?= base_url(); ?>/assets/js/dashboard.js"></script>
 <script src="<?= base_url(); ?>/assets/js/custom.js"></script>
+<script src="<?=base_url();?>/assets/notify/dist/notiflix-3.2.4.min.js"></script>
 <script type="text/javascript" src="<?= base_url(); ?>/assets/js/jquery.dataTables.js"></script>
 <!-- <script type="text/javascript" src="<?= base_url(); ?>/assets/js/dataTables.responsive.min.js"></script>
  -->

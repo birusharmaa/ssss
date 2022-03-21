@@ -15,7 +15,7 @@ $emp = $session->get('loginInfo');
   <script src="<?= base_url(); ?>/assets/css/dropzone.css"></script>
 </head>
 
-<body class="sidebar-fixed">
+<body class="sidebar-icon-only">
   <div class="container-scroller">
     <?php include __DIR__ . '/../layout/navbar.php'; ?>
     <div class="container-fluid page-body-wrapper">

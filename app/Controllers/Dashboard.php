@@ -15,6 +15,8 @@ use App\Models\api\AccountModel;
 use App\Models\api\LocationModel;
 use App\Models\api\SystemModel;
 use App\Models\api\TeamModel;
+use App\Models\CitiesMadel;
+
 
 class Dashboard extends BaseController
 {
@@ -38,6 +40,7 @@ class Dashboard extends BaseController
         $this->locationModel = new LocationModel();
         $this->systemModel = new SystemModel();
         $this->teamModel = new TeamModel();
+        $this->city_model = new CitiesMadel();
         $this->session = \Config\Services::session();
         helper('general');
     }
@@ -243,8 +246,13 @@ class Dashboard extends BaseController
     {
         $empid = $this->session->get('loginInfo');
         $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Location', 'empid' => $empid['emp_id']];
+        $this->city_model->select('id, name');
+        $this->city_model->orderby('name', 'Asc');            
+        $pageData['cities'] = $this->city_model->where('state_id >', 0)->where('state_id <', 40)->findAll();
         return view('admin/dashboard/Settings/Location/index', $pageData);
     }
+
+    
 
     /**
      *  Function is used to show subject page
@@ -308,5 +316,17 @@ class Dashboard extends BaseController
      /**
      *  Function is used to status page view.
      */
+
+     /**
+     *  Function is used to show sources page     
+     * 
+     * @return array
+     */
+    public function sources()
+    {
+        $empid = $this->session->get('loginInfo');
+        $pageData = ['pageTitle' => 'XLAcademy Admin', 'pageHeading' => 'Sources', 'empid' => $empid['emp_id']];
+        return view('admin/dashboard/Settings/Source/index', $pageData);
+    }
 
 }

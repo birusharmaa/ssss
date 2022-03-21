@@ -1,11 +1,11 @@
 <?php namespace App\Controllers;
-  
+ 
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
-use App\Models\api\LocationModel;
+use App\Models\api\SourcesModel;
 
  
-class Location extends ResourceController
+class Sources extends ResourceController
 {
     use ResponseTrait;
 
@@ -15,8 +15,8 @@ class Location extends ResourceController
         
     }    
       public function index(){                 
-            $model = new LocationModel();
-            $data = $model->findAll();
+            $model = new SourcesModel();
+            $data = $model->findAll();          
             if ($data) {            
                 return $this->respond($data);
             } else {
@@ -25,35 +25,32 @@ class Location extends ResourceController
       }
 
     public function create(){    
-        
-        $model = new LocationModel();
+       
+        $this->model = new SourcesModel();
         $rules = [
-            "location_name" => "required",
-            "city_id" => "required"               
+            "sources_name" => "required",                
         ];
         $messages = [
-            "location_name" => [
-                "required" => "Location is required."          
-            ], 
-            "city_id" => [
-                "required" => "City is required."          
-            ],  
+            "source_name" => [
+            "required" => "source name is required."          
+        ]
        ];     
         if (!$this->validate($rules, $messages)) {      
-        return $this->fail($this->validator->getErrors(), 400);
+            return $this->fail($this->validator->getErrors(), 400);
 
         } else {
-                     
-            $data = $this->request->getPost(); 
-            $data = array_merge($data,array('created_at'=> date('y-m-d h:i:sa')));   
-               
-            $model->insertLocation($data);
+            $data = [
+                "title"     => $this->request->getPost('sources_name'),
+                'created_at'=> date('y-m-d h:i:sa'),
+            ];
+            
+            $this->model->insert($data);
             $response = [
-            'status'   => 200,
-            'error'    => null,
-            'messages' => [
-                'success' => 'Location Added Successfully.'
-            ]
+                'status'   => 200,
+                'error'    => null,
+                'messages' => [
+                        'success' => 'source Added Successfully.'
+                    ]
             ];
             return $this->respond($response);
         }            
@@ -62,10 +59,10 @@ class Location extends ResourceController
       // delete
     public function delete($id = null){
 
-        $model = new LocationModel();      
+        $model = new SourcesModel();      
         $data = $model->where('id', $id)->first(); 
            if($data !=''){            
-                if ($model->deleteLocation($id)) {
+                if ($model->delete($id)) {
                                         
                     $response = [
                     'status'   => 200,
@@ -80,7 +77,7 @@ class Location extends ResourceController
                         'status'   => 404,
                         'error'    => null,
                         'messages' => [
-                            'success' => 'Location No Deleted.'
+                            'success' => 'source No Deleted.'
                         ]
                         ];
                         return $this->respond($response);                   
@@ -93,7 +90,7 @@ class Location extends ResourceController
 
     public function Show($id = null){
 
-        $model = new LocationModel();      
+        $model = new SourcesModel();      
         $data = $model->where('id', $id)->first(); 
         if($data !=''){ 
             return $this->respond($data);                    
@@ -105,39 +102,35 @@ class Location extends ResourceController
     // update 
     public function update($id = null)
     {            
-        $model = new LocationModel();
+        $model = new SourcesModel();
         $data = $model->where('id', $id)->first(); 
         $input = $this->request->getRawInput();   
+        
         if($data){ 
             $rules = [
-                "location_name" => "required",
-                "city_id"  => "required"             
+                "sources_name" => "required"                
             ];
             $messages = [
-                "location_name" => [
-                    "required" => "Location Name is required."          
-                ],
-                "city_id" => [
-                    "required" => "city is required."          
-                ]
+                "sources_name" => [
+                "required" => "source Name is required."          
+            ]
            ];     
             if (!$this->validate($rules, $messages)) {                    
             return $this->fail($this->validator->getErrors(), 400);    
             } else {        
                                  
                 $updateData = [
-                    'location_name' => $input['location_name'],
-                    'city_id' => $input['city_id'],
+                    'title'  => $input['sources_name'],
                     'updated_by' => $input['created_by'],                  
                     'updated_at' => date('y-m-d h:i:sa')
                 ];
                 
-                $model->updateLocation($updateData,$id);
+                $model->update($id, $updateData);
                 $response = [
                     'status'   => 200,
                     'error'    => null,
                     'messages' => [
-                        'success' => 'Location Updated Successfully.'
+                        'success' => 'source Updated Successfully.'
                     ]
                 ];
                 return $this->respond($response);
