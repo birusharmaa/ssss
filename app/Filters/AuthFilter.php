@@ -33,10 +33,11 @@ class AuthFilter implements FilterInterface
             $model = new UserModel();
             $condition = ['personal_email' => $userEmail->getValue()];
             $data = $model->where($condition)->first();
+            
             if (!password_verify($userPassword->getValue(), $data['password'])) {
                 echo "Invalid credentials";
                 exit();
-             }
+            }
         } else {
             echo "required credentials";
             exit();

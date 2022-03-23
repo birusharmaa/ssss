@@ -14,247 +14,280 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?= $pageTitle ?></title>
-    <?php include __DIR__ . '/../layout/cssLinks.php'; ?>    
+    <?php include __DIR__ . '/../layout/cssLinks.php'; ?>   
+    <link href="<?= base_url('assets/dist/css/bootstrap-select.css');?>"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>/assets/js/pages/jquery.dataTables.colResize.css">
     <style type="text/css">
         .bottom-row {
-        min-height: 186px;
-    }
+            min-height: 186px;
+        }
 
-    div.dataTables_wrapper {
-        width: 1050px;
-        margin: 0 auto;
-    }
+        div.dataTables_wrapper {
+            width: 1050px;
+            margin: 0 auto;
+        }
 
-    .hide_me {
-        display: none !important;
-    }
+        .hide_me {
+            display: none !important;
+        }
 
-    .select2-results__option[aria-selected=true] {
-        display: none;
-    }
+        .select2-results__option[aria-selected=true] {
+            display: none;
+        }
 
-    /*.select2-container--default .select2-results__option--highlighted[aria-selected] {
-            background-color: yellowgreen;
-            color: white;
-        }*/
+        .row.card-title {
+            border: 2px solid;
+            margin-bottom: 0;
+        }
 
-    .row.card-title {
-        border: 2px solid;
-        /*padding: 10px;*/
-        margin-bottom: 0;
-    }
+        .table-sm td {
+            padding: 0;
+        }
 
-    .table-sm td {
-        padding: 0;
-    }
+        .row {
+            margin-left: 0px;
+            margin-right: 0px;
+            white-space: nowrap;
+        }
 
-    .row {
-        margin-left: 0px;
-        margin-right: 0px;
-        white-space: nowrap;
-    }
+        .row .col-md-8,
+        .row .col-md-4 {
+            align-items: center;
+            display: flex;
+        }
 
-    .row .col-md-8,
-    .row .col-md-4 {
-        align-items: center;
-        display: flex;
-    }
+        .form-control myform-control:focus {
+            outline: none !important;
+        }
 
-    .form-control myform-control:focus {
-        outline: none !important;
-    }
+        label {
+            margin-bottom: 0;
+        }
 
-    label {
-        margin-bottom: 0;
-    }
+        .myform-control {
+            border: none;
+            outline: none;
+        }
 
-    .myform-control {
-        border: none;
-        outline: none;
-    }
+        .select2-container--default .select2-selection--multiple {
+            border: 0px solid red !important;
+        }
 
-    .select2-container--default .select2-selection--multiple {
-        border: 0px solid red !important;
-    }
+        button#saveUserDetials {
+            border-top: 2px solid black !important;
+            border-left: 2px solid black !important;
+            border-radius: 0px;
+            padding: 6px !important;
+        }
 
-    button#saveUserDetials {
-        border-top: 2px solid black !important;
-        border-left: 2px solid black !important;
-        border-radius: 0px;
-        padding: 6px !important;
-    }
+        button#saveComments {
+            border-top: 2px solid black !important;
+            border-left: 2px solid black !important;
+            border-radius: 0px;
+            padding: 8px !important;
+        }
 
-    button#saveComments {
-        border-top: 2px solid black !important;
-        border-left: 2px solid black !important;
-        border-radius: 0px;
-        padding: 8px !important;
-    }
+        button#sendMessage {
+            border-top: 2px solid black !important;
+            border-left: 2px solid black !important;
+            border-radius: 0px;
+            padding: 6px !important;
+        }
 
-    button#sendMessage {
-        border-top: 2px solid black !important;
-        border-left: 2px solid black !important;
-        border-radius: 0px;
-        padding: 6px !important;
-        /*position: absolute;
-    bottom: 0;
-    right: 0;*/
-    }
+        span.select2.select2-container.select2-container--default.select2-container--focus.select2-container--below.select2-container--open {
+            width: 150px;
+        }
 
-    span.select2.select2-container.select2-container--default.select2-container--focus.select2-container--below.select2-container--open {
-        width: 150px;
-    }
+        .font-size {
+            font-size: 14px !important;
+        }
 
-    .font-size {
-        font-size: 14px !important;
-    }
+        .myform-control {
+            height: calc(1.5rem + 2px);
+            padding: 0px !important;
+            font-size: 10px;
+        }
 
-    .myform-control {
-        height: calc(1.5rem + 2px);
-        padding: 0px !important;
-        font-size: 10px;
-    }
+        select#enqStatus,
+        select#ownerId,
+        select#sourceId,
+        select#userStatus,
+        select#bulkSms {
+            height: calc(1.5rem + 2px);
+        }
 
-    select#enqStatus,
-    select#ownerId,
-    select#sourceId,
-    select#userStatus,
-    select#bulkSms {
-        height: calc(1.5rem + 2px);
-    }
+        .margin-left {
+            margin-left: -10px;
+        }
 
-    .margin-left {
-        margin-left: -10px;
-    }
+        input#searchValue {
+            border-top: 2px solid;
+            border-left: 2px solid;
+            border-radius: 0px;
+            /* height: 20px; */
+            width: 100%;
+            border-right: 0;
+            border-bottom: 0;
+        }
 
-    input#searchValue {
-        border-top: 2px solid;
-        border-left: 2px solid;
-        border-radius: 0px;
-        /* height: 20px; */
-        width: 100%;
-        border-right: 0;
-        border-bottom: 0;
+        select {
+            border: none !important;
+        }
 
-        /*position: absolute;
-    bottom: 0;
-    outline:none;
-    right: 0;*/
-    }
+        div.dataTables_wrapper {
+            width: 100% !important;
+            margin: 0 auto;
+        }
 
-    select {
-        border: none !important;
-    }
+        .myform-control {
+            height: calc(1rem) !important;
+        }
 
-    div.dataTables_wrapper {
-        width: 100% !important;
-        margin: 0 auto;
-    }
+        textarea#comments {
+            height: 100%;
+            padding: 0px !important;
+            font-size: 14px;
+            border: none;
+            outline: none;
+            margin-top: 5px;
 
-    .myform-control {
-        height: calc(1rem) !important;
-    }
+        }
 
-    textarea#comments {
-        height: 100%;
-        padding: 0px !important;
-        font-size: 14px;
-        border: none;
-        outline: none;
-        margin-top: 5px;
+        .councler-state {
+            height: 200px;
+            overflow-y: auto;
+        }
 
-    }
+        div#commentsRow {
+            height: 100px;
+        }
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-indent: 1px;
+            text-overflow: '';
+        }
 
-    /* *{
-    border: 1px solid red;
-} */
-    .councler-state {
-        height: 200px;
-        overflow-y: auto;
-    }
+        .mtn-3 {
+            margin-top: -3px;
+        }
 
-    div#commentsRow {
-        height: 100px;
-    }
+        .cmw-80 {
+            max-width: 80px !important;
+        }
 
-    /*#commentBtn{
-    padding-top: 72px;
-}
-#commentBox{
-    padding-top: 82px;
-}*/
-    select {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        text-indent: 1px;
-        text-overflow: '';
-    }
+        .button-div {
+            position: relative;
+        }
 
-    .mtn-3 {
-        margin-top: -3px;
-    }
+        .button-div button {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
 
-    .cmw-80 {
-        max-width: 80px !important;
-    }
+        .comment-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
 
-    .button-div {
-        position: relative;
-    }
+        #leadModel {
+            padding-left: 0 !important;
+        }
 
-    .button-div button {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-    }
+        #leadModel .modal-dialog {
+            margin: 0 !important;
+            max-width: 100% !important;
+        }
 
-    .comment-box {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-    }
+        #leadModel .modal-dialog .modal-content .modal-header {
+            padding: 5px 26px;
+        }
 
-    #leadModel {
-        padding-left: 0 !important;
-    }
+        #leadModel .modal-dialog .modal-content .modal-body {
+            padding: 0;
+        }
 
-    #leadModel .modal-dialog {
-        margin: 0 !important;
-        max-width: 100% !important;
-    }
+        .councler-state .row .col-12:nth-child(1) {
+            background-color: #fbe1bf;
+            white-space: break-spaces;
+        }
+        .councler-state .row .col-12:nth-child(2) {
+            background-color: #b2e4f7;
+        }
 
-    #leadModel .modal-dialog .modal-content .modal-header {
-        padding: 5px 26px;
-    }
+        tr.odd {
+            background-color: #c6c6c6 !important
+        }
 
-    #leadModel .modal-dialog .modal-content .modal-body {
-        padding: 0;
-    }
+        .bg-cgray {
+            background-color: #c6c6c6 !important
+        }
+        .card .card-title {
+            padding-bottom: 0.5px;
+        }
+        .comment-box{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }    
+        div#leadModel {
+            padding-right: 0px !important;
+        }
 
-    /* .table-responsive{
-    max-height:350px;
-} */
-    .councler-state .row:nth-child(odd) {
-        background-color: #fbe1bf;
-    }
 
-    tr.odd {
-        background-color: #c6c6c6 !important
-    }
+        .multiselect {
+            width: 100%;
+        }
 
-    .bg-cgray {
-        background-color: #c6c6c6 !important
-    }
-.card .card-title {
-    padding-bottom: 0.5px;
-}
-.comment-box{
-        display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}    
+        .selectBox {
+            position: relative;
+        }
+
+        .selectBox select {
+            width: 100%;
+        }
+
+        .overSelect {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .btn.dropdown-toggle:focus {
+            outline: none !important;
+        }
+
+        button.multiselect.dropdown-toggle.btn.btn-default {
+            padding: 1px;
+            font-size: 11px;
+        }
+        .multiselect-container>li>a>label {
+            margin: 0;
+            height: 100%;
+            cursor: pointer;
+            font-weight: 400;
+            padding: 0px 0px 2px 8px !important;
+            font-size: 11px;
+        }
+        li {
+            line-height: 0px !important;
+        }
+
+        .multiselect-container>li>a>label>input[type=checkbox]{
+            width: 10px!important;
+        }
+
+        .dropdown-menu {
+            min-width: 7em;
+            max-height: 250px;
+            overflow-y: auto;
+        }
     </style>
-
 </head>
 <body class="sidebar-icon-only">
     <?php include __DIR__ . '/../layout/loader.php'; ?>
@@ -352,9 +385,14 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <!-- <img src="http://localhost:8080/assets/images/logo-sm.png" alt=""
+                                            <!-- <img src="http://localhost:8080/assets/images/ logo-sm.png" alt=""
                                                 class="position-absolute rounded-circle" width="50" height="50" style="top:0; right:0;"> -->
-                                                <img src="<?= $logo;?>" class="position-absolute rounded-circle" alt="logo" width="100" height="50" style="top:0; right:0;"/>
+                                                <!-- <img src="<?= $logo;?>" class="position-absolute rounded-circle" alt="logo" width="100" height="50" style="top:0; right:0;"/> -->
+                                                <?php if (!empty($sessData['picture_attachment'])) : ?>
+                                                <img src="<?= $sessData['picture_attachment'] ?>" alt="profile" class="position-absolute rounded-circle"  width="75" style="top:0; right:0;"/>
+                                              <?php else : ?>
+                                                <img src="<?= base_url(); ?>/assets/images/faces/face12.jpg" alt="profile" class="position-absolute rounded-circle" width="100" style="top:0; right:0;"/>
+                                              <?php endif; ?>
                                         </div>
                                     
                                     </div>
@@ -367,40 +405,37 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                                     <tr>
                                                         <td><div class="mr-1 mtn-3 bg-cgray">Status</div></td>
                                                         <td>
-                                                            <select name="" id="enqStatus" class="form-control myform-control" onchange="fetchData()">
-                                                                <option value="">Select</option>
+                                                            <select id="enqStatus" onchange="fetchData(this)" name="enqStatus[]" multiple >
                                                                 <?php foreach ($enqStatus as $enq_status) {
                                                                     ?>
                                                                     <option value="<?= $enq_status['id'];?>"><?= $enq_status['title'];?></option>
                                                                     <?php
                                                                 }?>
-                                                            </select>
+                                                            </select>   
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><div class="mr-1 mtn-3 bg-cgray">Lead Owner</div></td>
                                                         <td>
-                                                        <select name="" id="ownerId" class="form-control myform-control" onchange="fetchData()">
-                                                        <option value="">Select</option>
-                                                        <?php foreach ($usersData as $user_data) {
-                                                            ?>
-                                                            <option value="<?= $user_data['emp_id'];?>"><?= $user_data['full_name'];?></option>
-                                                            <?php
-                                                        }?>
-                                                    </select>
+                                                            <select id="ownerId" onchange="fetchData(this)" name="ownerId[]" multiple >
+                                                                <?php foreach ($usersData as $user_data) {
+                                                                    ?>
+                                                                    <option value="<?= $user_data['emp_id'];?>"><?= $user_data['full_name'];?></option>
+                                                                    <?php
+                                                                }?>
+                                                            </select>   
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><div class="mr-1 mtn-3 bg-cgray">Source</div></td>
                                                         <td>
-                                                            <select name="" id="sourceId" class="form-control myform-control" onchange="fetchData()">
-                                                            <option value="">Select</option>
-                                                            <?php foreach ($sourceModel as $source_model) {
-                                                                ?>
-                                                                <option value="<?= $source_model['id'];?>"><?= $source_model['title'];?></option>
-                                                                <?php
-                                                            }?>
-                                                        </select>
+                                                            <select id="sourceId" onchange="fetchData(this)" name="sourceId[]" multiple >
+                                                                <?php foreach ($sourceModel as $source_model) {
+                                                                    ?>
+                                                                    <option value="<?= $source_model['id'];?>"><?= $source_model['title'];?></option>
+                                                                    <?php
+                                                                }?>
+                                                            </select> 
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -418,14 +453,14 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                                     <tr>
                                                         <td><div class="mr-1 mtn-3 bg-cgray">Enq_Dt</div></td>
                                                         <td>
-                                                            <input class="form-control myform-control input-group" id="enqDate" onchange="fetchData()" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" />
+                                                            <input class="form-control myform-control input-group" id="enqDate" onchange="fetchData(this,'enqDate')" onkeyup="fetchDatasss(this,'enqDate')" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" />
                                                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><div class="mr-1 mtn-3 bg-cgray">Follow-up Date</div></td>
                                                         <td>
-                                                            <input class="form-control myform-control input-group" id="followUpDate" onchange="fetchData()" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" />
+                                                            <input class="form-control myform-control input-group" id="followUpDate" onchange="fetchData()" onkeyup="fetchDatasss(this,'followUpDate')" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" />
                                                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                         </td>
                                                     </tr>
@@ -433,30 +468,29 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                                     <tr>
                                                         <td><div class="mr-1 mtn-3 bg-cgray">City</div></td>
                                                         <td>
-                                                           <!--  <input type="text" onkeyup="fetchData()" id="city" placeholder="City" class="form-control myform-control" /> -->
-                                                           <select onchange="fetchData()" id="city" placeholder="City" class="form-control myform-control" 
-                                                            >
-                                                            <option value="">Select location</option>
-                                                            <?php foreach($locations as $location):
+                                                           
+                                                            <select id="city" onchange="fetchData(this)" name="city[]" multiple >
+                                                                <?php foreach ($cities as $city) {
                                                                     ?>
-                                                            <option value="<?= $location['id'];?> "><?= $location['location_name'];?></option>
-                                                            <?php endforeach ?>
+                                                                    <option value="<?= $city['id'];?>"><?= $city['name'];?></option>
+                                                                    <?php
+                                                                }?>
+                                                            </select> 
 
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td><div class="mr-1 mtn-3 bg-cgray">Location</div></td>
                                                         <td>
-                                                            <!-- <input type="text" onkeyup="fetchData()" id="location" placeholder="Location" class="form-control myform-control" 
-                                                            cities
-                                                            /> -->
-                                                            <select onchange="fetchData()" id="location" placeholder="Location" class="form-control myform-control" 
-                                                            >
-                                                            <option value="">Select city</option>
-                                                            <?php foreach($cities as $city):
+                                                            <select id="location" onchange="fetchData(this)" name="location[]" multiple >
+                                                                <?php foreach ($locations as $location) {
                                                                     ?>
-                                                            <option value="<?= $city['id'];?> "><?= $city['name'];?></option>
-                                                            <?php endforeach ?>
+                                                                    <option value="<?= $location['id'];?>"><?= 
+                                                                    $location['location_name'];?></option>
+                                                                    <?php
+                                                                }?>
+                                                            </select> 
+                                                            
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -518,31 +552,32 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                             </div>
                                         </div> 
                                     </div>
-                                    </div>
+                                </div>
 
 
-                                    <div class="row card-title p-0 m-0 border-right-0"  style="font-size:smaller;">
-                                            <div class="table-responsive p-0 m-0">
-                                                <table id="leads-table" class="p-0 m-0" style="width:100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="border-right">Sr.No.</th>
-                                                            <th class="border-right">Lead _Id</th>
-                                                            <th class="border-right">Owner</th>
-                                                            <th class="border-right">Name</th>
-                                                            <th class="border-right">Email</th>
-                                                            <th class="border-right">Mob_1</th>
-                                                            <th class="border-right">Mob_2</th>
-                                                            <th class="border-right">Source</th>
-                                                            <th class="border-right">Days</th>
-                                                            <th class="border-right">Last Call</th>
-                                                            <th class="border-right">Next Call</th>
-                                                            <!-- <th>Actions</th> -->
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
+                                <div class="row card-title p-0 m-0 border-right-0"  style="font-size:smaller;">
+                                        <div class="table-responsive p-0 m-0">
+                                            <table id="leads-table" class="p-0 m-0 table display nowrap"
+                                            width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="border-right">Sr.No.</th>
+                                                        <th class="border-right">Lead _Id</th>
+                                                        <th class="border-right">Owner</th>
+                                                        <th class="border-right">Name</th>
+                                                        <th class="border-right">Email</th>
+                                                        <th class="border-right">Mob_1</th>
+                                                        <th class="border-right">Mob_2</th>
+                                                        <th class="border-right">Source</th>
+                                                        <th class="border-right">Days</th>
+                                                        <th class="border-right">Last Call</th>
+                                                        <th class="border-right">Next Call</th>
+                                                        <!-- <th>Actions</th> -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -559,13 +594,13 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                                                 <tr>
                                                                     <td>Name :</td>
                                                                     <td>
-                                                                        <input type="text" name="" placeholder="Name" id="userName" class="form-control myform-control" />
+                                                                        <input type="text" name="" placeholder="Name" onkeyup="myFunction()" id="userName" class="form-control myform-control" />
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Status :</td>
                                                                     <td>
-                                                                        <select id="userStatus" class="form-control myform-control">
+                                                                        <select id="userStatus" onkeyup="myFunction()" onchange="myFunction()" class="form-control myform-control" style="-webkit-appearance: auto;">
                                                                             <option value="">Select Status</option>
                                                                             <?php foreach ($enqStatus as $enqStatu) {
                                                                                 ?>
@@ -579,13 +614,13 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                                                 <tr>
                                                                     <td>Last Call :</td>
                                                                     <td>
-                                                                     <input class="form-control myform-control input-group" id="userLastCall" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" />
+                                                                     <input class="form-control myform-control input-group" id="userLastCall" onkeyup="fetchDatasss(this,'userLastCall')" onchange="fetchDatasss(this,'userLastCall')"  data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" />
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Next Call :</td>
                                                                     <td>
-                                                                        <input class="form-control myform-control input-group" id="userNextCall" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" />
+                                                                        <input class="form-control myform-control input-group" id="userNextCall" onkeyup="fetchDatasss(this,'userNextCall')" onchange="fetchDatasss(this,'userNextCall')" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY" />
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -623,7 +658,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                                                 <tr>
                                                                     <td>Bulk SMS :</td>
                                                                     <td>
-                                                                    <select id="bulkSms" class="form-control myform-control">
+                                                                    <select id="bulkSms" class="form-control myform-control" style="-webkit-appearance: auto;">
                                                                         <option value="">Select</option>
                                                                         <option value="all">All</option>
                                                                     </select>
@@ -632,7 +667,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                                                 <tr>
                                                                     <td> Smart SMS :</td>
                                                                     <td>
-                                                                    <select id="smartSms" class="form-control myform-control" multiple="multiple">
+                                                                    <select id="smartSms" class="form-control myform-control" multiple="multiple" style="-webkit-appearance: auto;">
                                                             <?php if(count($allFirstMobiles)>0){foreach($allFirstMobiles as $mobile){
                                                                 ?>
                                                                 <option value="<?= $mobile['Mob_1'] ;?>"><?= $mobile['Mob_1'] ;?></option>
@@ -644,7 +679,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                                                 <tr>
                                                                     <td>What'sApp :</td>
                                                                     <td>
-                                                                        <select id="whatsApp" class="form-control myform-control" multiple="multiple" >
+                                                                        <select id="whatsApp" class="form-control myform-control" multiple="multiple" style="-webkit-appearance: auto;">
 
                                                                         <?php if(count($allFirstMobiles)>0){foreach($allFirstMobiles as $mobile){
                                                                             ?>
@@ -657,7 +692,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                                                 <tr>
                                                                     <td>Bulk Email :</td>
                                                                     <td>
-                                                                    <select id="bulkEmails" class="form-control myform-control" multiple="multiple">
+                                                                    <select id="bulkEmails" class="form-control myform-control" multiple="multiple" style="-webkit-appearance: auto;">
                                                                         <?php if(count($allEmails)>0){foreach($allEmails as $all_email){
                                                                             ?>
                                                                             <option class="single" data-type="number" value="<?= $all_email['Email'] ;?>"><?= $all_email['Email'] ;?></option>
@@ -710,19 +745,21 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                 </div>
             </div>
         </div>
-        
         <?php include __DIR__ . '/../layout/jsLinks.php'; ?>
     </div>
     <?php include("modal.php");?>
     <script src="<?= base_url(); ?>/assets/js/xla-update-lead.js"></script>
     <script src="<?= base_url(); ?>/assets/js/dropzone.js"></script>
     <script src="<?= base_url(); ?>/assets/js/sweetalert2.js"></script>
-    <!-- <script src="<?= base_url(); ?>/assets/js/pages/ColReorderWithResize.js"></script> -->
     <script src="<?= base_url(); ?>/assets/js/pages/enquiry.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+    <!-- <script src="<?= base_url(); ?>/assets/js/pages/resizableColumns.min.js"></script> -->
+<!--     <script src="<?= base_url(); ?>/assets/js/pages/colReorderWithResize.js"></script>
+ -->
 
+    <script src="<?= base_url(); ?>/assets/js/pages/jquery.dataTables.colResize.js"></script>
+   
     <script type="text/javascript">
-
         // Mobile number valid
         function validatePhone(e, id){
             $(e).parent().find('.validation').remove();

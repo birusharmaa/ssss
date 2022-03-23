@@ -235,6 +235,7 @@ $routes->group('team', ['filter' => 'myauth'], function ($routes) {
 });
 
 $routes->group('leadsApi', ['filter' => 'myauth'], function ($routes) {
+    
     $routes->get('all','Enquiry::getAllLeads');
     $routes->get('show/(:num)','Enquiry::show/$1');
     $routes->post('fetchData','Enquiry::fetchData');
@@ -244,7 +245,10 @@ $routes->group('leadsApi', ['filter' => 'myauth'], function ($routes) {
     $routes->post('import','Enquiry::import');
     $routes->post('sendMessage','Enquiry::sendMessage'); 
     $routes->post('searchValue','Enquiry::searchValue');  
-    $routes->GET('getLocation/(:num)','Enquiry::getLocation/$1');    
+    $routes->GET('getLocation/(:num)','Enquiry::getLocation/$1');
+    $routes->get('searchlead','Enquiry::searchlead');   
+    $routes->post('searchData','Enquiry::searchData');
+
     // $routes->put('update/(:any)','Category::update/$1');  
 });
 
