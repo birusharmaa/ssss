@@ -86,6 +86,8 @@ $routes->group('admin', ["filter" => "mysess"], function ($routes) {
     $routes->get('fee-collection', 'Dashboard::fee_collection');
     $routes->get('status', 'Dashboard::status');
     $routes->get('enquiry', 'Enquiry::index');
+    $routes->get('attendance', 'Attendance::index');
+    $routes->get('attendance/users','Attendance::users');
 });
 
 $routes->group('settings', ["filter" => "mysess"], function ($routes) {
@@ -235,7 +237,6 @@ $routes->group('team', ['filter' => 'myauth'], function ($routes) {
 });
 
 $routes->group('leadsApi', ['filter' => 'myauth'], function ($routes) {
-    
     $routes->get('all','Enquiry::getAllLeads');
     $routes->get('show/(:num)','Enquiry::show/$1');
     $routes->post('fetchData','Enquiry::fetchData');
@@ -248,10 +249,10 @@ $routes->group('leadsApi', ['filter' => 'myauth'], function ($routes) {
     $routes->GET('getLocation/(:num)','Enquiry::getLocation/$1');
     $routes->get('searchlead','Enquiry::searchlead');   
     $routes->post('searchData','Enquiry::searchData');
+    $routes->post('searchcity','Enquiry::searchcity');
 
     // $routes->put('update/(:any)','Category::update/$1');  
 });
-
 
 $routes->group('sources', ['filter' => 'myauth'], function ($routes) {
     $routes->get('all','Sources::index');
@@ -261,7 +262,23 @@ $routes->group('sources', ['filter' => 'myauth'], function ($routes) {
     $routes->put('update/(:any)','Sources::update/$1');  
 });
 
-
+$routes->group('attendance', ['filter' => 'myauth'], function ($routes) {
+    $routes->get('all-trainers/','Attendance::all_trainers');
+    $routes->get('/users','Attendance::users');
+    $routes->get('show/(:num)','Enquiry::show/$1');
+    $routes->post('fetchData','Enquiry::fetchData');
+    $routes->post('saveComment','Enquiry::saveComment');
+    $routes->post('updateUserDetails','Enquiry::updateUserDetails');
+    $routes->post('insertLead','Enquiry::insertLead');
+    $routes->post('import','Enquiry::import');
+    $routes->post('sendMessage','Enquiry::sendMessage'); 
+    $routes->post('searchValue','Enquiry::searchValue');  
+    $routes->GET('getLocation/(:num)','Enquiry::getLocation/$1');
+    $routes->get('searchlead','Enquiry::searchlead');   
+    $routes->post('searchData','Enquiry::searchData');
+    $routes->post('searchcity','Enquiry::searchcity');
+    // $routes->put('update/(:any)','Category::update/$1');  
+});
 
 
 /*

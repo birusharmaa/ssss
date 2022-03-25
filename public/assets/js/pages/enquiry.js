@@ -1,4 +1,3 @@
-
 $(document).ready(function() {       
     $('#enqStatus').multiselect({   
         nonSelectedText: 'Select'        
@@ -10,7 +9,9 @@ $(document).ready(function() {
         nonSelectedText: 'Select'        
     });
     $('#city').multiselect({   
-        nonSelectedText: 'Select'        
+        nonSelectedText: 'Select',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
     });
     $('#location').multiselect({   
         nonSelectedText: 'Select'        
@@ -24,6 +25,8 @@ $(document).ready(function() {
     loadtAllLeads();
     //searchLeads();
 });
+
+
 
 //Select 2 declarition
 $(document).ready(function() {
@@ -54,12 +57,58 @@ $(document).ready(function() {
         minimumResultsForSearch: -1,
         placeholder: "Select",
     });
+
+    $(".multiselect-search").attr('onClick','appendData()');
     $(".loader").hide();
 });
+
+function appendData(){
+    // let searchCity = $('.multiselect-search').val();
+    // let url = BaseUrl + "/leadsApi/searchcity";
+    // $.ajax({
+    //     type: "POST",
+    //     headers: {
+    //         email: email,
+    //         password: passw,
+    //     },
+    //     url: url,
+    //     data: {
+    //         searchCity: searchCity
+    //     },
+    //     dataType: "json",
+    //     success: function(data) {
+    //       if(data.cities){
+    //         $("#city").empty();
+    //         $('#city').multiselect('destroy');
+    //         $.each(data.cities, function (i, citie) {
+    //                 $("#city").append('<option value="' + citie.Value + '">' + citie.Text + '</option>');
+    //         });
+    //         $('#city').multiselect();
+    //       }
+            
+    //     },
+    //     error: function(jqxhr, eception) {
+    //         if (jqxhr.status == 404) {
+                
+    //         }
+    //     },
+    // });
+}
+
+
+
+var currentTime = new Date();
+var minDate = new Date(currentTime.getFullYear(), currentTime.getMonth(), 1);
+var maxDate =  new Date(currentTime.getFullYear(), currentTime.getMonth() + 1, 0);
 
 $("#enqDate").datepicker({
     autoclose: true,
     todayHighlight: false,
+     minDate: minDate, 
+    maxDate: maxDate ,
+    beforeShow: function(){ 
+        $(".ui-datepicker").css('font-size', 5)
+    }
 }).datepicker();
 
 $("#followUpDate").datepicker({
@@ -147,10 +196,12 @@ function getAllLeads(data) {
     let table = $("#leads-table").DataTable();  
     let dataSet = [];
     if (data) {
+        num = data.length;
         data.forEach((e) => {
             if (first == 0) {
                 first = e.id;
             }
+            
             
             const d = new Date();
             let date = formatDate(d);
@@ -174,7 +225,7 @@ function getAllLeads(data) {
 
             let name = `<a href= "#" class="text-info"  onclick="leadDetails(${e.id}, this)">${e.Name}</a>`;
             let row = [
-                ++num,
+                num--,
                 e.id,
                 e.owner_name,
                 name,

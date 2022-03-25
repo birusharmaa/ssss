@@ -16,7 +16,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
     <title><?= $pageTitle ?></title>
     <?php include __DIR__ . '/../layout/cssLinks.php'; ?>   
     <link href="<?= base_url('assets/dist/css/bootstrap-select.css');?>"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+    <link href="<?= base_url('assets/css/bootstrap-multiselect.css');?>"/>
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/js/pages/jquery.dataTables.colResize.css">
     <style type="text/css">
         .bottom-row {
@@ -160,7 +160,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
         }
 
         div#commentsRow {
-            height: 100px;
+            height: 8.5em;
         }
         select {
             -webkit-appearance: none;
@@ -284,8 +284,65 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
 
         .dropdown-menu {
             min-width: 7em;
-            max-height: 250px;
+            max-height: 230px;
             overflow-y: auto;
+        }
+        select{
+            -webkit-appearance: auto;
+        }
+        .bg-color-field{
+            background-color: #f5f6f8;
+        }
+        .date-bg-ht{
+            height: 36px !important;
+        }
+
+        table.table-condensed thead tr th {
+            padding: 0px !important; 
+        }
+        .datepicker.datepicker-dropdown .datepicker-days table.table-condensed tbody, .datepicker.datepicker-inline .datepicker-days table.table-condensed tbody {
+            position: relative;
+            top: 5px;
+            line-height: 1px;
+        }
+
+        .datepicker.datepicker-dropdown .datepicker-days table.table-condensed tbody td.day, .datepicker.datepicker-inline .datepicker-days table.table-condensed tbody td.day {
+            font-size: 0.6rem !important;
+            padding: 0.3rem !important;
+        }
+
+        .datepicker.datepicker-dropdown .datepicker-days table.table-condensed thead tr th.datepicker-switch, .datepicker.datepicker-inline .datepicker-days table.table-condensed thead tr th.datepicker-switch {
+         
+            font-size: .8rem;
+        }
+
+        .datepicker.datepicker-dropdown, .datepicker.datepicker-inline {
+            width: 18% !important;
+            height: 71%;
+        }
+        .datepicker.datepicker-dropdown .datepicker-days table.table-condensed thead tr th.dow, .datepicker.datepicker-inline .datepicker-days table.table-condensed thead tr th.dow {
+            font-size: .7rem;
+        }
+        .datepicker.datepicker-dropdown, .datepicker.datepicker-inline {
+            width: 20% !important;
+        }
+        .datepicker.datepicker-dropdown, .datepicker.datepicker-inline {
+            padding: 0 25px;
+            width: 30%;
+            max-height: 13.5rem;
+            max-width: 500px;
+            /* min-width: 250px; */
+        }
+        .multiselect-clear-filter i::before{
+            content: 'X';
+            font-weight: 900;
+            font-size: 12px;
+        }
+        button.btn.btn-default.multiselect-clear-filter {
+            padding: 2px;
+        }
+        input.form-control.multiselect-search {
+            padding: 4px;
         }
     </style>
 </head>
@@ -389,9 +446,9 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                                 class="position-absolute rounded-circle" width="50" height="50" style="top:0; right:0;"> -->
                                                 <!-- <img src="<?= $logo;?>" class="position-absolute rounded-circle" alt="logo" width="100" height="50" style="top:0; right:0;"/> -->
                                                 <?php if (!empty($sessData['picture_attachment'])) : ?>
-                                                <img src="<?= $sessData['picture_attachment'] ?>" alt="profile" class="position-absolute rounded-circle"  width="75" style="top:0; right:0;"/>
+                                                <img src="<?= $sessData['picture_attachment'] ?>" alt="profile" class="position-absolute rounded-circle" width="50" style="top:0; right:0;"/>
                                               <?php else : ?>
-                                                <img src="<?= base_url(); ?>/assets/images/faces/face12.jpg" alt="profile" class="position-absolute rounded-circle" width="100" style="top:0; right:0;"/>
+                                                <img src="<?= base_url(); ?>/assets/images/faces/face12.jpg" alt="profile" class="position-absolute rounded-circle" width="50" style="top:0; right:0;"/>
                                               <?php endif; ?>
                                         </div>
                                     
@@ -469,7 +526,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
                                                         <td><div class="mr-1 mtn-3 bg-cgray">City</div></td>
                                                         <td>
                                                            
-                                                            <select id="city" onchange="fetchData(this)" name="city[]" multiple >
+                                                            <select id="city" onchange="fetchData(this)" name="city[]" multiple class="selectpicker"  data-live-search="true">
                                                                 <?php foreach ($cities as $city) {
                                                                     ?>
                                                                     <option value="<?= $city['id'];?>"><?= $city['name'];?></option>
@@ -752,7 +809,7 @@ $logo = !empty($settingData[76]['setting_value'])? $settingData[76]['setting_val
     <script src="<?= base_url(); ?>/assets/js/dropzone.js"></script>
     <script src="<?= base_url(); ?>/assets/js/sweetalert2.js"></script>
     <script src="<?= base_url(); ?>/assets/js/pages/enquiry.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+    <script src="<?= base_url(); ?>/assets/js/pages/bootstrap-multiselect.js"></script>
     <!-- <script src="<?= base_url(); ?>/assets/js/pages/resizableColumns.min.js"></script> -->
 <!--     <script src="<?= base_url(); ?>/assets/js/pages/colReorderWithResize.js"></script>
  -->

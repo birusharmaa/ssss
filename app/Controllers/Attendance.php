@@ -20,8 +20,9 @@ use App\Models\api\LeadsCommentsModal;
 use App\Models\CitiesMadel;
 use App\Models\StatesMadel;
 use App\Models\api\LocationModel;
+use App\Models\Attendance_Model;
 
-class Enquiry extends BaseController
+class Attendance extends BaseController
 {
     use ResponseTrait;
     protected $leadModel;
@@ -32,6 +33,7 @@ class Enquiry extends BaseController
         $this->city_model = new CitiesMadel();
         $this->states_madel = new StatesMadel();
         $this->location_model = new LocationModel();
+        $this->attendance = new Attendance_Model();
         $this->validation =  \Config\Services::validation();
 
         $this->session = session();
@@ -43,146 +45,158 @@ class Enquiry extends BaseController
 
     //Load index with defaults data
     public function index(){
-        $pageData['pageTitle'] = "Enquiry";
-        $pageData['pageHeading'] = "Leads Enquiry";
-        $pageData['username'] = "username";
-
-        //Select enqstatusmodel table data;
-        $this->enqStatusModel = new EnqStatusModel();
-        $this->enqStatusModel->select(['id', 'title']);
-        $pageData['enqStatus'] = $this->enqStatusModel->findAll();
-
-        //Select users table data;
-        $this->userModel = new UserModel();
-        $this->userModel->select(['emp_id', 'full_name']);
-        $pageData['usersData'] = $this->userModel->findAll();
-
-        //Select source table data;
-        $this->sourceModel = new SourceModel();
-        $this->sourceModel->select(['id', 'title']);
-        $pageData['sourceModel'] = $this->sourceModel->findAll();
-
-        //Select phone number first;
-        $pageData['allFirstMobiles'] = Array();
-        $this->leadModel = new leadModel();
-        $this->leadModel->select('Mob_1');
-        $pageData['allFirstMobiles'] = $this->leadModel->findAll();
-
-        //Select email address from lead email field;
-        $pageData['allEmails'] = Array();
-        $this->leadModel = new leadModel();
-        $this->leadModel->select('Email');
-        $pageData['allEmails'] = $this->leadModel->findAll();
-
-        //Select all course or category data
-        $this->categoryModel = new CategoryModel();
-        $this->categoryModel->select(['id', 'title']);
-        $pageData['courseName'] = $this->categoryModel->findAll();
-
-        // $this->leadModel->join('xla_users', 'xla_users.emp_id = xla_leads.Lead_Owner', 'LEFT');
-        // $this->leadModel->join('xla_source', 'xla_source.id = xla_leads.Source', 'LEFT');
-        // $this->leadModel->select('xla_users.full_name AS owner_name');
-        // $this->leadModel->select('xla_source.title AS source_name');
-        
-        //Count current month leads
-        $this->leadModel->selectCount('id');
-        $this->leadModel->where('MONTH(created_at)', date('m'));
-        $this->leadModel->where('YEAR(created_at)', date('Y'));
-        $pageData['current_month_count'] = $this->leadModel->findAll();
-
-        //Count previous month leads
-        $this->leadModel->selectCount('id');
-        $this->leadModel->where('MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
-        $this->leadModel->where('YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)');
-        $pageData['last_month_count'] = $this->leadModel->findAll();
-
-        //Count current month open leads
-        $this->leadModel->selectCount('id');
-        //$this->leadModel->where('lead_action_status', 0);
-        $this->leadModel->where('MONTH(created_at)', date('m'));
-        $this->leadModel->where('YEAR(created_at)', date('Y'));
-        $this->leadModel->where('MONTH(updated_at)', null);
-        $this->leadModel->where('YEAR(updated_at)', null);
-        $pageData['open_leads'] = $this->leadModel->findAll();
-        // echo $this->leadModel->getLastQuery();
-        // echo "<pre>";
-        // print_r($pageData['open_leads']);
-        // exit;
-
-        //Count previous month open leads
-        $this->leadModel->selectCount('id');
-        //$this->leadModel->where('lead_action_status !=', 0);
-        $this->leadModel->where('MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
-        $this->leadModel->where('MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
-        $this->leadModel->where('MONTH(updated_at)', null);
-        $this->leadModel->where('MONTH(updated_at)', null);
-        //$this->leadModel->where('MONTH(updated_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
-        //$this->leadModel->where('MONTH(updated_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
-        $pageData['last_open_leads'] = $this->leadModel->findAll();
-
-        //Count current month current leads
-        $this->leadModel->selectCount('id');
-        //$this->leadModel->where('lead_action_status !=', 0);
-        // $this->leadModel->where('MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
-        // $this->leadModel->where('YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)');
-        $this->leadModel->where('MONTH(updated_at)', date('m'));
-        $this->leadModel->where('YEAR(updated_at)', date('Y'));
-        $pageData['current_leads'] = $this->leadModel->findAll();
-
-        //Count previous month current leads
-        $this->leadModel->selectCount('id');
-        //$this->leadModel->where('lead_action_status !=', 0);
-        // $this->leadModel->where('MONTH(created_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
-        // $this->leadModel->where('YEAR(created_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)');
-        $this->leadModel->where('MONTH(updated_at) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)');
-        $this->leadModel->where('YEAR(updated_at) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)');
-        $pageData['last_leads'] = $this->leadModel->findAll();
-        
-
-        $this->leadModel->selectSum('xla_leads.Course_Value');
-        $pageData['leads_sum'] = $this->leadModel->findAll();
-
-        $this->enqStatusModel = new EnqStatusModel();
-        $pageData['enqStatus'] = $this->enqStatusModel->findAll();
-
-
-        $lead_comment_model = new LeadsCommentsModal();
-
-        $lead_comment_model->join('xla_users', 'xla_users.emp_id = xla_leads_comments.created_by', 'LEFT');
-        $lead_comment_model->select('xla_users.full_name');
-        $lead_comment_model->selectCount('xla_leads_comments.id');
-        $lead_comment_model->select('xla_leads_comments.created_at AS fallow_comments_time, xla_leads_comments.comments');
-        $lead_comment_model->orderBy('xla_leads_comments.id','ASC');            
-        $pageData['follow_comment'] = $lead_comment_model->findAll(5);
-
-        //Get all states name
-        // $this->states_madel->select('id');
-        // $status = $this->states_madel->where('country_id', 101)->findAll();
-        $limit = 20;
-        $offset = 1;
-        $state_id = [5, 6, 10, 13, 22, 32, 33, 38,39];
-        $this->city_model->select('id, name');
-        $this->city_model->orderby('name', 'Asc');            
-        $pageData['cities'] = $this->city_model
-                ->whereIn('state_id', $state_id)
-                ->findAll();
-        
-        $this->location_model->select('id, location_name');
-        $this->location_model->orderby('location_name', 'Asc');            
-        $pageData['locations'] = $this->location_model->limit($limit, $offset)->findAll();
-
-        if(count($pageData['follow_comment'])>0){
-            for($i=0; $i<count($pageData['follow_comment']); $i++){
-                $date = date($pageData['follow_comment'][$i]['fallow_comments_time']);
-                $middle = strtotime($date); 
-                $new_date = date('d-M-Y H:i A', $middle);
-                $pageData['follow_comment'][$i]['fallow_comments_time'] = $new_date;
-            }
-        }
-
-        return view('admin/enquiry/index', $pageData);
+        $pages['title'] = "Trainers Attendance";
+        echo view('admin/layout/header-section', $pages);
+        return view('admin/attendance/trainers');        
     }
+    
+    public function users(){
+        $pages['title'] = "Users Attendance";
+        echo view('admin/layout/header-section', $pages);
+        return view('admin/attendance/users');
+    }
+    
+    public function all_trainers($param = null) {
+        //$month = Date("m");
+        // $this->attendance->select('xla_users.full_name, xla_attendance.*, xla_attendance_type.name as type_name');
+        // $this->attendance->join('xla_users', 'xla_attendance.user_id = xla_users.emp_id', 'left');
+        // $this->attendance->join('xla_attendance_type', 'xla_attendance.type = xla_attendance_type.id', 'left');
+        // $this->attendance->where('MONTH(xla_attendance.created_at) = MONTH(CURRENT_DATE())');
+        // $this->attendance->where('YEAR(xla_attendance.created_at) = YEAR(CURRENT_DATE())');
+        // //$this->attendance->orderBy('xla_attendance.created_at', 'asc');
+        // $this->attendance->orderBy('xla_attendance.created_by', 'asc');
+        // //$this->attendance->groupBy('xla_attendance.created_by, xla_attendance.created_at');
+        // $data = $this->attendance->findAll(); 
+        // echo $this->attendance->getLastQuery();
+        
+        //Database connection 
+        $db = db_connect();
+        
 
+        //Fetch all user id in attendance table
+        $query = $db->query('SELECT `user_id` FROM `xla_attendance` GROUP BY `user_id` ');
+        $users = $query->getResult();
+
+        //Convert in array from array obejct
+        $users = json_decode(json_encode($users), true);
+        
+        $data = [];
+        
+        //Loop for all users
+        for($u=0; $u<sizeof($users); $u++){
+            //Find user id
+            $user_id = $users[$u]['user_id'];
+            $query   = $db->query("SELECT `xla_users`.`full_name`, 
+                                        `xla_attendance`.*, 
+                                        `xla_attendance_type`.`name` as `type_name` 
+                                        FROM `xla_attendance` 
+                                        LEFT JOIN `xla_users` 
+                                        ON `xla_attendance`.`user_id` = `xla_users`.`emp_id` 
+                                        LEFT JOIN `xla_attendance_type` 
+                                        ON `xla_attendance`.`type` = `xla_attendance_type`.`id` 
+                                        WHERE MONTH(xla_attendance.created_at) = MONTH(CURRENT_DATE()) 
+                                        AND YEAR(xla_attendance.created_at) = YEAR(CURRENT_DATE()) 
+                                        AND `xla_attendance`.`user_id` = $user_id
+                                        ORDER BY `xla_attendance`.`created_at` ASC");
+
+            $results = $query->getResult();
+
+            //Convert in array of user attendence results
+            $results = json_decode(json_encode($results), true);
+            
+            //Total days in month from current date          
+            $total_days   = date('t');
+
+            //Find month from current date
+            $current_month = date('m');
+            
+            //Make present and apsent as count number of days
+            for($i = 0; $i < $total_days; $i++){
+                $j = $i;
+                $j = $j+1;
+                if($j < 10){
+                    $j = '0'.$j;
+                }
+
+                //Current month 
+                $c_m  = $j."-".$current_month;
+
+                
+                for($k = 0; $k < sizeof($results); $k++){
+                    $newdate = date("d-m", strtotime($results[$k]['created_at']));
+                    if($c_m == $newdate){
+                        //Make attendance type data
+                        $v = 'P';
+
+                        //Make key aur value as per date
+                        $new_data = ['day_'.$j => $v ];
+
+                        //Append key and value in exists array data
+                        $results[$k]= $results[$k] + $new_data;
+                    }else{
+                        //Set attendance type are blanck
+                        $v = '';
+
+                        //Make key aur value as per date
+                        $new_data = ['day_'.$j => $v ];
+
+                        //Append key and value in exists array data
+                        $results[$k]= $results[$k] + $new_data;
+                    }
+                }
+            }
+
+            $final_arr = [];
+            $a= 1;
+            $pos = []; 
+            
+            //Making present and absent in data
+            foreach($results as $values){
+                foreach($values as $key=>$value){
+                    //Initializing "A" as absent in value are empty
+                    if(empty($value)){
+                        $value = "A";
+                    }
+
+                    //Condition check
+                    if(!in_array($value, $final_arr)){
+                        $final_arr[$key] = $value;
+                    }
+
+                    //Condition check
+                    if(in_array($value, $final_arr) && $value =="A" && $key !="full_name"
+                        && $key !="user_id"
+                        && $key !="created_at" && $key !="updated_at"
+                        && $key !="type_name"
+                    ){                   
+                        $final_arr[$key] = $value;
+                    }       
+                }
+                
+                //Search P position(Key value) in current array of row data
+                $p = array_search('P',$final_arr,true);
+                $pos[] = $p; 
+            }
+
+            //Make final data with final_arr and pos array variables
+            foreach($final_arr as $k=>$final){    
+                foreach($pos as $p=>$pv){
+                    if($k==$pv){
+                        $final_arr[$k] = "P";
+                    }
+                }
+            }
+            //$append  all final_arr in data
+            $data[] = $final_arr;
+        }
+        
+        
+        if($data) {            
+            return $this->respond($data);
+        }else{
+            return $this->respond('No record found.');
+        }
+    }
     public function view($id = null){
         $pageData['leads'] = $this->leadModel->getLeadDetails($id);
         return view('admin/leads/view');

@@ -14,35 +14,35 @@
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="sysName">Sys_Name</label>
-                                <input type="text" class="form-control p-2 " id="sysName" name="sysName" placeholder="System Name" value="">
+                                <input type="text" class="form-control bg-color-field p-2 " id="sysName" name="sysName" placeholder="System Name" value="">
                             </div>
                         </div>
 
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="userName">User Name</label>
-                                <input type="text" class="form-control p-2" id="leadUserName" name="leadUserName" placeholder="User Name" value="<?php echo $session->get('loginInfo')['full_name'];?>" readonly="readonly" />
+                                <input type="text" class="form-control bg-color-field p-2" id="leadUserName" name="leadUserName" placeholder="User Name" value="<?php echo $session->get('loginInfo')['full_name'];?>" readonly="readonly" />
                             </div>
                         </div>
 
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="name">Name</label>
-                                <input type="text" onkeyup="searchData()" onchange="searchData()" class="form-control p-2" id="name" name="name" placeholder="Name" value="" />
+                                <input type="text" onkeyup="searchData()" onchange="searchData()" class="form-control bg-color-field p-2" id="name" name="name" placeholder="Name" value="" />
                             </div>
                         </div>
 
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="email">Email address</label>
-                                <input type="email" onkeyup="searchData()" onchange="searchData()" class="form-control p-2" id="email" name="email" placeholder="Email" value="">
+                                <input type="email" onkeyup="searchData()" onchange="searchData()" class="form-control bg-color-field p-2" id="email" name="email" placeholder="Email" value="">
                             </div>
                         </div>
                         <div class="col-md-2 p-2">
 
                             <div class="form-group mb-0">
                                 <label for="mob_1">Mobile 1</label>
-                                <input type="text" onkeyup="searchData()" onchange="searchData()" maxlength="10" onkeyup="validatePhone(this, 'mob_1')" class="form-control p-2" id="mob_1" name="mob_1" placeholder="Phone" value="">
+                                <input type="text" onkeyup="searchData()" onchange="searchData()" maxlength="10" onkeyup="validatePhone(this, 'mob_1')" class="form-control bg-color-field p-2" id="mob_1" name="mob_1" placeholder="Phone" value="">
                                 <span class="text-danger mob_1 d-none">Please enter valid mobile number.</span>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="mob_2">Mobile 2</label>
-                                <input type="text" onkeyup="searchData()" onchange="searchData()" class="form-control p-2" maxlength="10" onkeyup="validatePhone(this, 'mob_2')" id="mob_2" name="mob_2" placeholder="Phone" value="">
+                                <input type="text" onkeyup="searchData()" onchange="searchData()" class="form-control bg-color-field p-2" maxlength="10" onkeyup="validatePhone(this, 'mob_2')" id="mob_2" name="mob_2" placeholder="Phone" value="">
                                 <span class="text-danger mob_2 d-none">Please enter valid mobile number.</span>
                             </div>
                         </div>
@@ -58,8 +58,8 @@
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="city">City</label>
-                                <!-- <input type="text" class="form-control p-2" id="leadCity" name="leadCity" placeholder="city" value="">z -->
-                                <select class="form-control p-2" id="leadCity" name="leadCity" placeholder="city">
+                                <!-- <input type="text" class="form-control bg-color-field p-2" id="leadCity" name="leadCity" placeholder="city" value="">z -->
+                                <select class="form-control bg-color-field p-2" id="leadCity" name="leadCity" placeholder="city">
                                     <option value="">Select City</option>
                                 <?php foreach($cities as $city):
                                     ?>
@@ -72,8 +72,8 @@
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="location">Location</label>
-                                <!-- <input type="text" class="form-control p-2" id="leadLocation" name="leadLocation" placeholder="Location" value=""> -->
-                                <select class="form-control p-2" id="leadLocation" name="leadLocation" placeholder="Location" >
+                                <!-- <input type="text" class="form-control bg-color-field p-2" id="leadLocation" name="leadLocation" placeholder="Location" value=""> -->
+                                <select class="form-control bg-color-field p-2" id="leadLocation" name="leadLocation" placeholder="Location" >
                                     <option value="">Select city</option>
                                 </select>
                             </div>
@@ -82,8 +82,8 @@
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="enqDate">Enquiry Date</label>
-<!--                                 <input type="date" class="form-control p-2" id="leadEnqDate" name="leadEnqDate" placeholder="Location" value="">
- -->                                <input class="form-control myform-control input-group" id="leadEnqDate" name="leadEnqDate"onchange="fetchData(this,'leadEnqDate')" onkeyup="fetchDatasss(this,'leadEnqDate')" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+<!--                                 <input type="date" class="form-control bg-color-field p-2" id="leadEnqDate" name="leadEnqDate" placeholder="Location" value="">
+ -->                                <input class="form-control date-bg-ht bg-color-field myform-control bg-color-field input-group" id="leadEnqDate" name="leadEnqDate"onchange="fetchData(this,'leadEnqDate')" onkeyup="fetchDatasss(this,'leadEnqDate')" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                             </div>
                         </div>
@@ -91,8 +91,8 @@
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="FollowUpDate">Follow up date</label>
-                                <!-- <input type="date" class="form-control p-2" id="FollowUpDate" name="FollowUpDate" placeholder="Location" value=""> -->
-                                <input class="form-control myform-control input-group" id="FollowUpDate" name="FollowUpDate"onchange="fetchData(this,'FollowUpDate')" onkeyup="fetchDatasss(this,'FollowUpDate')" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                                <!-- <input type="date" class="form-control bg-color-field p-2" id="FollowUpDate" name="FollowUpDate" placeholder="Location" value=""> -->
+                                <input class="form-control date-bg-ht bg-color-field myform-control bg-color-field input-group" id="FollowUpDate" name="FollowUpDate"onchange="fetchData(this,'FollowUpDate')" onkeyup="fetchDatasss(this,'FollowUpDate')" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="leadOwner">Lead Owner</label>
-                                <select class="form-control p-2" id="leadOwner" name="leadOwner">
+                                <select class="form-control bg-color-field p-2" id="leadOwner" name="leadOwner">
                                     <option value="">Select</option>
                                     <?php if (!empty($usersData)) : ?>
                                         <?php foreach ($usersData as $user_data) : ?>
@@ -116,7 +116,7 @@
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="source">Source</label>
-                                <select class="form-control p-2" id="source" name="source">
+                                <select class="form-control bg-color-field p-2" id="source" name="source">
                                     <option value="">Select</option>
                                     <?php if (!empty($sourceModel)) : ?>
                                         <?php foreach ($sourceModel as $source_model) : ?>
@@ -131,8 +131,8 @@
 
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
-                                <label for="enqCourse">Enqury Course</label>
-                                <select class="form-control p-2" id="enqCourse" name="enqCourse">
+                                <label for="enqCourse">Enquiry Course</label>
+                                <select class="form-control bg-color-field p-2" id="enqCourse" name="enqCourse">
                                     <option value="">Select</option>
                                     <?php if (!empty($courseName)) : ?>
                                         <?php foreach ($courseName as $course_name) : ?>
@@ -148,7 +148,7 @@
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="courseValue">Course value</label>
-                                <input type="number" class="form-control p-2" id="courseValue" name="courseValue" placeholder="Course Value">
+                                <input type="number" class="form-control bg-color-field p-2" id="courseValue" name="courseValue" placeholder="Course Value">
                             </div>
                         </div>
 
@@ -156,7 +156,7 @@
                             <div class="form-group mb-0">
                                 <input type="hidden" name="statusValue" value="" id="statusValue" />
                                 <label for="status">Status</label>
-                                <select class="form-control p-2" id="status" name="status">
+                                <select class="form-control bg-color-field p-2" id="status" name="status">
                                     <option value="">Select</option>
                                     <?php if (!empty($enqStatus)) : ?>
                                         <?php foreach ($enqStatus as $enq_status) : ?>
@@ -172,23 +172,23 @@
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="keyComment">Comment</label>
-                                <textarea class="form-control p-2" onkeyup="searchData()" onchange="searchData()" id="keyComment" name="keyComment" placeholder="Comment" value="" ></textarea>
+                                <textarea class="form-control bg-color-field p-2" onkeyup="searchData()" onchange="searchData()" id="keyComment" name="keyComment" placeholder="Comment" value="" ></textarea>
                             </div>
                         </div>
 
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="followUpComment">Follow up comment</label>
-                                <textarea class="form-control p-2" onkeyup="searchData()" onchange="searchData()" id="followUpComment" name="followUpComment" placeholder="Comment" value="" ></textarea>
+                                <textarea class="form-control bg-color-field p-2" onkeyup="searchData()" onchange="searchData()" id="followUpComment" name="followUpComment" placeholder="Comment" value="" ></textarea>
                             </div>
                         </div>
 
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="FollowUpDays">Follow up days</label>
-                                <!-- <input type="date" class="form-control p-2" id="FollowUpDays" name="FollowUpDays" placeholder="FollowUpDays" value="">
+                                <!-- <input type="date" class="form-control bg-color-field p-2" id="FollowUpDays" name="FollowUpDays" placeholder="FollowUpDays" value="">
                                  -->
-                                <input class="form-control myform-control input-group" id="FollowUpDays" name="FollowUpDays"onchange="fetchData(this,'FollowUpDays')" onkeyup="fetchDatasss(this,'FollowUpDays')" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
+                                <input class="form-control date-bg-ht bg-color-field myform-control bg-color-field input-group" id="FollowUpDays" name="FollowUpDays"onchange="fetchData(this,'FollowUpDays')" onkeyup="fetchDatasss(this,'FollowUpDays')" data-date-format="dd-mm-yyyy" placeholder="DD-MM-YYYY">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                             </div>
                         </div>
@@ -196,7 +196,7 @@
                         <div class="col-md-2 p-2">
                             <div class="form-group mb-0">
                                 <label for="FollouUpCounts">Follow up counts</label>
-                                <input type="number" class="form-control p-2" id="FollouUpCounts" name="FollouUpCounts" placeholder="Follow up counts">
+                                <input type="number" class="form-control bg-color-field p-2" id="FollouUpCounts" name="FollouUpCounts" placeholder="Follow up counts">
                             </div>
                         </div>
 
@@ -218,7 +218,7 @@
                         <div class="col-md-3 p-2 mt-2">
                             <div class="form-group mb-0">
                                 <label for="Photo">Photo</label>
-                                <input type="file" class="form-control p-2 form-control p-2-sm" id="photo" name="photo" onchange="onFileUpload(this);" accept="image/*">
+                                <input type="file" class="form-control bg-color-field p-2 form-control bg-color-field p-2-sm" id="photo" name="photo" onchange="onFileUpload(this);" accept="image/*">
                             </div>
                         </div>
 
@@ -285,7 +285,7 @@
                                 <input type="file" class="custom-file-input" name="file_csv">
                                 <label class="custom-file-label"></label>
                             </div> -->
-                            <input name="file_csv" class="form-control p-2" type="file" id="file_csv" accept=".csv" />
+                            <input name="file_csv" class="form-control bg-color-field p-2" type="file" id="file_csv" accept=".csv" />
                         </div>
                     </div>
                     
@@ -293,7 +293,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="importCourseVaue">Course</label>
-                                <select class="form-control p-2" id="importCourseVaue" name="importCourseVaue">
+                                <select class="form-control bg-color-field p-2" id="importCourseVaue" name="importCourseVaue">
                                     <option value="">Select</option>
                                     <?php if (!empty($courseName)) : ?>
                                         <?php foreach ($courseName as $course_name) : ?>
@@ -309,7 +309,7 @@
                         <!-- <div class="col-md-3">
                             <div class="form-group">
                                 <label for="subcategory">Sub Category</label>
-                                <select class="form-control p-2" id="subcategory1" name="subcategory1">
+                                <select class="form-control bg-color-field p-2" id="subcategory1" name="subcategory1">
                                     <option value="">Select</option>
                                 </select>
                             </div>

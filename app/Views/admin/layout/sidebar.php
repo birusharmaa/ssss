@@ -62,7 +62,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#attendance" aria-expanded="false" aria-controls="attendance"  title="Attendance">
+      <a class="nav-link" data-toggle="collapse" href="<?= base_url('admin/attendance'); ?>" aria-expanded="false" aria-controls="attendance"  title="Attendance">
         <i class="fas fa-calendar-day menu-icon"></i>
         <span class="menu-title">Attendance</span>
         <i class="menu-arrow"></i>
@@ -70,10 +70,10 @@
       <div class="collapse" id="attendance">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item d-none d-lg-block">
-            <a class="nav-link" href="#">Trainer's Attendance</a>
+            <a class="nav-link" href="<?= base_url('admin/attendance'); ?>">Trainer's Attendance</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Student's Attendance</a>
+            <a class="nav-link" href="<?= base_url('admin/attendance/users'); ?>">Student's Attendance</a>
           </li>
         </ul>
       </div>
