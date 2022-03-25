@@ -57,24 +57,23 @@ class Attendance extends BaseController
     }
     
     public function all_trainers($param = null) {
-        //$month = Date("m");
-        // $this->attendance->select('xla_users.full_name, xla_attendance.*, xla_attendance_type.name as type_name');
-        // $this->attendance->join('xla_users', 'xla_attendance.user_id = xla_users.emp_id', 'left');
-        // $this->attendance->join('xla_attendance_type', 'xla_attendance.type = xla_attendance_type.id', 'left');
-        // $this->attendance->where('MONTH(xla_attendance.created_at) = MONTH(CURRENT_DATE())');
-        // $this->attendance->where('YEAR(xla_attendance.created_at) = YEAR(CURRENT_DATE())');
-        // //$this->attendance->orderBy('xla_attendance.created_at', 'asc');
-        // $this->attendance->orderBy('xla_attendance.created_by', 'asc');
-        // //$this->attendance->groupBy('xla_attendance.created_by, xla_attendance.created_at');
-        // $data = $this->attendance->findAll(); 
-        // echo $this->attendance->getLastQuery();
+        $current_date = $this->request->getGet('date');
+        if(empty($current_date)){
+            $current_date = date('m-Y');
+        } 
         
         //Database connection 
         $db = db_connect();
         
+        $income_month = date('m', strtotime('25-'.$current_date));
+        $income_years = date('Y', strtotime('25-'.$current_date));
 
         //Fetch all user id in attendance table
-        $query = $db->query('SELECT `user_id` FROM `xla_attendance` GROUP BY `user_id` ');
+        $sql = "SELECT `user_id` FROM `xla_attendance`
+                            WHERE MONTH(`created_at`) = ".$income_month."
+                            AND YEAR(`created_at`) = ".$income_years."
+                            GROUP BY `user_id` ";
+        $query = $db->query($sql);
         $users = $query->getResult();
 
         //Convert in array from array obejct
@@ -94,21 +93,23 @@ class Attendance extends BaseController
                                         ON `xla_attendance`.`user_id` = `xla_users`.`emp_id` 
                                         LEFT JOIN `xla_attendance_type` 
                                         ON `xla_attendance`.`type` = `xla_attendance_type`.`id` 
-                                        WHERE MONTH(xla_attendance.created_at) = MONTH(CURRENT_DATE()) 
-                                        AND YEAR(xla_attendance.created_at) = YEAR(CURRENT_DATE()) 
+                                        WHERE MONTH(xla_attendance.created_at) =  $income_month
+                                        AND YEAR(xla_attendance.created_at) =  $income_years
                                         AND `xla_attendance`.`user_id` = $user_id
                                         ORDER BY `xla_attendance`.`created_at` ASC");
 
+            //$query   = $db->query($sql)
             $results = $query->getResult();
 
             //Convert in array of user attendence results
             $results = json_decode(json_encode($results), true);
             
-            //Total days in month from current date          
-            $total_days   = date('t');
+            //Total days in month from current date
+            $total_days = intval(date('t', strtotime('25-'.$current_date)));
+            
 
             //Find month from current date
-            $current_month = date('m');
+            $current_month = date('m', strtotime('25-'.$current_date));
             
             //Make present and apsent as count number of days
             for($i = 0; $i < $total_days; $i++){
@@ -127,7 +128,6 @@ class Attendance extends BaseController
                     if($c_m == $newdate){
                         //Make attendance type data
                         $v = 'P';
-
                         //Make key aur value as per date
                         $new_data = ['day_'.$j => $v ];
 
@@ -138,7 +138,7 @@ class Attendance extends BaseController
                         $v = '';
 
                         //Make key aur value as per date
-                        $new_data = ['day_'.$j => $v ];
+                        $new_data = ['day_'.$j=> $v ];
 
                         //Append key and value in exists array data
                         $results[$k]= $results[$k] + $new_data;
@@ -170,9 +170,9 @@ class Attendance extends BaseController
                         && $key !="type_name"
                     ){                   
                         $final_arr[$key] = $value;
-                    }       
+                    }      
                 }
-                
+
                 //Search P position(Key value) in current array of row data
                 $p = array_search('P',$final_arr,true);
                 $pos[] = $p; 
@@ -182,7 +182,7 @@ class Attendance extends BaseController
             foreach($final_arr as $k=>$final){    
                 foreach($pos as $p=>$pv){
                     if($k==$pv){
-                        $final_arr[$k] = "P";
+                        $final_arr[$k] = "<span class='text-white bg-success p-1'>P</span>";
                     }
                 }
             }
@@ -190,11 +190,12 @@ class Attendance extends BaseController
             $data[] = $final_arr;
         }
         
-        
-        if($data) {            
-            return $this->respond($data);
+        $res['data'] = $data;
+        $res['date'] = $current_date;
+        if($res) {            
+            return $this->respond($res);
         }else{
-            return $this->respond('No record found.');
+            return $this->respond($res, false);
         }
     }
     public function view($id = null){

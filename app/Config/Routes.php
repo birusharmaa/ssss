@@ -263,7 +263,7 @@ $routes->group('sources', ['filter' => 'myauth'], function ($routes) {
 });
 
 $routes->group('attendance', ['filter' => 'myauth'], function ($routes) {
-    $routes->get('all-trainers/','Attendance::all_trainers');
+    $routes->get('all-trainers','Attendance::all_trainers');
     $routes->get('/users','Attendance::users');
     $routes->get('show/(:num)','Enquiry::show/$1');
     $routes->post('fetchData','Enquiry::fetchData');

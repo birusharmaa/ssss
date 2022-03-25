@@ -23,12 +23,12 @@
                             <table id="attandance" class="table display dataTable table-hover"
                                 style="width:100%">
                                 <div class="co1-2 offset-10 mb-2 text-right float-right">
-                                    <input class="form-control" data-date-format="mm/yyyy" id="datepicker">
+                                    <input onchange="getdata()" class="form-control" data-date-format="mm/yyyy" id="datepicker">
                                 </div>
                                 <thead>
-                                    <tr class="py-3 table-info">
+                                    <tr class="py-3 table-info" id="attendance_tr">
                                         <th>#ID</th>
-                                        <th>Name</th>
+                                        <th>Name </th>
                                         <th>1 Mon</th>
                                         <th>2 Tues</th>
                                         <th>3 wed</th>
